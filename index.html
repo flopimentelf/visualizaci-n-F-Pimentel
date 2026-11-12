@@ -1,1 +1,658 @@
 
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SENTIR LA CALLE | Percepción peatonal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg:#080808;
+  --panel:#111;
+  --white:#f5f5f5;
+  --pink:#EB56D4;
+  --muted:#858585;
+  --line:#303030;
+  --mono:'DM Mono',monospace;
+}
+* {box-sizing:border-box;margin:0;padding:0}
+html {scroll-behavior:smooth}
+body {
+  background:var(--bg);
+  color:var(--white);
+  font-family:'Montserrat',sans-serif;
+}
+button {font:inherit}
+button:focus-visible,a:focus-visible {outline:2px solid var(--pink);outline-offset:4px}
+a {color:inherit;text-decoration:none}
+.top-progress {
+  position:fixed;
+  top:0;left:0;width:100%;height:3px;
+  background:#222;z-index:1000;
+}
+.top-progress span {
+  display:block;width:0;height:100%;background:var(--pink);
+}
+.intro {
+  position:fixed;inset:0;z-index:900;
+  background:#000;
+  display:flex;align-items:center;justify-content:center;
+}
+.intro img {width:90%;height:85%;object-fit:contain}
+.intro-controls {
+  position:absolute;left:25px;right:25px;bottom:22px;
+  display:flex;justify-content:space-between;align-items:center;
+  color:#999;font:10px var(--mono);letter-spacing:2px;
+}
+.btn {
+  background:transparent;border:1px solid #555;
+  color:var(--white);padding:11px 16px;
+  font-size:10px;letter-spacing:1px;text-transform:uppercase;
+  cursor:pointer;transition:.2s;
+}
+.btn:hover,.btn.active {
+  background:var(--pink);border-color:var(--pink);color:#000;
+}
+.header {
+  padding:22px 5vw;
+  border-bottom:1px solid var(--line);
+  display:flex;justify-content:space-between;align-items:center;
+  position:relative;z-index:2;
+}
+.brand {
+  font-weight:800;font-size:13px;letter-spacing:1px;
+}
+.brand span {color:var(--pink)}
+.header-meta {
+  color:var(--muted);font:10px var(--mono);
+  letter-spacing:1px;text-transform:uppercase;
+}
+.hero {
+  min-height:85vh;
+  padding:12vh 8vw 8vh;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.eyebrow {
+  color:var(--pink);font:11px var(--mono);
+  letter-spacing:2px;text-transform:uppercase;
+}
+.hero h1 {
+  font-size:clamp(65px,13vw,175px);
+  line-height:1.02;letter-spacing:-.085em;
+  font-weight:800;margin:45px 0 35px;
+}
+.hero h1 span {color:var(--pink)}
+.hero-bottom {
+  display:flex;justify-content:space-between;align-items:end;
+  gap:30px;border-top:1px solid var(--line);padding-top:22px;
+}
+.hero-bottom p {
+  max-width:470px;color:#aaa;font-size:13px;line-height:1.9;
+}
+.hero-index {font:10px var(--mono);color:#777}
+.section {
+  padding:100px 8vw;
+  border-top:1px solid var(--line);
+}
+.section-head {
+  display:flex;justify-content:space-between;align-items:start;gap:25px;
+}
+.section-number {color:var(--pink);font:11px var(--mono);letter-spacing:2px}
+.section h2 {
+  font-size:clamp(35px,6vw,78px);
+  line-height:1.13;letter-spacing:-.06em;
+  max-width:900px;margin:25px 0;
+}
+.intro-copy {
+  color:#aaa;font-size:14px;line-height:1.9;
+  max-width:650px;
+}
+.question-block {
+  padding:70px 0 15px;
+  display:grid;grid-template-columns:1fr 1fr;gap:40px;
+}
+.question-block h3 {
+  font-size:clamp(22px,3vw,38px);
+  line-height:1.3;font-weight:500;
+}
+.question-block h3 span {color:var(--pink)}
+.question-note {
+  color:#888;font-size:12px;line-height:1.9;max-width:400px;
+}
+.dashboard {background:#0d0d0d}
+.dashboard-top {
+  display:flex;justify-content:space-between;
+  align-items:end;gap:25px;flex-wrap:wrap;
+  margin:50px 0 25px;
+}
+.dashboard-label {
+  color:#888;font:10px var(--mono);
+  letter-spacing:2px;text-transform:uppercase;
+}
+.filters {display:flex;gap:8px;flex-wrap:wrap}
+.filter {
+  padding:10px 14px;background:transparent;
+  border:1px solid #444;color:#aaa;
+  font-size:10px;letter-spacing:1px;
+  text-transform:uppercase;cursor:pointer;
+}
+.filter.active {
+  background:var(--pink);border-color:var(--pink);color:#000;
+}
+.dashboard-grid {
+  display:grid;grid-template-columns:1fr 1.1fr;
+  gap:25px;
+}
+.data-panel {
+  background:var(--panel);border:1px solid #292929;
+  padding:30px;min-width:0;
+}
+.panel-heading {
+  display:flex;justify-content:space-between;
+  align-items:center;gap:15px;
+  border-bottom:1px solid #333;padding-bottom:18px;
+}
+.panel-heading h3 {font-size:12px;font-weight:600}
+.panel-heading span {font:10px var(--mono);color:#777}
+.main-stat {
+  font-size:clamp(80px,12vw,145px);
+  line-height:1;font-weight:800;letter-spacing:-.09em;
+  margin:35px 0 15px;
+}
+.main-stat span {color:var(--pink)}
+.stat-explanation {
+  color:#999;font-size:12px;line-height:1.8;
+  max-width:360px;
+}
+.people-area {padding-top:35px}
+.people-grid {
+  display:grid;grid-template-columns:repeat(5,1fr);
+  gap:18px 12px;max-width:410px;margin:auto;
+}
+.person {
+  width:100%;aspect-ratio:.55;color:#f5f5f5;
+  opacity:.95;transition:color .25s,opacity .25s,transform .25s;
+}
+.person.selected {color:var(--pink)}
+.person.dimmed {opacity:.16}
+.person svg {width:100%;height:100%}
+.legend {
+  display:flex;gap:22px;flex-wrap:wrap;
+  margin-top:28px;color:#999;font:10px var(--mono);
+  text-transform:uppercase;
+}
+.legend-item {display:flex;align-items:center;gap:8px}
+.legend-dot {width:9px;height:9px;background:var(--pink);border-radius:50%}
+.legend-dot.white {background:white}
+.data-footnote {
+  margin-top:28px;border-left:2px solid var(--pink);
+  padding:12px 15px;color:#888;font-size:10px;line-height:1.8;
+}
+.comparison {
+  margin-top:25px;
+  display:grid;grid-template-columns:repeat(2,1fr);gap:15px;
+}
+.comparison-card {
+  border:1px solid #333;padding:20px;
+}
+.comparison-card small {
+  font:10px var(--mono);color:#888;text-transform:uppercase;
+}
+.comparison-card strong {
+  display:block;font-size:36px;margin:12px 0;
+}
+.comparison-card p {font-size:10px;color:#888;line-height:1.6}
+.bar-chart {margin-top:28px}
+.bar-row {
+  display:grid;grid-template-columns:110px 1fr 30px;
+  align-items:center;gap:12px;margin:20px 0;
+}
+.bar-label {font:10px var(--mono);color:#aaa}
+.bar-track {height:8px;background:#292929}
+.bar-fill {height:100%;background:var(--pink);width:0;transition:width .4s}
+.bar-value {font:11px var(--mono);text-align:right}
+.full-panel {margin-top:25px}
+.explore-intro {
+  display:grid;grid-template-columns:1fr 1fr;gap:35px;
+  margin:35px 0 50px;
+}
+.explore-intro p {font-size:13px;color:#999;line-height:1.9}
+.variable-list {
+  display:grid;grid-template-columns:repeat(2,1fr);
+  border-top:1px solid var(--line);
+  border-left:1px solid var(--line);
+}
+.variable {
+  background:transparent;border:0;border-right:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  color:white;text-align:left;padding:28px;
+  cursor:pointer;transition:.2s;min-height:145px;
+}
+.variable:hover,.variable.active {background:#171017}
+.variable.active {box-shadow:inset 3px 0 var(--pink)}
+.variable small {font:10px var(--mono);color:var(--pink)}
+.variable h3 {font-size:19px;margin:15px 0 8px}
+.variable p {font-size:11px;line-height:1.7;color:#888}
+.variable-detail {
+  margin-top:20px;padding:28px;
+  border:1px solid #333;background:#101010;
+}
+.variable-detail h3 {font-size:22px;margin-bottom:12px}
+.variable-detail p {font-size:12px;color:#999;line-height:1.9}
+.map-placeholder {
+  margin-top:35px;border:1px solid #333;
+  min-height:300px;position:relative;overflow:hidden;
+  background:
+    linear-gradient(90deg,transparent 49.8%,#292929 50%,transparent 50.2%),
+    linear-gradient(0deg,transparent 49.8%,#292929 50%,transparent 50.2%),
+    #0e0e0e;
+  background-size:100px 100px;
+  display:flex;align-items:center;justify-content:center;
+}
+.map-placeholder p {
+  background:#080808;padding:15px 20px;
+  color:#888;font:10px var(--mono);text-align:center;
+  line-height:1.8;max-width:320px;
+}
+.final {
+  min-height:70vh;display:flex;flex-direction:column;
+  justify-content:center;
+}
+.final h2 {font-size:clamp(45px,9vw,115px);line-height:1.15}
+.final h2 span {color:var(--pink)}
+.final p {max-width:550px;color:#999;font-size:13px;line-height:1.9;margin-top:30px}
+footer {
+  border-top:1px solid var(--line);padding:25px 5vw;
+  display:flex;justify-content:space-between;gap:20px;
+  color:#777;font:10px var(--mono);letter-spacing:1px;
+}
+@media(max-width:800px) {
+  .section {padding:75px 25px}
+  .hero {padding:100px 25px 65px}
+  .hero-bottom {flex-direction:column;align-items:start}
+  .dashboard-grid,.question-block,.explore-intro {grid-template-columns:1fr}
+  .data-panel {padding:22px}
+  .variable-list {grid-template-columns:1fr}
+  .header {padding:18px 22px}
+  .header-meta {display:none}
+  footer {flex-direction:column}
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-progress"><span id="progress"></span></div>
+
+<div class="intro" id="intro">
+  <img id="animationFrame" alt="Secuencia de apertura">
+  <div class="intro-controls">
+    <span>SENTIR LA CALLE / 2026</span>
+    <button class="btn" onclick="skipIntro()">Saltar secuencia</button>
+  </div>
+</div>
+
+<header class="header">
+  <div class="brand">SENTIR <span>LA CALLE.</span></div>
+  <div class="header-meta">Investigación visual / EAD PUCV</div>
+  <button class="btn" onclick="skipIntro()">Entrar</button>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="eyebrow">Una investigación sobre la experiencia peatonal</div>
+  <h1>SENTIR<br>LA <span>CALLE.</span></h1>
+  <div class="hero-bottom">
+    <p>
+      ¿Qué nos hace sentir seguros o vulnerables al caminar?
+      Una exploración de las relaciones entre las personas,
+      sus recorridos y las condiciones del espacio urbano.
+    </p>
+    <div class="hero-index">VALPARAÍSO / CHILE<br>2026</div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-number">01 / LA PREGUNTA</div>
+  <div class="question-block">
+    <h3>La seguridad no solo se mide en cifras. También se <span>percibe, interpreta y experimenta.</span></h3>
+    <p class="question-note">
+      Una misma calle puede generar experiencias distintas.
+      La iluminación, la visibilidad, la actividad urbana y
+      el estado del espacio forman parte de cómo se vive
+      un recorrido peatonal.
+    </p>
+  </div>
+</section>
+
+<section class="section dashboard" id="datos">
+  <div class="section-number">02 / EXPLORAR LOS DATOS</div>
+  <h2>Una observación.<br>Veinte personas.</h2>
+  <p class="intro-copy">
+    Explora el registro de permanencia realizado en Plaza
+    Sotomayor. Cada figura representa una persona observada
+    durante un intervalo de diez minutos.
+  </p>
+
+  <div class="dashboard-top">
+    <div class="dashboard-label">REGISTRO / PLAZA SOTOMAYOR / 10 MIN</div>
+    <div class="filters">
+      <button class="filter active" data-filter="all">Todas</button>
+      <button class="filter" data-filter="stayed">Permanecieron</button>
+      <button class="filter" data-filter="walked">Continuaron</button>
+    </div>
+  </div>
+
+  <div class="dashboard-grid">
+    <div class="data-panel">
+      <div class="panel-heading">
+        <h3>Personas observadas</h3>
+        <span>n = 20</span>
+      </div>
+      <div class="main-stat" id="mainStat">75<span>%</span></div>
+      <div class="stat-explanation" id="statExplanation">
+        15 de las 20 personas registradas permanecieron
+        en el espacio durante el período de observación.
+      </div>
+      <div class="comparison">
+        <div class="comparison-card">
+          <small>Permanecieron</small>
+          <strong class="pink">15</strong>
+          <p>Personas que se mantuvieron en el lugar.</p>
+        </div>
+        <div class="comparison-card">
+          <small>Continuaron</small>
+          <strong>05</strong>
+          <p>Personas que siguieron caminando.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="data-panel">
+      <div class="panel-heading">
+        <h3>Distribución de personas</h3>
+        <span>01 FIGURA = 01 PERSONA</span>
+      </div>
+      <div class="people-area">
+        <div class="people-grid" id="peopleGrid"></div>
+      </div>
+      <div class="legend">
+        <div class="legend-item"><span class="legend-dot"></span> Permanecieron</div>
+        <div class="legend-item"><span class="legend-dot white"></span> Continuaron</div>
+      </div>
+      <div class="data-footnote">
+        Selecciona los filtros para destacar los grupos.
+        El color rosado identifica a quienes permanecieron.
+      </div>
+    </div>
+  </div>
+
+  <div class="data-panel full-panel">
+    <div class="panel-heading">
+      <h3>Relación entre permanencia y desplazamiento</h3>
+      <span>20 PERSONAS</span>
+    </div>
+    <div class="bar-chart">
+      <div class="bar-row">
+        <span class="bar-label">Permanecieron</span>
+        <div class="bar-track"><div class="bar-fill" style="width:75%"></div></div>
+        <span class="bar-value">15</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">Continuaron</span>
+        <div class="bar-track"><div class="bar-fill" style="width:25%"></div></div>
+        <span class="bar-value">05</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="data-footnote">
+    IMPORTANTE: este registro describe comportamientos observados.
+    No mide miedo, tranquilidad ni percepción de seguridad.
+    No debe interpretarse como una encuesta de opinión.
+  </div>
+</section>
+
+<section class="section" id="variables">
+  <div class="section-number">03 / CAPAS DE EXPERIENCIA</div>
+  <h2>¿Qué condiciones<br>transforman un recorrido?</h2>
+
+  <div class="explore-intro">
+    <p>
+      El entorno urbano está compuesto por distintas
+      condiciones que pueden influir en la experiencia
+      de quienes caminan.
+    </p>
+    <p>
+      Selecciona una variable para conocer qué dimensión
+      se propone observar y qué información sería
+      necesaria para analizarla.
+    </p>
+  </div>
+
+  <div class="variable-list">
+    <button class="variable active" data-variable="light">
+      <small>VARIABLE 01</small>
+      <h3>Iluminación</h3>
+      <p>Presencia de luz y reconocimiento del entorno.</p>
+    </button>
+    <button class="variable" data-variable="visibility">
+      <small>VARIABLE 02</small>
+      <h3>Visibilidad</h3>
+      <p>Alcance visual, obstáculos y puntos ciegos.</p>
+    </button>
+    <button class="variable" data-variable="activity">
+      <small>VARIABLE 03</small>
+      <h3>Actividad urbana</h3>
+      <p>Personas, comercios y actividad en el espacio.</p>
+    </button>
+    <button class="variable" data-variable="condition">
+      <small>VARIABLE 04</small>
+      <h3>Estado del espacio</h3>
+      <p>Superficies, obstáculos y mantenimiento.</p>
+    </button>
+  </div>
+
+  <div class="variable-detail" id="variableDetail">
+    <h3>Iluminación</h3>
+    <p>
+      Se propone observar la distribución de luz en los
+      recorridos, identificar zonas iluminadas y sectores
+      con menor visibilidad. Para convertir esta variable
+      en un resultado se necesitan registros de terreno
+      o respuestas de participantes.
+    </p>
+  </div>
+</section>
+
+<section class="section" id="territorio">
+  <div class="section-number">04 / TERRITORIO</div>
+  <h2>La experiencia<br>ocurre en un lugar.</h2>
+  <p class="intro-copy">
+    Los recorridos peatonales se desarrollan en espacios
+    concretos. La ubicación de cada observación permitirá
+    relacionar las experiencias con las condiciones de
+    las calles y sus entornos.
+  </p>
+
+  <div class="map-placeholder">
+    <p>
+      MAPA DE RECORRIDOS<br>
+      ESPACIO RESERVADO PARA CARTOGRAFÍA REAL<br>
+      Barrio Puerto / Valparaíso
+    </p>
+  </div>
+  <div class="data-footnote">
+    Este espacio está preparado para incorporar un mapa
+    georreferenciado con tus puntos de observación,
+    recorridos y registros de terreno.
+  </div>
+</section>
+
+<section class="section final">
+  <div class="section-number">05 / UNA MIRADA PEATONAL</div>
+  <h2>La calle se recorre.<br><span>También se siente.</span></h2>
+  <p>
+    Comprender la percepción de seguridad implica escuchar
+    las experiencias de las personas y observar las
+    condiciones del entorno que acompañan sus recorridos.
+  </p>
+</section>
+
+</main>
+
+<footer>
+  <span>SENTIR LA CALLE / 2026</span>
+  <span>Percepción de seguridad peatonal / EAD PUCV</span>
+</footer>
+
+<script>
+const FRAME_PATH = "caminar_frames/frame-";
+const TOTAL_FRAMES = 53;
+const FRAME_DURATION = 120;
+
+let frames = [];
+let currentFrame = 1;
+let animationTimer;
+
+function preloadFrames() {
+  const promises = [];
+
+  for (let i = 1; i <= TOTAL_FRAMES; i++) {
+    const img = new Image();
+    img.src = FRAME_PATH + String(i).padStart(2, "0") + ".webp";
+    frames.push(img);
+    promises.push(new Promise(resolve => {
+      img.onload = resolve;
+      img.onerror = resolve;
+    }));
+  }
+
+  return Promise.all(promises);
+}
+
+function showFrame(index) {
+  const img = frames[index - 1];
+  if (img && img.complete && img.naturalWidth > 0) {
+    document.getElementById("animationFrame").src = img.src;
+  }
+}
+
+function startAnimation() {
+  showFrame(1);
+  animationTimer = setInterval(() => {
+    currentFrame++;
+    if (currentFrame > TOTAL_FRAMES) {
+      skipIntro();
+      return;
+    }
+    showFrame(currentFrame);
+  }, FRAME_DURATION);
+}
+
+function skipIntro() {
+  clearInterval(animationTimer);
+  document.getElementById("intro").style.display = "none";
+}
+
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") skipIntro();
+});
+
+preloadFrames().then(startAnimation);
+
+const peopleGrid = document.getElementById("peopleGrid");
+
+for (let i = 0; i < 20; i++) {
+  const person = document.createElement("div");
+  person.className = "person" + (i < 15 ? " selected" : "");
+  person.dataset.type = i < 15 ? "stayed" : "walked";
+
+  person.innerHTML = `
+    <svg viewBox="0 0 40 72" fill="currentColor" aria-hidden="true">
+      <circle cx="20" cy="9" r="7"></circle>
+      <path d="M10 21 Q20 16 30 21 L33 43 Q33 47 29 47 L28 70 L21 70 L20 49 L19 70 L12 70 L11 47 Q7 47 7 43 Z"></path>
+      <path d="M9 23 L3 43 Q2 47 6 48 Q9 49 11 44 L16 29 Z"></path>
+      <path d="M31 23 L37 43 Q38 47 34 48 Q31 49 29 44 L24 29 Z"></path>
+    </svg>
+  `;
+
+  peopleGrid.appendChild(person);
+}
+
+document.querySelectorAll(".filter").forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".filter").forEach(b => b.classList.remove("active"));
+    button.classList.add("active");
+
+    const filter = button.dataset.filter;
+    const people = document.querySelectorAll(".person");
+
+    people.forEach(person => {
+      const selected = filter === "all" || person.dataset.type === filter;
+      person.classList.toggle("dimmed", !selected);
+    });
+
+    const stat = document.getElementById("mainStat");
+    const explanation = document.getElementById("statExplanation");
+
+    if (filter === "stayed") {
+      stat.innerHTML = '15<span>/20</span>';
+      explanation.textContent = "15 personas permanecieron en el lugar durante el registro.";
+    } else if (filter === "walked") {
+      stat.innerHTML = '05<span>/20</span>';
+      explanation.textContent = "5 personas continuaron caminando durante el registro.";
+    } else {
+      stat.innerHTML = '75<span>%</span>';
+      explanation.textContent = "15 de las 20 personas registradas permanecieron en el espacio durante el período de observación.";
+    }
+  });
+});
+
+const variableContent = {
+  light: {
+    title:"Iluminación",
+    text:"Se propone observar la distribución de luz en los recorridos, identificar zonas iluminadas y sectores con menor visibilidad. Para convertir esta variable en un resultado se necesitan registros de terreno o respuestas de participantes."
+  },
+  visibility: {
+    title:"Visibilidad",
+    text:"Se propone identificar obstáculos visuales, puntos ciegos, cierres y condiciones que dificulten reconocer lo que ocurre alrededor. Los registros deben asociarse a lugares concretos."
+  },
+  activity: {
+    title:"Actividad urbana",
+    text:"Se propone observar la presencia de personas, comercios, tránsito y actividad en distintos momentos del día. Los horarios y las condiciones de observación deben quedar registrados."
+  },
+  condition: {
+    title:"Estado del espacio",
+    text:"Se propone registrar pavimentos, desniveles, obstáculos, limpieza y mantenimiento. Estas condiciones permiten describir el entorno físico del recorrido."
+  }
+};
+
+document.querySelectorAll(".variable").forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".variable").forEach(b => b.classList.remove("active"));
+    button.classList.add("active");
+
+    const data = variableContent[button.dataset.variable];
+    document.getElementById("variableDetail").innerHTML =
+      `<h3>${data.title}</h3><p>${data.text}</p>`;
+  });
+});
+
+const progress = document.getElementById("progress");
+
+window.addEventListener("scroll", () => {
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  const value = max > 0 ? window.scrollY / max * 100 : 0;
+  progress.style.width = value + "%";
+});
+</script>
+
+</body>
+</html>
