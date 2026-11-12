@@ -17,7 +17,6 @@
   --ink: #000000;
   --orange: #F0642B;
   --gray: #777777;
-  --line: #000000;
   --soft: #F1F1F1;
 }
 
@@ -40,18 +39,8 @@ body.intro-active {
   overflow: hidden;
 }
 
-button, select {
+button {
   font: inherit;
-}
-
-.mono {
-  font-family: 'DM Mono', monospace;
-  text-transform: uppercase;
-  letter-spacing: .06em;
-}
-
-.orange {
-  color: var(--orange);
 }
 
 /* INTRODUCCIÓN */
@@ -59,6 +48,9 @@ button, select {
 #intro {
   position: fixed;
   inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
   z-index: 9999;
   background: #000000;
   display: flex;
@@ -71,10 +63,15 @@ button, select {
 }
 
 #introVector {
-  width: min(75vw, 600px);
-  height: min(75vh, 600px);
-  object-fit: contain;
   position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  object-fit: contain;
+  object-position: center;
   opacity: 1;
   transition: opacity .8s ease;
 }
@@ -794,8 +791,6 @@ footer {
 
 <body class="intro-active">
 
-<!-- INTRODUCCIÓN ANIMADA -->
-
 <div id="intro">
   <button id="skipIntro" type="button">SALTAR INTRODUCCIÓN ↗</button>
   <img id="introVector" src="caminar_frames/frame-01.webp" alt="">
@@ -804,7 +799,6 @@ footer {
 
 <header>
   <a href="#" class="mono"><strong>SENTIR LA CALLE</strong></a>
-
   <nav class="mono">
     <a href="#investigacion">Investigación</a>
     <a href="#variables">Variables</a>
@@ -823,7 +817,6 @@ footer {
 
     <div class="hero-bottom">
       <p>Una investigación sobre cómo las condiciones de la infraestructura peatonal se relacionan con la percepción de seguridad y comodidad al caminar.</p>
-
       <div class="scroll mono">DESPLAZARSE PARA EXPLORAR ↓</div>
     </div>
   </div>
@@ -837,12 +830,9 @@ footer {
 
   <div class="question-layout">
     <div class="question-mark">?</div>
-
     <div>
       <div class="mono kicker orange">Pregunta de investigación</div>
-
       <p class="question-text">¿Cómo influye la calidad de la infraestructura peatonal en la percepción de seguridad y comodidad de las personas al caminar?</p>
-
       <p class="small">La investigación busca comprender la relación entre las condiciones físicas del espacio y la experiencia de quienes lo transitan. No se presupone que una infraestructura deficiente produzca necesariamente una percepción negativa: esa relación debe observarse y contrastarse.</p>
     </div>
   </div>
@@ -1011,7 +1001,6 @@ footer {
 
     <div class="vector-table-panel">
       <h3 id="selectedMetricTitle">Inseguridad al cruzar</h3>
-
       <p id="selectedMetricDescription">Porcentaje demostrativo de personas que declaran sentirse inseguras al cruzar.</p>
 
       <div class="metric-list" id="metricList"></div>
@@ -1024,25 +1013,21 @@ footer {
           <div class="scale-track"><div class="scale-fill" style="width:20%"></div></div>
           <span class="scale-value">Bajo</span>
         </div>
-
         <div class="scale-row">
           <span>21–40%</span>
           <div class="scale-track"><div class="scale-fill" style="width:40%"></div></div>
           <span class="scale-value">Medio</span>
         </div>
-
         <div class="scale-row">
           <span>41–60%</span>
           <div class="scale-track"><div class="scale-fill" style="width:60%"></div></div>
           <span class="scale-value">Medio</span>
         </div>
-
         <div class="scale-row">
           <span>61–80%</span>
           <div class="scale-track"><div class="scale-fill" style="width:80%"></div></div>
           <span class="scale-value">Alto</span>
         </div>
-
         <div class="scale-row">
           <span>81–100%</span>
           <div class="scale-track"><div class="scale-fill" style="width:100%"></div></div>
@@ -1072,9 +1057,7 @@ footer {
 
 <section class="section closing">
   <div class="mono">SENTIR LA CALLE / INVESTIGACIÓN PEATONAL</div>
-
   <h2>CAMINAR<br>ES TAMBIÉN<br><span>SENTIR.</span></h2>
-
   <div class="mono">VALPARAÍSO / BUENOS AIRES / 2026</div>
 </section>
 
