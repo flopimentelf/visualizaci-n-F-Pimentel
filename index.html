@@ -7,1081 +7,620 @@
 <title>SENTIR LA CALLE | Percepción peatonal</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root {
   --paper: #F4F2ED;
-  --white: #FFFFFF;
   --ink: #202020;
   --orange: #F0642B;
-  --orange-light: #F5A17E;
+  --light-orange: #F5A17E;
   --gray: #A8A49D;
-  --muted: #706D67;
-  --line: #D8D4CC;
-  --dark: #292724;
-  --mono: 'DM Mono', monospace;
-  --sans: 'Montserrat', sans-serif;
+  --line: #D6D2CA;
+  --white: #FFFFFF;
 }
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-html {
-  scroll-behavior: smooth;
-}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 body {
+  margin: 0;
   background: var(--paper);
   color: var(--ink);
-  font-family: var(--sans);
+  font-family: 'Montserrat', sans-serif;
 }
-button {
-  font-family: inherit;
-}
-button:focus-visible {
-  outline: 2px solid var(--orange);
-  outline-offset: 4px;
-}
-.top-progress {
-  position: fixed;
-  z-index: 1000;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: var(--line);
-}
-.top-progress span {
-  display: block;
-  height: 100%;
-  width: 0;
-  background: var(--orange);
-}
-.intro-animation {
-  position: fixed;
-  z-index: 900;
-  inset: 0;
-  background: #080808;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.intro-animation img {
-  width: 90%;
-  height: 85%;
-  object-fit: contain;
-}
-.intro-controls {
-  position: absolute;
-  left: 25px;
-  right: 25px;
-  bottom: 22px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  color: #aaa;
-  font: 10px var(--mono);
-  letter-spacing: 2px;
-}
-.intro-controls button {
-  background: transparent;
-  border: 1px solid #777;
-  padding: 10px 15px;
-  color: white;
-  font-size: 10px;
-  cursor: pointer;
+button, select { font: inherit; }
+.mono {
+  font-family: 'DM Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: .04em;
 }
 header {
-  padding: 22px 6vw;
+  padding: 22px 5vw;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid var(--line);
+  font-size: 10px;
 }
-.logo {
-  font-weight: 800;
-  font-size: 13px;
-  letter-spacing: -1px;
+header nav { display: flex; gap: 24px; }
+header a {
+  color: var(--ink);
+  text-decoration: none;
 }
-.logo span {
-  color: var(--orange);
-}
-.header-info {
-  color: var(--muted);
-  font: 10px var(--mono);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-.header-right {
-  color: var(--orange);
-  font: 10px var(--mono);
-}
+header a:hover { color: var(--orange); }
 .hero {
-  min-height: 90vh;
-  padding: 12vh 8vw 8vh;
+  min-height: 88vh;
+  padding: 8vh 5vw 5vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
 }
-.eyebrow {
+.kicker {
+  font-size: 11px;
   color: var(--orange);
-  font: 11px var(--mono);
-  letter-spacing: 2px;
-  text-transform: uppercase;
 }
 .hero h1 {
-  font-size: clamp(65px, 13vw, 180px);
-  line-height: 1.03;
-  letter-spacing: -.09em;
+  font-size: clamp(65px, 13.5vw, 190px);
+  line-height: .82;
+  letter-spacing: -.095em;
   font-weight: 800;
-  margin: 45px 0;
+  margin: 65px 0 30px;
+  max-width: 1100px;
 }
-.hero h1 span {
-  color: var(--orange);
-}
+.hero h1 span { color: var(--orange); }
 .hero-bottom {
-  border-top: 1px solid var(--line);
-  padding-top: 22px;
   display: flex;
   justify-content: space-between;
   align-items: end;
   gap: 30px;
 }
 .hero-bottom p {
-  max-width: 510px;
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.9;
+  max-width: 470px;
+  font-size: clamp(15px, 1.5vw, 20px);
+  line-height: 1.55;
 }
-.hero-code {
-  color: var(--muted);
-  font: 10px var(--mono);
-  text-align: right;
-  line-height: 1.8;
+.scroll {
+  font-size: 10px;
+  color: var(--gray);
 }
 .section {
-  padding: 110px 8vw;
+  padding: 110px 5vw;
   border-top: 1px solid var(--line);
 }
-.section-label {
+.section-head {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 30px;
+  margin-bottom: 65px;
+}
+.section-number {
+  font-size: 11px;
   color: var(--orange);
-  font: 11px var(--mono);
-  letter-spacing: 2px;
-  text-transform: uppercase;
 }
 .section h2 {
-  max-width: 1000px;
-  font-size: clamp(38px, 6.5vw, 85px);
-  line-height: 1.12;
-  letter-spacing: -.065em;
+  font-size: clamp(35px, 6vw, 78px);
+  line-height: .98;
+  letter-spacing: -.07em;
+  margin: 0;
   font-weight: 700;
-  margin: 30px 0;
 }
-.description {
-  max-width: 660px;
-  font-size: 13px;
-  line-height: 2;
-  color: var(--muted);
+.lead {
+  font-size: clamp(19px, 2.3vw, 30px);
+  line-height: 1.4;
+  max-width: 900px;
+  letter-spacing: -.035em;
 }
-.intro-question {
-  display: grid;
-  grid-template-columns: 1.2fr .8fr;
-  gap: 50px;
-  margin-top: 65px;
-  align-items: end;
-}
-.intro-question h3 {
-  font-size: clamp(25px, 4vw, 48px);
-  line-height: 1.3;
-  font-weight: 500;
-  letter-spacing: -.05em;
-}
-.intro-question h3 span {
-  color: var(--orange);
-}
-.intro-question p {
+.small {
   font-size: 12px;
-  color: var(--muted);
-  line-height: 1.9;
+  line-height: 1.7;
+  color: #68645E;
 }
-.data-section {
-  background: #EBE8E1;
-}
-.data-heading {
-  display: flex;
-  justify-content: space-between;
-  gap: 30px;
-  align-items: start;
-}
-.data-heading h2 {
-  margin-bottom: 15px;
-}
-.data-tag {
-  border: 1px solid var(--line);
-  padding: 9px 12px;
-  font: 10px var(--mono);
-  white-space: nowrap;
-}
-.data-overview {
+.question-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 25px;
-  margin-top: 55px;
+  gap: 8vw;
+  align-items: start;
 }
-.data-card {
-  background: var(--paper);
-  border: 1px solid var(--line);
-  padding: 30px;
-}
-.card-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid var(--line);
-  padding-bottom: 17px;
-}
-.card-top h3 {
-  font-size: 11px;
-  font-weight: 600;
-}
-.card-top span {
-  color: var(--muted);
-  font: 10px var(--mono);
-}
-.big-number {
-  font-size: clamp(75px, 11vw, 135px);
-  font-weight: 800;
-  letter-spacing: -.1em;
-  line-height: 1;
-  margin: 35px 0 18px;
-}
-.big-number span {
+.question-mark {
+  font-size: clamp(100px, 18vw, 250px);
   color: var(--orange);
+  line-height: .8;
+  font-weight: 800;
 }
-.big-caption {
-  font-size: 13px;
-  line-height: 1.8;
-  max-width: 380px;
+.question-text {
+  font-size: clamp(24px, 3.2vw, 43px);
+  line-height: 1.25;
+  letter-spacing: -.055em;
 }
-.small-caption {
-  margin-top: 18px;
-  font: 10px var(--mono);
-  color: var(--muted);
-  line-height: 1.8;
-}
-.ratio-bar {
-  display: flex;
-  height: 12px;
-  width: 100%;
-  margin-top: 35px;
-  background: var(--line);
-}
-.ratio-bar .stayed {
-  width: 75%;
-  background: var(--orange);
-}
-.ratio-bar .walked {
-  width: 25%;
-  background: var(--dark);
-}
-.ratio-labels {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 12px;
-  font: 10px var(--mono);
-  color: var(--muted);
-}
-.data-legend {
-  display: flex;
-  gap: 22px;
-  flex-wrap: wrap;
-  margin-top: 28px;
-}
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font: 10px var(--mono);
-  color: var(--muted);
-}
-.legend-dot {
-  width: 9px;
-  height: 9px;
-  background: var(--orange);
-}
-.legend-dot.dark {
-  background: var(--dark);
-}
-.note {
-  margin-top: 28px;
-  border-left: 2px solid var(--orange);
-  padding: 12px 16px;
-  color: var(--muted);
-  font-size: 10px;
-  line-height: 1.8;
-}
-.section-dark {
-  background: var(--ink);
-  color: var(--paper);
-}
-.section-dark .description {
-  color: #aaa69e;
-}
-.section-dark .section-label {
-  color: var(--orange-light);
-}
-.map-concept {
-  position: relative;
-  min-height: 370px;
-  background: #292724;
-  margin-top: 45px;
-  overflow: hidden;
-  border: 1px solid #494640;
-}
-.map-lines {
-  position: absolute;
-  inset: -10%;
-  background:
-    linear-gradient(26deg, transparent 46%, #666158 46.2%, #666158 46.6%, transparent 46.8%),
-    linear-gradient(90deg, transparent 23%, #514d46 23.2%, #514d46 23.5%, transparent 23.7%),
-    linear-gradient(0deg, transparent 65%, #514d46 65.2%, #514d46 65.5%, transparent 65.7%),
-    linear-gradient(130deg, transparent 58%, #514d46 58.2%, #514d46 58.5%, transparent 58.7%);
-  background-size: 100% 100%;
-}
-.map-point {
-  position: absolute;
-  width: 13px;
-  height: 13px;
-  background: var(--orange);
-  border: 2px solid #fff;
-  border-radius: 50%;
-  box-shadow: 0 0 0 8px #f0642b22;
-}
-.map-point.one {left:30%;top:34%}
-.map-point.two {left:54%;top:60%}
-.map-point.three {left:72%;top:25%}
-.map-point.four {left:43%;top:78%}
-.map-caption {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-  color: #d1cdc4;
-  font: 10px var(--mono);
-  line-height: 1.8;
-}
-.map-warning {
-  position: absolute;
-  top: 18px;
-  right: 18px;
-  font: 9px var(--mono);
-  color: #d1cdc4;
-  background: #171614;
-  padding: 10px;
-}
-.variables {
+.columns {
   display: grid;
-  grid-template-columns: repeat(4,1fr);
-  margin-top: 50px;
-  border-top: 1px solid var(--line);
-  border-left: 1px solid var(--line);
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.column {
+  background: var(--paper);
+  padding: 35px;
+}
+.column h3 {
+  font-size: 24px;
+  margin: 0 0 12px;
+  letter-spacing: -.05em;
+}
+.column .tag {
+  color: var(--orange);
+  font-size: 10px;
 }
 .variable {
-  min-height: 170px;
-  padding: 22px;
-  border: 0;
-  border-right: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  background: transparent;
-  color: var(--ink);
-  text-align: left;
-  cursor: pointer;
-  transition: .2s;
+  padding: 22px 0;
+  border-top: 1px solid var(--line);
 }
-.variable:hover,.variable.active {
-  background: #E9E2D7;
-  box-shadow: inset 0 3px var(--orange);
-}
-.variable small {
-  font: 10px var(--mono);
-  color: var(--orange);
-}
-.variable h3 {
-  font-size: 17px;
-  margin: 25px 0 10px;
+.variable strong {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 7px;
 }
 .variable p {
-  font-size: 10px;
-  color: var(--muted);
-  line-height: 1.7;
-}
-.variable-output {
-  margin-top: 18px;
-  border: 1px solid var(--line);
-  padding: 25px;
-  background: #F8F6F1;
-}
-.variable-output h3 {
-  font-size: 20px;
-  margin-bottom: 10px;
-}
-.variable-output p {
-  color: var(--muted);
   font-size: 12px;
-  line-height: 1.8;
-  max-width: 650px;
+  line-height: 1.6;
+  color: #68645E;
+  margin: 0;
 }
-.density-section {
-  background: #E8E5DE;
-}
-.density-intro {
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
+.method-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 30px;
-  flex-wrap: wrap;
-  margin: 35px 0;
 }
-.density-intro p {
-  max-width: 520px;
-  color: var(--muted);
+.method {
+  border-top: 3px solid var(--orange);
+  padding-top: 18px;
+}
+.method .num {
+  color: var(--orange);
   font-size: 12px;
-  line-height: 1.9;
 }
-.density-controls {
-  display: flex;
-  gap: 7px;
-  flex-wrap: wrap;
+.method h3 {
+  font-size: 19px;
+  letter-spacing: -.04em;
 }
-.density-controls button {
-  border: 1px solid #aaa59c;
-  background: transparent;
-  color: var(--ink);
-  padding: 10px 13px;
-  font: 10px var(--mono);
-  cursor: pointer;
+.method p {
+  font-size: 12px;
+  line-height: 1.7;
+  color: #68645E;
 }
-.density-controls button.active {
-  background: var(--orange);
-  border-color: var(--orange);
-  color: white;
-}
-.density-layout {
+.comparison {
   display: grid;
-  grid-template-columns: 1fr 270px;
-  gap: 18px;
-  align-items: stretch;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-top: 50px;
 }
-.density-field {
-  min-height: 500px;
-  padding: 22px;
-  border: 1px solid #c8c2b7;
-  background: #F4F2ED;
-}
-.density-meta {
+.city {
+  min-height: 300px;
+  padding: 30px;
+  background: var(--ink);
+  color: var(--paper);
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  color: var(--muted);
-  font: 9px var(--mono);
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--line);
 }
-.density-grid {
+.city:nth-child(2) { background: var(--orange); color: var(--ink); }
+.city h3 {
+  font-size: clamp(32px, 4vw, 55px);
+  letter-spacing: -.07em;
+  margin: 0;
+}
+.city p {
+  font-size: 12px;
+  line-height: 1.7;
+  max-width: 370px;
+}
+.city .mono { font-size: 10px; }
+.data-section { background: #EAE7E0; }
+.data-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+.data-toolbar label {
+  font-size: 10px;
+  color: #68645E;
+}
+select {
+  background: transparent;
+  border: 1px solid var(--ink);
+  padding: 11px 14px;
+  color: var(--ink);
+  font-size: 11px;
+  border-radius: 0;
+}
+.data-status {
+  margin-left: auto;
+  color: var(--orange);
+  font-size: 10px;
+}
+.data-field {
   display: grid;
-  grid-template-columns: repeat(10,minmax(0,1fr));
-  gap: 7px;
-  padding-top: 22px;
+  grid-template-columns: repeat(20, minmax(0, 1fr));
+  gap: 5px;
+  min-height: 240px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  background: var(--paper);
 }
 .unit {
   aspect-ratio: 1;
   background: var(--orange);
-  position: relative;
-  cursor: pointer;
-  transition: transform .18s,background .18s,opacity .18s;
   border: 0;
+  cursor: pointer;
+  transition: transform .2s, opacity .2s;
+  position: relative;
 }
-.unit.walked {background: var(--dark)}
 .unit:hover {
-  transform: scale(1.18);
-  outline: 2px solid var(--ink);
-  outline-offset: 2px;
+  transform: scale(1.25);
   z-index: 2;
 }
-.unit.filtered-out {opacity:.12}
-.unit.selected {
-  outline: 2px solid var(--ink);
+.unit.walk { background: var(--ink); }
+.unit.demo { opacity: .68; }
+.unit.hidden { display: none; }
+.unit:focus-visible {
+  outline: 3px solid var(--ink);
   outline-offset: 2px;
 }
-.density-sidebar {
-  background: var(--ink);
-  color: var(--paper);
-  padding: 24px;
-}
-.density-sidebar .mono {
-  color: var(--orange-light);
-  font: 10px var(--mono);
-  letter-spacing: 1px;
-}
-.density-sidebar h3 {
-  font-size: 25px;
-  line-height: 1.2;
-  margin: 25px 0;
-}
-.density-sidebar p {
-  color: #aaa69e;
-  font-size: 11px;
-  line-height: 1.9;
-}
-.unit-info {
-  border-top: 1px solid #4b4842;
-  margin-top: 25px;
-  padding-top: 20px;
-}
-.unit-info strong {
-  display: block;
-  font-size: 32px;
-  margin-bottom: 8px;
-}
-.density-footer {
+.legend {
   display: flex;
-  justify-content: space-between;
-  gap: 20px;
   flex-wrap: wrap;
+  gap: 25px;
   margin-top: 20px;
-  font: 9px var(--mono);
-  color: var(--muted);
+  font-size: 10px;
 }
-.density-summary {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
+.legend span { display: flex; align-items: center; gap: 8px; }
+.swatch {
+  width: 11px;
+  height: 11px;
+  display: inline-block;
+  background: var(--orange);
+}
+.swatch.dark { background: var(--ink); }
+.data-detail {
   margin-top: 20px;
-  border: 1px solid #c8c2b7;
+  padding: 20px;
+  border-top: 1px solid var(--line);
+  min-height: 85px;
+  font-size: 12px;
+  line-height: 1.7;
 }
-.summary-cell {
-  padding: 22px;
-  border-right: 1px solid #c8c2b7;
+.map-placeholder {
+  border: 1px solid var(--line);
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px;
+  background:
+    linear-gradient(90deg, transparent 49.8%, var(--line) 50%, transparent 50.2%),
+    linear-gradient(transparent 49.8%, var(--line) 50%, transparent 50.2%);
+  background-size: 70px 70px;
 }
-.summary-cell:last-child {border-right:0}
-.summary-cell small {
-  display: block;
-  font: 9px var(--mono);
-  color: var(--muted);
-  text-transform: uppercase;
+.map-placeholder div {
+  background: var(--paper);
+  padding: 25px;
+  max-width: 420px;
 }
-.summary-cell strong {
-  display: block;
-  font-size: 32px;
-  margin-top: 12px;
+.map-placeholder strong {
+  color: var(--orange);
+  font-size: 12px;
 }
-.summary-cell strong.orange {color:var(--orange)}
-.final {
-  min-height: 70vh;
+.closing {
+  background: var(--orange);
+  min-height: 65vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
 }
-.final h2 {
-  font-size: clamp(45px,8vw,110px);
-  line-height: 1.15;
-  letter-spacing: -.07em;
-}
-.final h2 span {color:var(--orange)}
-.final p {
-  max-width: 580px;
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.9;
-  margin-top: 25px;
+.closing h2 {
+  font-size: clamp(60px, 12vw, 160px);
+  line-height: .83;
+  letter-spacing: -.09em;
+  max-width: 1100px;
 }
 footer {
-  padding: 25px 6vw;
-  border-top: 1px solid var(--line);
+  padding: 25px 5vw;
   display: flex;
   justify-content: space-between;
   gap: 20px;
-  color: var(--muted);
-  font: 9px var(--mono);
-  letter-spacing: 1px;
+  font-size: 10px;
+  border-top: 1px solid var(--line);
 }
-@media(max-width:850px) {
-  .section {padding:80px 25px}
-  .hero {padding:100px 25px 60px}
-  .hero-bottom {flex-direction:column;align-items:start}
-  .data-overview {grid-template-columns:1fr}
-  .variables {grid-template-columns:repeat(2,1fr)}
-  .density-layout {grid-template-columns:1fr}
-  .density-sidebar {min-height:240px}
-  .intro-question {grid-template-columns:1fr}
+.sequence {
+  width: 100%;
+  max-height: 480px;
+  object-fit: contain;
+  display: block;
+  margin: 40px auto 0;
 }
-@media(max-width:500px) {
-  .header-info {display:none}
-  .hero h1 {font-size:18vw}
-  .data-card {padding:22px}
-  .density-grid {grid-template-columns:repeat(5,minmax(0,1fr))}
-  .density-field {min-height:400px}
-  .density-summary {grid-template-columns:1fr}
-  .summary-cell {border-right:0;border-bottom:1px solid #c8c2b7}
-  .summary-cell:last-child {border-bottom:0}
-  .variables {grid-template-columns:1fr}
-  footer {flex-direction:column}
+@media(max-width: 700px) {
+  header { align-items: flex-start; }
+  header nav { gap: 10px; flex-wrap: wrap; justify-content: end; }
+  .hero { min-height: 75vh; }
+  .hero-bottom, .section-head, .question-layout {
+    grid-template-columns: 1fr;
+    display: grid;
+  }
+  .columns, .comparison { grid-template-columns: 1fr; }
+  .method-grid { grid-template-columns: 1fr 1fr; }
+  .data-field { grid-template-columns: repeat(10, minmax(0, 1fr)); }
+  .section { padding: 75px 6vw; }
+  .column { padding: 25px; }
+  footer { flex-direction: column; }
+}
+@media(max-width: 420px) {
+  .method-grid { grid-template-columns: 1fr; }
+  .data-field { grid-template-columns: repeat(8, minmax(0, 1fr)); }
 }
 </style>
 </head>
-
 <body>
 
-<div class="top-progress"><span id="progressBar"></span></div>
-
-<div class="intro-animation" id="intro">
-  <img id="animationFrame" alt="Secuencia de apertura">
-  <div class="intro-controls">
-    <span>SENTIR LA CALLE / 2026</span>
-    <button onclick="skipAnimation()">Saltar secuencia</button>
-  </div>
-</div>
-
 <header>
-  <div class="logo">SENTIR <span>LA CALLE.</span></div>
-  <div class="header-info">Investigación visual / EAD PUCV</div>
-  <div class="header-right">VALPARAÍSO / 2026</div>
+  <a href="#" class="mono"><strong>SENTIR LA CALLE</strong></a>
+  <nav class="mono">
+    <a href="#investigacion">Investigación</a>
+    <a href="#variables">Variables</a>
+    <a href="#metodo">Método</a>
+    <a href="#datos">Datos</a>
+  </nav>
 </header>
 
 <main>
-
 <section class="hero">
-  <div class="eyebrow">Percepción de seguridad peatonal</div>
-  <h1>SENTIR<br>LA <span>CALLE.</span></h1>
-  <div class="hero-bottom">
-    <p>
-      ¿Qué nos hace sentir seguros o vulnerables al caminar?
-      Una investigación visual sobre la experiencia peatonal
-      y las condiciones que construyen nuestra relación
-      con el espacio público.
-    </p>
-    <div class="hero-code">
-      ESTUDIO URBANO<br>
-      EXPERIENCIA PEATONAL<br>
-      2026
+  <div class="kicker mono">Investigación urbana / Experiencia peatonal / 2026</div>
+  <div>
+    <h1>SENTIR<br>LA <span>CALLE.</span></h1>
+    <div class="hero-bottom">
+      <p>Una investigación sobre cómo las condiciones de la infraestructura peatonal se relacionan con la percepción de seguridad y comodidad al caminar.</p>
+      <div class="scroll mono">DESPLAZARSE PARA EXPLORAR ↓</div>
     </div>
   </div>
 </section>
 
-<section class="section">
-  <div class="section-label">01 / PUNTO DE PARTIDA</div>
-  <h2>La ciudad se percibe<br>desde el cuerpo.</h2>
-  <p class="description">
-    La percepción de seguridad se construye durante el
-    desplazamiento. La iluminación, la visibilidad, la
-    actividad urbana y las condiciones físicas pueden
-    modificar la manera en que experimentamos una calle.
-  </p>
-
-  <div class="intro-question">
-    <h3>¿Qué nos hace sentir <span>seguros o vulnerables</span> al caminar?</h3>
-    <p>
-      Esta investigación observa la relación entre el peatón
-      y su entorno. No busca describir únicamente las
-      características de una calle, sino comprender cómo
-      estas se relacionan con la experiencia de las personas.
-    </p>
+<section class="section" id="investigacion">
+  <div class="section-head">
+    <div class="section-number mono">01 / PUNTO DE PARTIDA</div>
+    <h2>La calle no solo se recorre. También se percibe.</h2>
   </div>
-</section>
-
-<section class="section data-section">
-  <div class="section-label">02 / UN REGISTRO DEL TERRITORIO</div>
-
-  <div class="data-heading">
+  <div class="question-layout">
+    <div class="question-mark">?</div>
     <div>
-      <h2>20 personas.<br>Un espacio compartido.</h2>
-      <p class="description">
-        Observación de permanencia y desplazamiento en
-        Plaza Sotomayor durante un intervalo de diez minutos.
-      </p>
+      <div class="mono kicker">Pregunta de investigación</div>
+      <p class="question-text">¿Cómo influye la calidad de la infraestructura peatonal en la percepción de seguridad y comodidad de las personas al caminar?</p>
+      <p class="small">La investigación busca comprender la relación entre las condiciones físicas del espacio y la experiencia de quienes lo transitan. No se presupone que una infraestructura deficiente produzca necesariamente una percepción negativa: esa relación debe observarse y contrastarse.</p>
     </div>
-    <div class="data-tag">PLAZA SOTOMAYOR / REGISTRO</div>
   </div>
+</section>
 
-  <div class="data-overview">
-    <div class="data-card">
-      <div class="card-top">
-        <h3>PERSONAS QUE PERMANECIERON</h3>
-        <span>01 / 02</span>
+<section class="section" id="variables">
+  <div class="section-head">
+    <div class="section-number mono">02 / DIMENSIONES</div>
+    <h2>Dos dimensiones. Una experiencia.</h2>
+  </div>
+  <div class="columns">
+    <div class="column">
+      <div class="tag mono">01 / CONDICIONES OBSERVABLES</div>
+      <h3>Infraestructura física</h3>
+      <p class="small">Características materiales y espaciales que pueden observarse y registrarse en terreno.</p>
+      <div class="variable">
+        <strong>Veredas</strong>
+        <p>Anchura, estado del pavimento, obstáculos, continuidad y accesibilidad.</p>
       </div>
-      <div class="big-number">15<span>/20</span></div>
-      <p class="big-caption">
-        Quince personas permanecieron en el espacio
-        durante el período observado.
-      </p>
-      <div class="ratio-bar">
-        <div class="stayed"></div>
-        <div class="walked"></div>
+      <div class="variable">
+        <strong>Pasos de cebra</strong>
+        <p>Demarcación, visibilidad, ubicación y continuidad del cruce.</p>
       </div>
-      <div class="ratio-labels">
-        <span>75% PERMANECIERON</span>
-        <span>25% CONTINUARON</span>
+      <div class="variable">
+        <strong>Semáforos</strong>
+        <p>Señal peatonal, tiempo de espera, tiempo de cruce y visibilidad.</p>
+      </div>
+      <div class="variable">
+        <strong>Intersecciones</strong>
+        <p>Distancia de cruce, giros vehiculares y exposición al tránsito.</p>
       </div>
     </div>
-
-    <div class="data-card">
-      <div class="card-top">
-        <h3>COMPOSICIÓN DEL REGISTRO</h3>
-        <span>02 / 02</span>
+    <div class="column">
+      <div class="tag mono">02 / EXPERIENCIA SUBJETIVA</div>
+      <h3>Percepción peatonal</h3>
+      <p class="small">Experiencias y respuestas de las personas frente a las condiciones del espacio.</p>
+      <div class="variable">
+        <strong>Seguridad percibida</strong>
+        <p>Qué tan segura se siente una persona al caminar o cruzar.</p>
       </div>
-      <div class="big-number">75<span>%</span></div>
-      <p class="big-caption">
-        Tres de cada cuatro personas registradas
-        permanecieron en Plaza Sotomayor.
-      </p>
-      <div class="data-legend">
-        <div class="legend-item"><span class="legend-dot"></span> Permanecieron</div>
-        <div class="legend-item"><span class="legend-dot dark"></span> Continuaron caminando</div>
+      <div class="variable">
+        <strong>Comodidad</strong>
+        <p>Qué tan agradable y cómodo resulta el recorrido.</p>
       </div>
-      <div class="note">
-        El dato describe un comportamiento observado.
-        No mide percepción de seguridad, miedo o tranquilidad.
+      <div class="variable">
+        <strong>Dificultad</strong>
+        <p>Problemas o barreras que aparecen durante el desplazamiento.</p>
+      </div>
+      <div class="variable">
+        <strong>Conductas peatonales</strong>
+        <p>Esperar, detenerse, cambiar de ruta o evitar determinados cruces.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section section-dark">
-  <div class="section-label">03 / TERRITORIO</div>
-  <h2>La experiencia<br>tiene una ubicación.</h2>
-  <p class="description">
-    Los registros pueden vincularse con los espacios
-    específicos donde ocurren. La cartografía permitirá
-    reconocer concentraciones, recorridos y condiciones
-    del entorno.
-  </p>
-
-  <div class="map-concept">
-    <div class="map-lines"></div>
-    <div class="map-point one"></div>
-    <div class="map-point two"></div>
-    <div class="map-point three"></div>
-    <div class="map-point four"></div>
-    <div class="map-warning">ESQUEMA GRÁFICO / NO ES CARTOGRAFÍA REAL</div>
-    <div class="map-caption">
-      ESPACIO RESERVADO PARA EL MAPA DE OBSERVACIONES<br>
-      BARRIO PUERTO / VALPARAÍSO
+<section class="section" id="metodo">
+  <div class="section-head">
+    <div class="section-number mono">03 / METODOLOGÍA</div>
+    <h2>Observar. Preguntar. Relacionar.</h2>
+  </div>
+  <div class="method-grid">
+    <div class="method">
+      <div class="num mono">01</div>
+      <h3>Seleccionar</h3>
+      <p>Definir recorridos y sectores comparables en ambas ciudades, considerando tipos de calles y cruces.</p>
+    </div>
+    <div class="method">
+      <div class="num mono">02</div>
+      <h3>Observar</h3>
+      <p>Registrar veredas, cruces, semáforos e intersecciones con una misma pauta de observación.</p>
+    </div>
+    <div class="method">
+      <div class="num mono">03</div>
+      <h3>Consultar</h3>
+      <p>Aplicar las mismas preguntas y escalas para conocer la percepción de las personas.</p>
+    </div>
+    <div class="method">
+      <div class="num mono">04</div>
+      <h3>Relacionar</h3>
+      <p>Contrastar las condiciones físicas con las respuestas y conductas registradas.</p>
     </div>
   </div>
+  <div class="comparison">
+    <div class="city">
+      <div class="mono">ÁREA DE ESTUDIO / CHILE</div>
+      <h3>Barrio Puerto<br>Valparaíso</h3>
+      <p>Observación de recorridos, cruces y condiciones de infraestructura peatonal en el sector.</p>
+      <div class="mono">01 / VALPARAÍSO</div>
+    </div>
+    <div class="city">
+      <div class="mono">ÁREA DE ESTUDIO / ARGENTINA</div>
+      <h3>Buenos<br>Aires</h3>
+      <p>Aplicación del mismo instrumento para construir una comparación bajo criterios equivalentes.</p>
+      <div class="mono">02 / BUENOS AIRES</div>
+    </div>
+  </div>
+  <p class="small" style="margin-top:25px">La comparación requiere mantener equivalentes las preguntas, escalas, criterios de observación y franjas horarias. Los tamaños de muestra y las limitaciones del levantamiento deben quedar documentados.</p>
 </section>
 
 <section class="section">
-  <div class="section-label">04 / VARIABLES DEL ENTORNO</div>
-  <h2>¿Qué condiciones<br>construyen la experiencia?</h2>
-  <p class="description">
-    Selecciona una variable para explorar qué aspectos
-    pueden observarse y qué registros permitirían
-    estudiarla.
-  </p>
-
-  <div class="variables">
-    <button class="variable active" data-variable="light">
-      <small>VARIABLE 01</small>
-      <h3>Iluminación</h3>
-      <p>Distribución de luz y reconocimiento del entorno.</p>
-    </button>
-    <button class="variable" data-variable="visibility">
-      <small>VARIABLE 02</small>
-      <h3>Visibilidad</h3>
-      <p>Obstáculos, puntos ciegos y campo visual.</p>
-    </button>
-    <button class="variable" data-variable="activity">
-      <small>VARIABLE 03</small>
-      <h3>Actividad urbana</h3>
-      <p>Personas, comercios y movimiento en la calle.</p>
-    </button>
-    <button class="variable" data-variable="physical">
-      <small>VARIABLE 04</small>
-      <h3>Condición física</h3>
-      <p>Superficies, obstáculos y mantenimiento.</p>
-    </button>
+  <div class="section-head">
+    <div class="section-number mono">04 / TERRITORIO</div>
+    <h2>La experiencia ocurre en un lugar concreto.</h2>
   </div>
-
-  <div class="variable-output" id="variableOutput">
-    <h3>Iluminación</h3>
-    <p>
-      Observar la distribución de luz en los recorridos,
-      identificar zonas iluminadas y sectores con menor
-      visibilidad. Esta dimensión requiere registros
-      de terreno o respuestas de participantes.
-    </p>
+  <p class="lead">Cada registro debe poder relacionarse con un recorrido, un cruce o un tramo de calle.</p>
+  <div class="map-placeholder">
+    <div>
+      <strong class="mono">MAPA EN DESARROLLO</strong>
+      <p class="small">Esta sección incorporará la localización de los puntos de observación y las encuestas cuando estén disponibles las coordenadas y los recorridos definitivos.</p>
+    </div>
   </div>
 </section>
 
-<section class="section density-section" id="campo">
-  <div class="section-label">05 / CAMPO DE DATOS</div>
-  <h2>Una experiencia<br>construida por unidades.</h2>
-
-  <div class="density-intro">
-    <p>
-      Cada unidad representa una persona registrada.
-      La composición reúne los veinte casos en un mismo
-      campo visual. Selecciona los filtros para observar
-      cómo se distribuyen los grupos.
-    </p>
-    <div class="density-controls">
-      <button class="active" data-density="all">TODOS</button>
-      <button data-density="stayed">PERMANENCIA</button>
-      <button data-density="walked">DESPLAZAMIENTO</button>
-    </div>
+<section class="section data-section" id="datos">
+  <div class="section-head">
+    <div class="section-number mono">05 / VISUALIZACIÓN</div>
+    <h2>Cada unidad representa una experiencia.</h2>
   </div>
-
-  <div class="density-layout">
-    <div class="density-field">
-      <div class="density-meta">
-        <span>PLAZA SOTOMAYOR</span>
-        <span>20 UNIDADES / 10 MIN</span>
-      </div>
-      <div class="density-grid" id="densityGrid"></div>
-      <div class="density-footer">
-        <span>01 UNIDAD = 01 PERSONA</span>
-        <span>REGISTRO DE OBSERVACIÓN</span>
-      </div>
-    </div>
-
-    <aside class="density-sidebar">
-      <div class="mono">LECTURA DEL CAMPO</div>
-      <h3 id="densityTitle">20 personas registradas</h3>
-      <p id="densityDescription">
-        La composición muestra los dos comportamientos
-        observados durante el registro.
-        Selecciona una unidad para consultar su categoría.
-      </p>
-      <div class="unit-info">
-        <div class="mono">UNIDAD SELECCIONADA</div>
-        <strong id="unitNumber">--</strong>
-        <p id="unitCategory">Selecciona un elemento del campo.</p>
-      </div>
-    </aside>
+  <p class="lead">Un campo de registros individuales que permite explorar cómo se distribuyen las respuestas y observaciones entre ciudades y dimensiones.</p>
+  <div class="data-toolbar">
+    <label class="mono" for="cityFilter">Ciudad</label>
+    <select id="cityFilter">
+      <option value="all">Todas</option>
+      <option value="valparaiso">Valparaíso</option>
+      <option value="buenosaires">Buenos Aires</option>
+    </select>
+    <label class="mono" for="typeFilter">Registro</label>
+    <select id="typeFilter">
+      <option value="all">Todos</option>
+      <option value="stay">Permanencia</option>
+      <option value="walk">Desplazamiento</option>
+    </select>
+    <div class="data-status mono" id="count">20 UNIDADES DEMOSTRATIVAS</div>
   </div>
-
-  <div class="density-summary">
-    <div class="summary-cell">
-      <small>Total observado</small>
-      <strong>20</strong>
-    </div>
-    <div class="summary-cell">
-      <small>Permanecieron</small>
-      <strong class="orange">15</strong>
-    </div>
-    <div class="summary-cell">
-      <small>Continuaron</small>
-      <strong>05</strong>
-    </div>
+  <div class="data-field" id="dataField" aria-label="Visualización de unidades demostrativas"></div>
+  <div class="legend">
+    <span><i class="swatch"></i> Permanencia</span>
+    <span><i class="swatch dark"></i> Desplazamiento</span>
+    <span class="mono">Unidades de demostración</span>
   </div>
-
-  <div class="note">
-    Esta composición utiliza exclusivamente las dos categorías
-    registradas en la observación. No representa respuestas
-    emocionales ni atributos personales de los peatones.
-    La posición de las unidades en la cuadrícula es visual
-    y no corresponde a coordenadas espaciales.
+  <div class="data-detail" id="dataDetail">
+    <span class="mono kicker">Explorar registro</span><br>
+    Selecciona una unidad para ver su información.
   </div>
+  <p class="small">Importante: las unidades visibles son demostrativas y sirven para probar la interacción. No representan resultados de encuestas ni observaciones reales. La visualización deberá conectarse al conjunto de datos validado para mostrar resultados de la investigación.</p>
 </section>
 
-<section class="section final">
-  <div class="section-label">06 / SIGUIENTE CAPA</div>
-  <h2>La calle se recorre.<br><span>También se siente.</span></h2>
-  <p>
-    El siguiente nivel de esta investigación será incorporar
-    las respuestas reales de los peatones, relacionarlas con
-    las condiciones urbanas y construir una lectura conjunta
-    de la percepción de seguridad.
-  </p>
+<section class="section">
+  <div class="section-head">
+    <div class="section-number mono">06 / PROPÓSITO</div>
+    <h2>Del espacio construido a la experiencia vivida.</h2>
+  </div>
+  <p class="lead">Comprender la calle desde quien la camina permite reconocer que la infraestructura no es únicamente un soporte para desplazarse: también condiciona las posibilidades, decisiones y sensaciones que aparecen durante el recorrido.</p>
 </section>
 
+<section class="section closing">
+  <div class="mono">SENTIR LA CALLE / INVESTIGACIÓN PEATONAL</div>
+  <h2>CAMINAR<br>ES TAMBIÉN<br><span style="color:var(--paper)">SENTIR.</span></h2>
+  <div class="mono">VALPARAÍSO / BUENOS AIRES / 2026</div>
+</section>
 </main>
 
 <footer>
-  <span>SENTIR LA CALLE / 2026</span>
-  <span>PERCEPCIÓN PEATONAL / EAD PUCV</span>
+  <span class="mono">SENTIR LA CALLE</span>
+  <span class="mono">Investigación sobre experiencia peatonal</span>
+  <span class="mono">2026</span>
 </footer>
 
 <script>
-const FRAME_PATH = "caminar_frames/frame-";
-const TOTAL_FRAMES = 53;
-const FRAME_DURATION = 120;
-
-let frames = [];
-let currentFrame = 1;
-let animationTimer;
-
-function preloadFrames() {
-  const promises = [];
-
-  for (let i = 1; i <= TOTAL_FRAMES; i++) {
-    const image = new Image();
-    image.src = FRAME_PATH + String(i).padStart(2, "0") + ".webp";
-    frames.push(image);
-
-    promises.push(new Promise(resolve => {
-      image.onload = resolve;
-      image.onerror = resolve;
-    }));
-  }
-
-  return Promise.all(promises);
-}
-
-function showFrame(index) {
-  const image = frames[index - 1];
-
-  if (image && image.complete && image.naturalWidth > 0) {
-    document.getElementById("animationFrame").src = image.src;
-  }
-}
-
-function startAnimation() {
-  showFrame(1);
-
-  animationTimer = setInterval(() => {
-    currentFrame++;
-
-    if (currentFrame > TOTAL_FRAMES) {
-      skipAnimation();
-      return;
-    }
-
-    showFrame(currentFrame);
-  }, FRAME_DURATION);
-}
-
-function skipAnimation() {
-  clearInterval(animationTimer);
-  document.getElementById("intro").style.display = "none";
-}
-
-preloadFrames().then(startAnimation);
-
-document.addEventListener("keydown", event => {
-  if (event.key === "Escape") skipAnimation();
-});
-
-const densityGrid = document.getElementById("densityGrid");
-const records = Array.from({length:20}, (_,i) => ({
-  id:i+1,
-  category:i<15 ? "stayed" : "walked"
+const records = Array.from({ length: 20 }, (_, i) => ({
+  id: i + 1,
+  city: i < 10 ? "valparaiso" : "buenosaires",
+  type: i % 4 === 0 || i % 4 === 1 ? "stay" : "walk",
+  source: "Demostrativo",
+  infrastructure: ["Vereda", "Paso de cebra", "Semáforo", "Intersección"][i % 4]
 }));
 
-let selectedUnit = null;
-let activeDensity = "all";
+const field = document.getElementById("dataField");
+const cityFilter = document.getElementById("cityFilter");
+const typeFilter = document.getElementById("typeFilter");
+const count = document.getElementById("count");
+const detail = document.getElementById("dataDetail");
 
-function renderDensity() {
-  densityGrid.innerHTML = "";
+function render() {
+  const city = cityFilter.value;
+  const type = typeFilter.value;
 
-  records.forEach(record => {
+  const filtered = records.filter(record =>
+    (city === "all" || record.city === city) &&
+    (type === "all" || record.type === type)
+  );
+
+  field.innerHTML = "";
+
+  filtered.forEach(record => {
     const unit = document.createElement("button");
-    unit.className = "unit";
+    unit.className = "unit demo " + (record.type === "walk" ? "walk" : "");
     unit.type = "button";
-    unit.setAttribute("aria-label", `Unidad ${record.id}: ${record.category === "stayed" ? "permaneció" : "continuó caminando"}`);
-
-    if (record.category === "walked") unit.classList.add("walked");
-    if (activeDensity !== "all" && activeDensity !== record.category) {
-      unit.classList.add("filtered-out");
-    }
-    if (selectedUnit === record.id) unit.classList.add("selected");
-
+    unit.setAttribute("aria-label", "Registro demostrativo " + record.id);
+    unit.title = "Registro demostrativo " + record.id;
     unit.addEventListener("click", () => {
-      selectedUnit = record.id;
-      updateSelectedRecord(record);
-      renderDensity();
+      const cityName = record.city === "valparaiso" ? "Barrio Puerto, Valparaíso" : "Buenos Aires";
+      const typeName = record.type === "stay" ? "Permanencia" : "Desplazamiento";
+      detail.innerHTML = `
+        <span class="mono kicker">REGISTRO DEMOSTRATIVO / ${String(record.id).padStart(2, "0")}</span><br>
+        <strong>${cityName}</strong><br>
+        Tipo: ${typeName}<br>
+        Dimensión asociada: ${record.infrastructure}<br>
+        <span class="small">Este registro es ficticio y solo permite probar la interacción.</span>
+      `;
     });
-
-    densityGrid.appendChild(unit);
+    field.appendChild(unit);
   });
-}
 
-function updateSelectedRecord(record) {
-  document.getElementById("unitNumber").textContent =
-    String(record.id).padStart(2,"0");
-
-  document.getElementById("unitCategory").textContent =
-    record.category === "stayed"
-      ? "Permaneció en Plaza Sotomayor."
-      : "Continuó caminando.";
-
-  document.getElementById("densityTitle").textContent =
-    record.category === "stayed"
-      ? "Unidad de permanencia"
-      : "Unidad de desplazamiento";
-
-  document.getElementById("densityDescription").textContent =
-    "Esta unidad pertenece al grupo de personas que " +
-    (record.category === "stayed"
-      ? "permanecieron en el espacio durante el registro."
-      : "continuaron caminando durante el registro.");
-}
-
-document.querySelectorAll("[data-density]").forEach(button => {
-  button.addEventListener("click", () => {
-    document.querySelectorAll("[data-density]").forEach(b => b.classList.remove("active"));
-    button.classList.add("active");
-
-    activeDensity = button.dataset.density;
-
-    const count = activeDensity === "all" ? 20 :
-      activeDensity === "stayed" ? 15 : 5;
-
-    document.getElementById("densityTitle").textContent =
-      activeDensity === "all" ? "20 personas registradas" :
-      activeDensity === "stayed" ? "15 personas permanecieron" :
-      "5 personas continuaron";
-
-    document.getElementById("densityDescription").textContent =
-      activeDensity === "all"
-      ? "La composición muestra los dos comportamientos observados durante el registro."
-      : activeDensity === "stayed"
-      ? "Se destacan las 15 unidades correspondientes a las personas que permanecieron."
-      : "Se destacan las 5 unidades correspondientes a las personas que continuaron caminando.";
-
-    renderDensity();
-  });
-});
-
-const variableData = {
-  light:{
-    title:"Iluminación",
-    text:"Observar la distribución de luz en los recorridos, identificar zonas iluminadas y sectores con menor visibilidad. Esta dimensión requiere registros de terreno o respuestas de participantes."
-  },
-  visibility:{
-    title:"Visibilidad",
-    text:"Identificar obstáculos visuales, puntos ciegos, cierres y condiciones que dificulten reconocer lo que ocurre alrededor. Los registros deben vincularse con lugares concretos."
-  },
-  activity:{
-    title:"Actividad urbana",
-    text:"Observar la presencia de personas, comercios, tránsito y actividad en distintos momentos del día. Los horarios y las condiciones de observación deben quedar registrados."
-  },
-  physical:{
-    title:"Condición física",
-    text:"Registrar pavimentos, desniveles, obstáculos, limpieza y mantenimiento. Estas condiciones permiten describir el entorno físico del recorrido."
+  count.textContent = filtered.length + " UNIDADES DEMOSTRATIVAS";
+  if (!filtered.length) {
+    field.innerHTML = "<p class='small'>No hay unidades para estos filtros.</p>";
   }
-};
+}
 
-document.querySelectorAll("[data-variable]").forEach(button => {
-  button.addEventListener("click", () => {
-    document.querySelectorAll("[data-variable]").forEach(b => b.classList.remove("active"));
-    button.classList.add("active");
-
-    const data = variableData[button.dataset.variable];
-
-    document.getElementById("variableOutput").innerHTML =
-      `<h3>${data.title}</h3><p>${data.text}</p>`;
-  });
-});
-
-renderDensity();
-
-const progressBar = document.getElementById("progressBar");
-
-window.addEventListener("scroll", () => {
-  const total = document.documentElement.scrollHeight - window.innerHeight;
-  const progress = total > 0 ? window.scrollY / total * 100 : 0;
-  progressBar.style.width = progress + "%";
-});
+cityFilter.addEventListener("change", render);
+typeFilter.addEventListener("change", render);
+render();
 </script>
-
 </body>
 </html>
