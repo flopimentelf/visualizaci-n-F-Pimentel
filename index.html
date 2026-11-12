@@ -8,30 +8,43 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
 <style>
 :root {
-  --paper: #F4F2ED;
-  --ink: #202020;
-  --orange: #F0642B;
-  --light-orange: #F5A17E;
-  --gray: #A8A49D;
-  --line: #D6D2CA;
+  --paper: #FFFFFF;
+  --ink: #000000;
+  --orange: #000000;
+  --light-orange: #000000;
+  --gray: #000000;
+  --line: #000000;
   --white: #FFFFFF;
 }
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   background: var(--paper);
   color: var(--ink);
   font-family: 'Montserrat', sans-serif;
 }
-button, select { font: inherit; }
+
+button, select {
+  font: inherit;
+}
+
 .mono {
   font-family: 'DM Mono', monospace;
   text-transform: uppercase;
   letter-spacing: .04em;
 }
+
 header {
   padding: 22px 5vw;
   display: flex;
@@ -40,12 +53,21 @@ header {
   border-bottom: 1px solid var(--line);
   font-size: 10px;
 }
-header nav { display: flex; gap: 24px; }
+
+header nav {
+  display: flex;
+  gap: 24px;
+}
+
 header a {
   color: var(--ink);
   text-decoration: none;
 }
-header a:hover { color: var(--orange); }
+
+header a:hover {
+  text-decoration: underline;
+}
+
 .hero {
   min-height: 88vh;
   padding: 8vh 5vw 5vh;
@@ -55,168 +77,206 @@ header a:hover { color: var(--orange); }
   position: relative;
   overflow: hidden;
 }
+
 .kicker {
   font-size: 11px;
-  color: var(--orange);
 }
+
 .hero h1 {
   font-size: clamp(65px, 13.5vw, 190px);
-  line-height: .82;
-  letter-spacing: -.095em;
+  line-height: .88;
+  letter-spacing: -.075em;
   font-weight: 800;
   margin: 65px 0 30px;
   max-width: 1100px;
 }
-.hero h1 span { color: var(--orange); }
+
+.hero h1 span {
+  color: #FFFFFF;
+  -webkit-text-stroke: 2px #000000;
+}
+
 .hero-bottom {
   display: flex;
   justify-content: space-between;
   align-items: end;
   gap: 30px;
 }
+
 .hero-bottom p {
   max-width: 470px;
   font-size: clamp(15px, 1.5vw, 20px);
   line-height: 1.55;
 }
+
 .scroll {
   font-size: 10px;
-  color: var(--gray);
 }
+
 .section {
   padding: 110px 5vw;
   border-top: 1px solid var(--line);
 }
+
 .section-head {
   display: grid;
   grid-template-columns: 1fr 2fr;
   gap: 30px;
   margin-bottom: 65px;
 }
+
 .section-number {
   font-size: 11px;
-  color: var(--orange);
 }
+
 .section h2 {
   font-size: clamp(35px, 6vw, 78px);
-  line-height: .98;
-  letter-spacing: -.07em;
+  line-height: 1;
+  letter-spacing: -.055em;
   margin: 0;
   font-weight: 700;
 }
+
 .lead {
   font-size: clamp(19px, 2.3vw, 30px);
   line-height: 1.4;
   max-width: 900px;
-  letter-spacing: -.035em;
+  letter-spacing: -.025em;
 }
-.small {
-  font-size: 12px;
-  line-height: 1.7;
-  color: #68645E;
-}
+
 .question-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8vw;
   align-items: start;
 }
+
 .question-mark {
   font-size: clamp(100px, 18vw, 250px);
-  color: var(--orange);
   line-height: .8;
   font-weight: 800;
 }
+
 .question-text {
   font-size: clamp(24px, 3.2vw, 43px);
-  line-height: 1.25;
-  letter-spacing: -.055em;
+  line-height: 1.3;
+  letter-spacing: -.035em;
 }
+
+.small {
+  font-size: 12px;
+  line-height: 1.7;
+}
+
 .columns {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1px;
-  background: var(--line);
-  border: 1px solid var(--line);
+  background: var(--ink);
+  border: 1px solid var(--ink);
 }
+
 .column {
   background: var(--paper);
   padding: 35px;
 }
+
 .column h3 {
   font-size: 24px;
-  margin: 0 0 12px;
-  letter-spacing: -.05em;
+  margin: 15px 0 12px;
+  letter-spacing: -.04em;
 }
+
 .column .tag {
-  color: var(--orange);
   font-size: 10px;
 }
+
 .variable {
   padding: 22px 0;
   border-top: 1px solid var(--line);
 }
+
 .variable strong {
   display: block;
   font-size: 16px;
   margin-bottom: 7px;
 }
+
 .variable p {
   font-size: 12px;
   line-height: 1.6;
-  color: #68645E;
   margin: 0;
 }
+
 .method-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 30px;
 }
+
 .method {
-  border-top: 3px solid var(--orange);
+  border-top: 3px solid var(--ink);
   padding-top: 18px;
 }
+
 .method .num {
-  color: var(--orange);
   font-size: 12px;
 }
+
 .method h3 {
   font-size: 19px;
-  letter-spacing: -.04em;
+  letter-spacing: -.03em;
 }
+
 .method p {
   font-size: 12px;
   line-height: 1.7;
-  color: #68645E;
 }
+
 .comparison {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 15px;
   margin-top: 50px;
 }
+
 .city {
   min-height: 300px;
   padding: 30px;
-  background: var(--ink);
-  color: var(--paper);
+  background: #000000;
+  color: #FFFFFF;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
-.city:nth-child(2) { background: var(--orange); color: var(--ink); }
+
+.city:nth-child(2) {
+  background: #FFFFFF;
+  color: #000000;
+  border: 1px solid #000000;
+}
+
 .city h3 {
   font-size: clamp(32px, 4vw, 55px);
-  letter-spacing: -.07em;
+  letter-spacing: -.055em;
+  line-height: 1;
   margin: 0;
 }
+
 .city p {
   font-size: 12px;
   line-height: 1.7;
   max-width: 370px;
 }
-.city .mono { font-size: 10px; }
-.data-section { background: #EAE7E0; }
+
+.city .mono {
+  font-size: 10px;
+}
+
+.data-section {
+  background: #FFFFFF;
+}
+
 .data-toolbar {
   display: flex;
   flex-wrap: wrap;
@@ -224,51 +284,62 @@ header a:hover { color: var(--orange); }
   gap: 12px;
   margin-bottom: 25px;
 }
+
 .data-toolbar label {
   font-size: 10px;
-  color: #68645E;
 }
+
 select {
-  background: transparent;
-  border: 1px solid var(--ink);
+  background: #FFFFFF;
+  border: 1px solid #000000;
   padding: 11px 14px;
-  color: var(--ink);
+  color: #000000;
   font-size: 11px;
   border-radius: 0;
 }
+
 .data-status {
   margin-left: auto;
-  color: var(--orange);
   font-size: 10px;
 }
+
 .data-field {
   display: grid;
   grid-template-columns: repeat(20, minmax(0, 1fr));
   gap: 5px;
   min-height: 240px;
   padding: 20px;
-  border: 1px solid var(--line);
-  background: var(--paper);
+  border: 1px solid #000000;
+  background: #FFFFFF;
 }
+
 .unit {
   aspect-ratio: 1;
-  background: var(--orange);
-  border: 0;
+  background: #000000;
+  border: 1px solid #000000;
   cursor: pointer;
-  transition: transform .2s, opacity .2s;
+  transition: transform .2s, background .2s;
   position: relative;
 }
+
+.unit.walk {
+  background: #FFFFFF;
+}
+
 .unit:hover {
   transform: scale(1.25);
   z-index: 2;
 }
-.unit.walk { background: var(--ink); }
-.unit.demo { opacity: .68; }
-.unit.hidden { display: none; }
-.unit:focus-visible {
-  outline: 3px solid var(--ink);
-  outline-offset: 2px;
+
+.unit.hidden {
+  display: none;
 }
+
+.unit:focus-visible {
+  outline: 2px solid #000000;
+  outline-offset: 3px;
+}
+
 .legend {
   display: flex;
   flex-wrap: wrap;
@@ -276,24 +347,36 @@ select {
   margin-top: 20px;
   font-size: 10px;
 }
-.legend span { display: flex; align-items: center; gap: 8px; }
+
+.legend span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .swatch {
   width: 11px;
   height: 11px;
   display: inline-block;
-  background: var(--orange);
+  background: #000000;
 }
-.swatch.dark { background: var(--ink); }
+
+.swatch.dark {
+  background: #FFFFFF;
+  border: 1px solid #000000;
+}
+
 .data-detail {
   margin-top: 20px;
   padding: 20px;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid #000000;
   min-height: 85px;
   font-size: 12px;
   line-height: 1.7;
 }
+
 .map-placeholder {
-  border: 1px solid var(--line);
+  border: 1px solid #000000;
   min-height: 280px;
   display: flex;
   align-items: center;
@@ -301,68 +384,111 @@ select {
   text-align: center;
   padding: 30px;
   background:
-    linear-gradient(90deg, transparent 49.8%, var(--line) 50%, transparent 50.2%),
-    linear-gradient(transparent 49.8%, var(--line) 50%, transparent 50.2%);
+    linear-gradient(90deg, transparent 49.8%, #000000 50%, transparent 50.2%),
+    linear-gradient(transparent 49.8%, #000000 50%, transparent 50.2%);
   background-size: 70px 70px;
 }
+
 .map-placeholder div {
-  background: var(--paper);
+  background: #FFFFFF;
   padding: 25px;
   max-width: 420px;
 }
+
 .map-placeholder strong {
-  color: var(--orange);
   font-size: 12px;
 }
+
 .closing {
-  background: var(--orange);
+  background: #000000;
+  color: #FFFFFF;
   min-height: 65vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
+
 .closing h2 {
   font-size: clamp(60px, 12vw, 160px);
-  line-height: .83;
-  letter-spacing: -.09em;
+  line-height: .9;
+  letter-spacing: -.075em;
   max-width: 1100px;
 }
+
+.closing h2 span {
+  color: #000000;
+  -webkit-text-stroke: 1.5px #FFFFFF;
+}
+
 footer {
   padding: 25px 5vw;
   display: flex;
   justify-content: space-between;
   gap: 20px;
   font-size: 10px;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid #000000;
 }
-.sequence {
-  width: 100%;
-  max-height: 480px;
-  object-fit: contain;
-  display: block;
-  margin: 40px auto 0;
-}
+
 @media(max-width: 700px) {
-  header { align-items: flex-start; }
-  header nav { gap: 10px; flex-wrap: wrap; justify-content: end; }
-  .hero { min-height: 75vh; }
-  .hero-bottom, .section-head, .question-layout {
+  header {
+    align-items: flex-start;
+  }
+
+  header nav {
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: end;
+  }
+
+  .hero {
+    min-height: 75vh;
+  }
+
+  .hero-bottom,
+  .section-head,
+  .question-layout {
     grid-template-columns: 1fr;
     display: grid;
   }
-  .columns, .comparison { grid-template-columns: 1fr; }
-  .method-grid { grid-template-columns: 1fr 1fr; }
-  .data-field { grid-template-columns: repeat(10, minmax(0, 1fr)); }
-  .section { padding: 75px 6vw; }
-  .column { padding: 25px; }
-  footer { flex-direction: column; }
+
+  .columns,
+  .comparison {
+    grid-template-columns: 1fr;
+  }
+
+  .method-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .data-field {
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+  }
+
+  .section {
+    padding: 75px 6vw;
+  }
+
+  .column {
+    padding: 25px;
+  }
+
+  footer {
+    flex-direction: column;
+  }
 }
+
 @media(max-width: 420px) {
-  .method-grid { grid-template-columns: 1fr; }
-  .data-field { grid-template-columns: repeat(8, minmax(0, 1fr)); }
+  .method-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .data-field {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
 }
 </style>
 </head>
+
 <body>
 
 <header>
@@ -376,10 +502,13 @@ footer {
 </header>
 
 <main>
+
 <section class="hero">
   <div class="kicker mono">Investigación urbana / Experiencia peatonal / 2026</div>
+
   <div>
     <h1>SENTIR<br>LA <span>CALLE.</span></h1>
+
     <div class="hero-bottom">
       <p>Una investigación sobre cómo las condiciones de la infraestructura peatonal se relacionan con la percepción de seguridad y comodidad al caminar.</p>
       <div class="scroll mono">DESPLAZARSE PARA EXPLORAR ↓</div>
@@ -392,8 +521,10 @@ footer {
     <div class="section-number mono">01 / PUNTO DE PARTIDA</div>
     <h2>La calle no solo se recorre. También se percibe.</h2>
   </div>
+
   <div class="question-layout">
     <div class="question-mark">?</div>
+
     <div>
       <div class="mono kicker">Pregunta de investigación</div>
       <p class="question-text">¿Cómo influye la calidad de la infraestructura peatonal en la percepción de seguridad y comodidad de las personas al caminar?</p>
@@ -407,44 +538,54 @@ footer {
     <div class="section-number mono">02 / DIMENSIONES</div>
     <h2>Dos dimensiones. Una experiencia.</h2>
   </div>
+
   <div class="columns">
     <div class="column">
       <div class="tag mono">01 / CONDICIONES OBSERVABLES</div>
       <h3>Infraestructura física</h3>
       <p class="small">Características materiales y espaciales que pueden observarse y registrarse en terreno.</p>
+
       <div class="variable">
         <strong>Veredas</strong>
         <p>Anchura, estado del pavimento, obstáculos, continuidad y accesibilidad.</p>
       </div>
+
       <div class="variable">
         <strong>Pasos de cebra</strong>
         <p>Demarcación, visibilidad, ubicación y continuidad del cruce.</p>
       </div>
+
       <div class="variable">
         <strong>Semáforos</strong>
         <p>Señal peatonal, tiempo de espera, tiempo de cruce y visibilidad.</p>
       </div>
+
       <div class="variable">
         <strong>Intersecciones</strong>
         <p>Distancia de cruce, giros vehiculares y exposición al tránsito.</p>
       </div>
     </div>
+
     <div class="column">
       <div class="tag mono">02 / EXPERIENCIA SUBJETIVA</div>
       <h3>Percepción peatonal</h3>
       <p class="small">Experiencias y respuestas de las personas frente a las condiciones del espacio.</p>
+
       <div class="variable">
         <strong>Seguridad percibida</strong>
         <p>Qué tan segura se siente una persona al caminar o cruzar.</p>
       </div>
+
       <div class="variable">
         <strong>Comodidad</strong>
         <p>Qué tan agradable y cómodo resulta el recorrido.</p>
       </div>
+
       <div class="variable">
         <strong>Dificultad</strong>
         <p>Problemas o barreras que aparecen durante el desplazamiento.</p>
       </div>
+
       <div class="variable">
         <strong>Conductas peatonales</strong>
         <p>Esperar, detenerse, cambiar de ruta o evitar determinados cruces.</p>
@@ -458,28 +599,33 @@ footer {
     <div class="section-number mono">03 / METODOLOGÍA</div>
     <h2>Observar. Preguntar. Relacionar.</h2>
   </div>
+
   <div class="method-grid">
     <div class="method">
       <div class="num mono">01</div>
       <h3>Seleccionar</h3>
       <p>Definir recorridos y sectores comparables en ambas ciudades, considerando tipos de calles y cruces.</p>
     </div>
+
     <div class="method">
       <div class="num mono">02</div>
       <h3>Observar</h3>
       <p>Registrar veredas, cruces, semáforos e intersecciones con una misma pauta de observación.</p>
     </div>
+
     <div class="method">
       <div class="num mono">03</div>
       <h3>Consultar</h3>
       <p>Aplicar las mismas preguntas y escalas para conocer la percepción de las personas.</p>
     </div>
+
     <div class="method">
       <div class="num mono">04</div>
       <h3>Relacionar</h3>
       <p>Contrastar las condiciones físicas con las respuestas y conductas registradas.</p>
     </div>
   </div>
+
   <div class="comparison">
     <div class="city">
       <div class="mono">ÁREA DE ESTUDIO / CHILE</div>
@@ -487,6 +633,7 @@ footer {
       <p>Observación de recorridos, cruces y condiciones de infraestructura peatonal en el sector.</p>
       <div class="mono">01 / VALPARAÍSO</div>
     </div>
+
     <div class="city">
       <div class="mono">ÁREA DE ESTUDIO / ARGENTINA</div>
       <h3>Buenos<br>Aires</h3>
@@ -494,6 +641,7 @@ footer {
       <div class="mono">02 / BUENOS AIRES</div>
     </div>
   </div>
+
   <p class="small" style="margin-top:25px">La comparación requiere mantener equivalentes las preguntas, escalas, criterios de observación y franjas horarias. Los tamaños de muestra y las limitaciones del levantamiento deben quedar documentados.</p>
 </section>
 
@@ -502,7 +650,9 @@ footer {
     <div class="section-number mono">04 / TERRITORIO</div>
     <h2>La experiencia ocurre en un lugar concreto.</h2>
   </div>
+
   <p class="lead">Cada registro debe poder relacionarse con un recorrido, un cruce o un tramo de calle.</p>
+
   <div class="map-placeholder">
     <div>
       <strong class="mono">MAPA EN DESARROLLO</strong>
@@ -516,32 +666,42 @@ footer {
     <div class="section-number mono">05 / VISUALIZACIÓN</div>
     <h2>Cada unidad representa una experiencia.</h2>
   </div>
+
   <p class="lead">Un campo de registros individuales que permite explorar cómo se distribuyen las respuestas y observaciones entre ciudades y dimensiones.</p>
+
   <div class="data-toolbar">
     <label class="mono" for="cityFilter">Ciudad</label>
+
     <select id="cityFilter">
       <option value="all">Todas</option>
       <option value="valparaiso">Valparaíso</option>
       <option value="buenosaires">Buenos Aires</option>
     </select>
+
     <label class="mono" for="typeFilter">Registro</label>
+
     <select id="typeFilter">
       <option value="all">Todos</option>
       <option value="stay">Permanencia</option>
       <option value="walk">Desplazamiento</option>
     </select>
+
     <div class="data-status mono" id="count">20 UNIDADES DEMOSTRATIVAS</div>
   </div>
+
   <div class="data-field" id="dataField" aria-label="Visualización de unidades demostrativas"></div>
+
   <div class="legend">
     <span><i class="swatch"></i> Permanencia</span>
     <span><i class="swatch dark"></i> Desplazamiento</span>
     <span class="mono">Unidades de demostración</span>
   </div>
+
   <div class="data-detail" id="dataDetail">
     <span class="mono kicker">Explorar registro</span><br>
     Selecciona una unidad para ver su información.
   </div>
+
   <p class="small">Importante: las unidades visibles son demostrativas y sirven para probar la interacción. No representan resultados de encuestas ni observaciones reales. La visualización deberá conectarse al conjunto de datos validado para mostrar resultados de la investigación.</p>
 </section>
 
@@ -550,14 +710,16 @@ footer {
     <div class="section-number mono">06 / PROPÓSITO</div>
     <h2>Del espacio construido a la experiencia vivida.</h2>
   </div>
+
   <p class="lead">Comprender la calle desde quien la camina permite reconocer que la infraestructura no es únicamente un soporte para desplazarse: también condiciona las posibilidades, decisiones y sensaciones que aparecen durante el recorrido.</p>
 </section>
 
 <section class="section closing">
   <div class="mono">SENTIR LA CALLE / INVESTIGACIÓN PEATONAL</div>
-  <h2>CAMINAR<br>ES TAMBIÉN<br><span style="color:var(--paper)">SENTIR.</span></h2>
+  <h2>CAMINAR<br>ES TAMBIÉN<br><span>SENTIR.</span></h2>
   <div class="mono">VALPARAÍSO / BUENOS AIRES / 2026</div>
 </section>
+
 </main>
 
 <footer>
@@ -594,25 +756,35 @@ function render() {
 
   filtered.forEach(record => {
     const unit = document.createElement("button");
-    unit.className = "unit demo " + (record.type === "walk" ? "walk" : "");
+
+    unit.className = "unit " + (record.type === "walk" ? "walk" : "");
     unit.type = "button";
     unit.setAttribute("aria-label", "Registro demostrativo " + record.id);
     unit.title = "Registro demostrativo " + record.id;
+
     unit.addEventListener("click", () => {
-      const cityName = record.city === "valparaiso" ? "Barrio Puerto, Valparaíso" : "Buenos Aires";
-      const typeName = record.type === "stay" ? "Permanencia" : "Desplazamiento";
+      const cityName = record.city === "valparaiso"
+        ? "Barrio Puerto, Valparaíso"
+        : "Buenos Aires";
+
+      const typeName = record.type === "stay"
+        ? "Permanencia"
+        : "Desplazamiento";
+
       detail.innerHTML = `
         <span class="mono kicker">REGISTRO DEMOSTRATIVO / ${String(record.id).padStart(2, "0")}</span><br>
         <strong>${cityName}</strong><br>
         Tipo: ${typeName}<br>
         Dimensión asociada: ${record.infrastructure}<br>
-        <span class="small">Este registro es ficticio y solo permite probar la interacción.</span>
+        <span>Este registro es ficticio y solo permite probar la interacción.</span>
       `;
     });
+
     field.appendChild(unit);
   });
 
   count.textContent = filtered.length + " UNIDADES DEMOSTRATIVAS";
+
   if (!filtered.length) {
     field.innerHTML = "<p class='small'>No hay unidades para estos filtros.</p>";
   }
@@ -620,7 +792,9 @@ function render() {
 
 cityFilter.addEventListener("change", render);
 typeFilter.addEventListener("change", render);
+
 render();
 </script>
+
 </body>
 </html>
