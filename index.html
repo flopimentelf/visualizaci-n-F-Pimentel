@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SENTIR LA CALLE | Percepción peatonal</title>
+<title>SENTIR LA CALLE | Experiencia peatonal</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -13,11 +13,10 @@
 :root {
   --paper: #FFFFFF;
   --ink: #000000;
-  --orange: #000000;
-  --light-orange: #000000;
-  --gray: #000000;
+  --orange: #F0642B;
+  --gray: #777777;
   --line: #000000;
-  --white: #FFFFFF;
+  --soft: #F1F1F1;
 }
 
 * {
@@ -50,13 +49,18 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--ink);
   font-size: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #FFFFFF;
 }
 
 header nav {
   display: flex;
-  gap: 24px;
+  gap: 22px;
+  flex-wrap: wrap;
 }
 
 header a {
@@ -65,7 +69,7 @@ header a {
 }
 
 header a:hover {
-  text-decoration: underline;
+  color: var(--orange);
 }
 
 .hero {
@@ -74,12 +78,14 @@ header a:hover {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  position: relative;
-  overflow: hidden;
 }
 
 .kicker {
   font-size: 11px;
+}
+
+.orange {
+  color: var(--orange);
 }
 
 .hero h1 {
@@ -88,12 +94,10 @@ header a:hover {
   letter-spacing: -.075em;
   font-weight: 800;
   margin: 65px 0 30px;
-  max-width: 1100px;
 }
 
 .hero h1 span {
-  color: #FFFFFF;
-  -webkit-text-stroke: 2px #000000;
+  color: var(--orange);
 }
 
 .hero-bottom {
@@ -111,11 +115,12 @@ header a:hover {
 
 .scroll {
   font-size: 10px;
+  color: var(--gray);
 }
 
 .section {
   padding: 110px 5vw;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--ink);
 }
 
 .section-head {
@@ -127,6 +132,7 @@ header a:hover {
 
 .section-number {
   font-size: 11px;
+  color: var(--orange);
 }
 
 .section h2 {
@@ -153,6 +159,7 @@ header a:hover {
 
 .question-mark {
   font-size: clamp(100px, 18vw, 250px);
+  color: var(--orange);
   line-height: .8;
   font-weight: 800;
 }
@@ -166,7 +173,68 @@ header a:hover {
 .small {
   font-size: 12px;
   line-height: 1.7;
+  color: #555555;
 }
+
+/* SECUENCIA VECTORIAL */
+
+.sequence-section {
+  padding: 80px 5vw;
+  background: #000000;
+  color: #FFFFFF;
+  overflow: hidden;
+}
+
+.sequence-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: start;
+  margin-bottom: 30px;
+}
+
+.sequence-top .mono {
+  font-size: 10px;
+  color: var(--orange);
+}
+
+.sequence-title {
+  font-size: clamp(30px, 5vw, 65px);
+  letter-spacing: -.055em;
+  line-height: 1;
+  margin: 15px 0;
+}
+
+.sequence-stage {
+  min-height: 430px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  border-top: 1px solid #FFFFFF;
+  border-bottom: 1px solid #FFFFFF;
+}
+
+.sequence-stage img {
+  width: min(100%, 600px);
+  height: 420px;
+  object-fit: contain;
+  display: block;
+}
+
+.sequence-caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 18px;
+  font-size: 10px;
+}
+
+.sequence-caption span:last-child {
+  color: var(--orange);
+}
+
+/* DIMENSIONES */
 
 .columns {
   display: grid;
@@ -188,12 +256,13 @@ header a:hover {
 }
 
 .column .tag {
+  color: var(--orange);
   font-size: 10px;
 }
 
 .variable {
   padding: 22px 0;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--ink);
 }
 
 .variable strong {
@@ -205,8 +274,11 @@ header a:hover {
 .variable p {
   font-size: 12px;
   line-height: 1.6;
+  color: #555555;
   margin: 0;
 }
+
+/* METODOLOGÍA */
 
 .method-grid {
   display: grid;
@@ -215,11 +287,12 @@ header a:hover {
 }
 
 .method {
-  border-top: 3px solid var(--ink);
+  border-top: 3px solid var(--orange);
   padding-top: 18px;
 }
 
 .method .num {
+  color: var(--orange);
   font-size: 12px;
 }
 
@@ -231,6 +304,7 @@ header a:hover {
 .method p {
   font-size: 12px;
   line-height: 1.7;
+  color: #555555;
 }
 
 .comparison {
@@ -271,109 +345,10 @@ header a:hover {
 
 .city .mono {
   font-size: 10px;
+  color: var(--orange);
 }
 
-.data-section {
-  background: #FFFFFF;
-}
-
-.data-toolbar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 25px;
-}
-
-.data-toolbar label {
-  font-size: 10px;
-}
-
-select {
-  background: #FFFFFF;
-  border: 1px solid #000000;
-  padding: 11px 14px;
-  color: #000000;
-  font-size: 11px;
-  border-radius: 0;
-}
-
-.data-status {
-  margin-left: auto;
-  font-size: 10px;
-}
-
-.data-field {
-  display: grid;
-  grid-template-columns: repeat(20, minmax(0, 1fr));
-  gap: 5px;
-  min-height: 240px;
-  padding: 20px;
-  border: 1px solid #000000;
-  background: #FFFFFF;
-}
-
-.unit {
-  aspect-ratio: 1;
-  background: #000000;
-  border: 1px solid #000000;
-  cursor: pointer;
-  transition: transform .2s, background .2s;
-  position: relative;
-}
-
-.unit.walk {
-  background: #FFFFFF;
-}
-
-.unit:hover {
-  transform: scale(1.25);
-  z-index: 2;
-}
-
-.unit.hidden {
-  display: none;
-}
-
-.unit:focus-visible {
-  outline: 2px solid #000000;
-  outline-offset: 3px;
-}
-
-.legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 25px;
-  margin-top: 20px;
-  font-size: 10px;
-}
-
-.legend span {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.swatch {
-  width: 11px;
-  height: 11px;
-  display: inline-block;
-  background: #000000;
-}
-
-.swatch.dark {
-  background: #FFFFFF;
-  border: 1px solid #000000;
-}
-
-.data-detail {
-  margin-top: 20px;
-  padding: 20px;
-  border-top: 1px solid #000000;
-  min-height: 85px;
-  font-size: 12px;
-  line-height: 1.7;
-}
+/* MAPA */
 
 .map-placeholder {
   border: 1px solid #000000;
@@ -396,12 +371,243 @@ select {
 }
 
 .map-placeholder strong {
+  color: var(--orange);
   font-size: 12px;
 }
 
-.closing {
+/* CAMPO DE 50 VECTORES */
+
+.vector-section {
+  background: #FFFFFF;
+}
+
+.vector-intro {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 30px;
+  margin-bottom: 45px;
+}
+
+.vector-intro p {
+  max-width: 520px;
+}
+
+.vector-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(260px, .8fr);
+  gap: 45px;
+  align-items: start;
+}
+
+.vector-visual {
+  border: 1px solid #000000;
+  padding: 30px;
+  min-width: 0;
+}
+
+.vector-visual-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 28px;
+  font-size: 10px;
+}
+
+.vector-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: clamp(8px, 1.6vw, 18px);
+  align-items: center;
+}
+
+.person {
+  width: 100%;
+  aspect-ratio: .68;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #000000;
+  opacity: .95;
+  transition: color .25s, transform .25s, opacity .25s;
+}
+
+.person.active {
+  color: var(--orange);
+}
+
+.person svg {
+  width: 100%;
+  max-width: 43px;
+  height: 58px;
+  overflow: visible;
+}
+
+.person:hover {
+  transform: translateY(-5px) scale(1.08);
+}
+
+.vector-grid-note {
+  margin-top: 25px;
+  padding-top: 15px;
+  border-top: 1px solid #000000;
+  font-size: 10px;
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.vector-table-panel {
+  min-width: 0;
+}
+
+.vector-table-panel h3 {
+  font-size: 20px;
+  letter-spacing: -.04em;
+  margin: 0 0 8px;
+}
+
+.vector-table-panel > p {
+  font-size: 11px;
+  line-height: 1.7;
+  color: #555555;
+  margin-bottom: 25px;
+}
+
+.metric-list {
+  border-top: 1px solid #000000;
+}
+
+.metric-option {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid #000000;
+  background: #FFFFFF;
+  color: #000000;
+  padding: 17px 0;
+  text-align: left;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: center;
+}
+
+.metric-option:hover,
+.metric-option.selected {
+  color: var(--orange);
+}
+
+.metric-name {
+  font-size: 12px;
+  font-weight: 600;
+  display: block;
+}
+
+.metric-description {
+  display: block;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  margin-top: 6px;
+  color: #777777;
+  text-transform: uppercase;
+}
+
+.metric-value {
+  font-size: 23px;
+  font-weight: 800;
+  letter-spacing: -.04em;
+}
+
+.scale-title {
+  font-size: 10px;
+  margin: 30px 0 15px;
+}
+
+.scale-row {
+  display: grid;
+  grid-template-columns: 65px 1fr 35px;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+}
+
+.scale-track {
+  height: 8px;
+  background: #EEEEEE;
+  position: relative;
+}
+
+.scale-fill {
+  height: 100%;
+  background: var(--orange);
+}
+
+.scale-value {
+  text-align: right;
+}
+
+.vector-total {
+  margin-top: 30px;
+  padding: 20px;
   background: #000000;
   color: #FFFFFF;
+}
+
+.vector-total .number {
+  font-size: clamp(35px, 5vw, 58px);
+  font-weight: 800;
+  letter-spacing: -.06em;
+  color: var(--orange);
+}
+
+.vector-total p {
+  font-size: 10px;
+  line-height: 1.6;
+  margin: 5px 0 0;
+}
+
+.vector-source {
+  font-size: 10px;
+  line-height: 1.7;
+  color: #555555;
+  margin-top: 25px;
+}
+
+.vector-legend {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  margin-top: 18px;
+}
+
+.vector-legend span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  background: var(--orange);
+}
+
+.legend-dot.black {
+  background: #000000;
+}
+
+/* CIERRE */
+
+.closing {
+  background: var(--orange);
+  color: #000000;
   min-height: 65vh;
   display: flex;
   flex-direction: column;
@@ -416,8 +622,7 @@ select {
 }
 
 .closing h2 span {
-  color: #000000;
-  -webkit-text-stroke: 1.5px #FFFFFF;
+  color: #FFFFFF;
 }
 
 footer {
@@ -429,6 +634,20 @@ footer {
   border-top: 1px solid #000000;
 }
 
+@media(max-width: 850px) {
+  .vector-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .vector-intro {
+    display: block;
+  }
+
+  .vector-table-panel {
+    margin-top: 15px;
+  }
+}
+
 @media(max-width: 700px) {
   header {
     align-items: flex-start;
@@ -436,7 +655,6 @@ footer {
 
   header nav {
     gap: 10px;
-    flex-wrap: wrap;
     justify-content: end;
   }
 
@@ -460,16 +678,32 @@ footer {
     grid-template-columns: 1fr 1fr;
   }
 
-  .data-field {
-    grid-template-columns: repeat(10, minmax(0, 1fr));
-  }
-
   .section {
     padding: 75px 6vw;
   }
 
   .column {
     padding: 25px;
+  }
+
+  .sequence-stage {
+    min-height: 300px;
+  }
+
+  .sequence-stage img {
+    height: 300px;
+  }
+
+  .vector-visual {
+    padding: 15px;
+  }
+
+  .vector-grid {
+    gap: 8px;
+  }
+
+  .person svg {
+    height: 45px;
   }
 
   footer {
@@ -482,8 +716,30 @@ footer {
     grid-template-columns: 1fr;
   }
 
-  .data-field {
-    grid-template-columns: repeat(8, minmax(0, 1fr));
+  .sequence-caption {
+    flex-direction: column;
+  }
+
+  .vector-grid {
+    gap: 5px;
+  }
+
+  .person svg {
+    height: 38px;
+  }
+
+  .vector-visual-top {
+    font-size: 8px;
+  }
+}
+
+@media(prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *, *::before, *::after {
+    transition-duration: .01ms !important;
   }
 }
 </style>
@@ -497,7 +753,7 @@ footer {
     <a href="#investigacion">Investigación</a>
     <a href="#variables">Variables</a>
     <a href="#metodo">Método</a>
-    <a href="#datos">Datos</a>
+    <a href="#visualizacion">Datos</a>
   </nav>
 </header>
 
@@ -516,9 +772,33 @@ footer {
   </div>
 </section>
 
+<section class="sequence-section" id="secuencia">
+  <div class="sequence-top">
+    <div>
+      <div class="mono">01 / EL CUERPO EN MOVIMIENTO</div>
+      <h2 class="sequence-title">Caminar también<br>es una experiencia.</h2>
+    </div>
+    <div class="mono">SECUENCIA VECTORIAL / 53 FRAMES</div>
+  </div>
+
+  <div class="sequence-stage">
+    <img
+      id="walkingSequence"
+      src="caminar_frames/frame-01.webp"
+      alt="Secuencia vectorial de una persona caminando"
+      loading="eager"
+    >
+  </div>
+
+  <div class="sequence-caption mono">
+    <span>EL DESPLAZAMIENTO COMO EXPERIENCIA PEATONAL</span>
+    <span id="frameCounter">FRAME 01 / 53</span>
+  </div>
+</section>
+
 <section class="section" id="investigacion">
   <div class="section-head">
-    <div class="section-number mono">01 / PUNTO DE PARTIDA</div>
+    <div class="section-number mono">02 / PUNTO DE PARTIDA</div>
     <h2>La calle no solo se recorre. También se percibe.</h2>
   </div>
 
@@ -526,7 +806,7 @@ footer {
     <div class="question-mark">?</div>
 
     <div>
-      <div class="mono kicker">Pregunta de investigación</div>
+      <div class="mono kicker orange">Pregunta de investigación</div>
       <p class="question-text">¿Cómo influye la calidad de la infraestructura peatonal en la percepción de seguridad y comodidad de las personas al caminar?</p>
       <p class="small">La investigación busca comprender la relación entre las condiciones físicas del espacio y la experiencia de quienes lo transitan. No se presupone que una infraestructura deficiente produzca necesariamente una percepción negativa: esa relación debe observarse y contrastarse.</p>
     </div>
@@ -535,7 +815,7 @@ footer {
 
 <section class="section" id="variables">
   <div class="section-head">
-    <div class="section-number mono">02 / DIMENSIONES</div>
+    <div class="section-number mono">03 / DIMENSIONES</div>
     <h2>Dos dimensiones. Una experiencia.</h2>
   </div>
 
@@ -596,7 +876,7 @@ footer {
 
 <section class="section" id="metodo">
   <div class="section-head">
-    <div class="section-number mono">03 / METODOLOGÍA</div>
+    <div class="section-number mono">04 / METODOLOGÍA</div>
     <h2>Observar. Preguntar. Relacionar.</h2>
   </div>
 
@@ -647,7 +927,7 @@ footer {
 
 <section class="section">
   <div class="section-head">
-    <div class="section-number mono">04 / TERRITORIO</div>
+    <div class="section-number mono">05 / TERRITORIO</div>
     <h2>La experiencia ocurre en un lugar concreto.</h2>
   </div>
 
@@ -661,53 +941,89 @@ footer {
   </div>
 </section>
 
-<section class="section data-section" id="datos">
+<section class="section vector-section" id="visualizacion">
   <div class="section-head">
-    <div class="section-number mono">05 / VISUALIZACIÓN</div>
-    <h2>Cada unidad representa una experiencia.</h2>
+    <div class="section-number mono">06 / CAMPO DE DATOS</div>
+    <h2>50 personas. Una lectura colectiva.</h2>
   </div>
 
-  <p class="lead">Un campo de registros individuales que permite explorar cómo se distribuyen las respuestas y observaciones entre ciudades y dimensiones.</p>
-
-  <div class="data-toolbar">
-    <label class="mono" for="cityFilter">Ciudad</label>
-
-    <select id="cityFilter">
-      <option value="all">Todas</option>
-      <option value="valparaiso">Valparaíso</option>
-      <option value="buenosaires">Buenos Aires</option>
-    </select>
-
-    <label class="mono" for="typeFilter">Registro</label>
-
-    <select id="typeFilter">
-      <option value="all">Todos</option>
-      <option value="stay">Permanencia</option>
-      <option value="walk">Desplazamiento</option>
-    </select>
-
-    <div class="data-status mono" id="count">20 UNIDADES DEMOSTRATIVAS</div>
+  <div class="vector-intro">
+    <p class="lead">Cada figura representa una persona. El conjunto transforma las respuestas individuales en una lectura visual de la experiencia peatonal.</p>
+    <div class="mono orange">50 UNIDADES / 7 COLUMNAS</div>
   </div>
 
-  <div class="data-field" id="dataField" aria-label="Visualización de unidades demostrativas"></div>
+  <div class="vector-layout">
+    <div>
+      <div class="vector-visual">
+        <div class="vector-visual-top mono">
+          <span>REPRESENTACIÓN DE RESPUESTAS</span>
+          <span id="vectorFraction">31 / 50</span>
+        </div>
 
-  <div class="legend">
-    <span><i class="swatch"></i> Permanencia</span>
-    <span><i class="swatch dark"></i> Desplazamiento</span>
-    <span class="mono">Unidades de demostración</span>
+        <div class="vector-grid" id="vectorGrid"></div>
+
+        <div class="vector-grid-note mono">
+          <span>01 FIGURA = 01 PERSONA</span>
+          <span>50 REGISTROS</span>
+        </div>
+      </div>
+
+      <div class="vector-legend">
+        <span><i class="legend-dot"></i> Respuestas seleccionadas</span>
+        <span><i class="legend-dot black"></i> Otras respuestas</span>
+      </div>
+    </div>
+
+    <div class="vector-table-panel">
+      <h3 id="selectedMetricTitle">Inseguridad al cruzar</h3>
+      <p id="selectedMetricDescription">Porcentaje demostrativo de personas que declaran sentirse inseguras al cruzar.</p>
+
+      <div class="metric-list" id="metricList"></div>
+
+      <div class="scale-title mono">ESCALA DE REPRESENTACIÓN</div>
+
+      <div id="scaleTable">
+        <div class="scale-row">
+          <span>00–20%</span>
+          <div class="scale-track"><div class="scale-fill" style="width:20%"></div></div>
+          <span class="scale-value">Bajo</span>
+        </div>
+        <div class="scale-row">
+          <span>21–40%</span>
+          <div class="scale-track"><div class="scale-fill" style="width:40%"></div></div>
+          <span class="scale-value">Medio</span>
+        </div>
+        <div class="scale-row">
+          <span>41–60%</span>
+          <div class="scale-track"><div class="scale-fill" style="width:60%"></div></div>
+          <span class="scale-value">Medio</span>
+        </div>
+        <div class="scale-row">
+          <span>61–80%</span>
+          <div class="scale-track"><div class="scale-fill" style="width:80%"></div></div>
+          <span class="scale-value">Alto</span>
+        </div>
+        <div class="scale-row">
+          <span>81–100%</span>
+          <div class="scale-track"><div class="scale-fill" style="width:100%"></div></div>
+          <span class="scale-value">Alto</span>
+        </div>
+      </div>
+
+      <div class="vector-total">
+        <div class="mono">PORCENTAJE SELECCIONADO</div>
+        <div class="number" id="percentageNumber">62%</div>
+        <p id="percentageCount">31 de 50 personas</p>
+      </div>
+
+      <p class="vector-source">Los porcentajes y cantidades actuales son demostrativos. Deben sustituirse por resultados reales antes de presentar la visualización como evidencia de la investigación.</p>
+    </div>
   </div>
-
-  <div class="data-detail" id="dataDetail">
-    <span class="mono kicker">Explorar registro</span><br>
-    Selecciona una unidad para ver su información.
-  </div>
-
-  <p class="small">Importante: las unidades visibles son demostrativas y sirven para probar la interacción. No representan resultados de encuestas ni observaciones reales. La visualización deberá conectarse al conjunto de datos validado para mostrar resultados de la investigación.</p>
 </section>
 
 <section class="section">
   <div class="section-head">
-    <div class="section-number mono">06 / PROPÓSITO</div>
+    <div class="section-number mono">07 / PROPÓSITO</div>
     <h2>Del espacio construido a la experiencia vivida.</h2>
   </div>
 
@@ -729,71 +1045,164 @@ footer {
 </footer>
 
 <script>
-const records = Array.from({ length: 20 }, (_, i) => ({
-  id: i + 1,
-  city: i < 10 ? "valparaiso" : "buenosaires",
-  type: i % 4 === 0 || i % 4 === 1 ? "stay" : "walk",
-  source: "Demostrativo",
-  infrastructure: ["Vereda", "Paso de cebra", "Semáforo", "Intersección"][i % 4]
-}));
+/* SECUENCIA DE 53 FOTOGRAMAS */
 
-const field = document.getElementById("dataField");
-const cityFilter = document.getElementById("cityFilter");
-const typeFilter = document.getElementById("typeFilter");
-const count = document.getElementById("count");
-const detail = document.getElementById("dataDetail");
+const TOTAL_FRAMES = 53;
+const FRAME_DURATION = 120;
+const FRAME_PATH = "caminar_frames/frame-";
 
-function render() {
-  const city = cityFilter.value;
-  const type = typeFilter.value;
+const sequenceImage = document.getElementById("walkingSequence");
+const frameCounter = document.getElementById("frameCounter");
 
-  const filtered = records.filter(record =>
-    (city === "all" || record.city === city) &&
-    (type === "all" || record.type === type)
-  );
+let currentFrame = 1;
+let sequenceTimer = null;
 
-  field.innerHTML = "";
+function frameUrl(number) {
+  return FRAME_PATH + String(number).padStart(2, "0") + ".webp";
+}
 
-  filtered.forEach(record => {
-    const unit = document.createElement("button");
-
-    unit.className = "unit " + (record.type === "walk" ? "walk" : "");
-    unit.type = "button";
-    unit.setAttribute("aria-label", "Registro demostrativo " + record.id);
-    unit.title = "Registro demostrativo " + record.id;
-
-    unit.addEventListener("click", () => {
-      const cityName = record.city === "valparaiso"
-        ? "Barrio Puerto, Valparaíso"
-        : "Buenos Aires";
-
-      const typeName = record.type === "stay"
-        ? "Permanencia"
-        : "Desplazamiento";
-
-      detail.innerHTML = `
-        <span class="mono kicker">REGISTRO DEMOSTRATIVO / ${String(record.id).padStart(2, "0")}</span><br>
-        <strong>${cityName}</strong><br>
-        Tipo: ${typeName}<br>
-        Dimensión asociada: ${record.infrastructure}<br>
-        <span>Este registro es ficticio y solo permite probar la interacción.</span>
-      `;
-    });
-
-    field.appendChild(unit);
-  });
-
-  count.textContent = filtered.length + " UNIDADES DEMOSTRATIVAS";
-
-  if (!filtered.length) {
-    field.innerHTML = "<p class='small'>No hay unidades para estos filtros.</p>";
+function preloadFrames() {
+  for (let i = 1; i <= TOTAL_FRAMES; i++) {
+    const img = new Image();
+    img.src = frameUrl(i);
   }
 }
 
-cityFilter.addEventListener("change", render);
-typeFilter.addEventListener("change", render);
+function playSequence() {
+  if (sequenceTimer) clearInterval(sequenceTimer);
 
-render();
+  currentFrame = 1;
+  sequenceImage.src = frameUrl(currentFrame);
+  frameCounter.textContent = "FRAME 01 / " + TOTAL_FRAMES;
+
+  sequenceTimer = setInterval(() => {
+    currentFrame++;
+
+    if (currentFrame > TOTAL_FRAMES) currentFrame = 1;
+
+    sequenceImage.src = frameUrl(currentFrame);
+    frameCounter.textContent =
+      "FRAME " + String(currentFrame).padStart(2, "0") + " / " + TOTAL_FRAMES;
+  }, FRAME_DURATION);
+}
+
+preloadFrames();
+
+if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  playSequence();
+}
+
+/* VISUALIZACIÓN DE 50 FIGURAS */
+
+const TOTAL_PEOPLE = 50;
+
+const metrics = [
+  {
+    id: "inseguridad",
+    name: "Inseguridad al cruzar",
+    description: "Personas que declaran sentirse inseguras al cruzar.",
+    percentage: 62,
+    count: 31
+  },
+  {
+    id: "veredas",
+    name: "Veredas en mal estado",
+    description: "Personas que identifican problemas en las veredas.",
+    percentage: 48,
+    count: 24
+  },
+  {
+    id: "dificultad",
+    name: "Dificultad al caminar",
+    description: "Personas que experimentan dificultades durante el recorrido.",
+    percentage: 36,
+    count: 18
+  },
+  {
+    id: "comodidad",
+    name: "Comodidad al caminar",
+    description: "Personas que declaran sentirse cómodas al caminar.",
+    percentage: 74,
+    count: 37
+  }
+];
+
+const vectorGrid = document.getElementById("vectorGrid");
+const metricList = document.getElementById("metricList");
+
+const vectorFraction = document.getElementById("vectorFraction");
+const selectedMetricTitle = document.getElementById("selectedMetricTitle");
+const selectedMetricDescription = document.getElementById("selectedMetricDescription");
+const percentageNumber = document.getElementById("percentageNumber");
+const percentageCount = document.getElementById("percentageCount");
+
+let selectedMetric = metrics[0];
+
+function createPersonSVG() {
+  return `
+    <svg viewBox="0 0 42 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="21" cy="9" r="6.5" fill="currentColor"/>
+      <path d="M14 19 Q21 15 28 19 L30 39 L25 40 L24 30 L24 45 L29 61 L23 61 L20 47 L17 61 L11 61 L17 40 L12 39 Z" fill="currentColor"/>
+    </svg>
+  `;
+}
+
+function createPeople() {
+  vectorGrid.innerHTML = "";
+
+  for (let i = 0; i < TOTAL_PEOPLE; i++) {
+    const person = document.createElement("div");
+    person.className = "person";
+    person.innerHTML = createPersonSVG();
+    person.setAttribute("aria-label", "Persona " + (i + 1));
+    vectorGrid.appendChild(person);
+  }
+}
+
+function updatePeople() {
+  const people = vectorGrid.querySelectorAll(".person");
+  const activeCount = Math.round(selectedMetric.percentage / 100 * TOTAL_PEOPLE);
+
+  people.forEach((person, index) => {
+    person.classList.toggle("active", index < activeCount);
+  });
+
+  vectorFraction.textContent = activeCount + " / " + TOTAL_PEOPLE;
+  percentageNumber.textContent = selectedMetric.percentage + "%";
+  percentageCount.textContent = activeCount + " de " + TOTAL_PEOPLE + " personas";
+  selectedMetricTitle.textContent = selectedMetric.name;
+  selectedMetricDescription.textContent = selectedMetric.description;
+}
+
+function updateMetricList() {
+  metricList.innerHTML = "";
+
+  metrics.forEach(metric => {
+    const button = document.createElement("button");
+    button.className = "metric-option" + (metric.id === selectedMetric.id ? " selected" : "");
+    button.type = "button";
+
+    button.innerHTML = `
+      <span>
+        <span class="metric-name">${metric.name}</span>
+        <span class="metric-description">${metric.count} DE 50 RESPUESTAS</span>
+      </span>
+      <span class="metric-value">${metric.percentage}%</span>
+    `;
+
+    button.addEventListener("click", () => {
+      selectedMetric = metric;
+      updateMetricList();
+      updatePeople();
+    });
+
+    metricList.appendChild(button);
+  });
+}
+
+createPeople();
+updateMetricList();
+updatePeople();
 </script>
 
 </body>
