@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#000000">
-<title>SENTIR LA CALLE</title>
+<title>SENTIR LA CALLE — Valparaíso / Buenos Aires</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -400,27 +399,6 @@ a{color:inherit;text-decoration:none}
   font-size:10px;line-height:1.9;letter-spacing:.025em;color:#514a55;
 }
 
-.interlude{
-  min-height:75vh;background:var(--purple);color:white;
-  display:flex;flex-direction:column;justify-content:space-between;
-  padding:80px 7vw;overflow:hidden;position:relative;
-}
-.interlude h2{
-  position:relative;z-index:2;margin:0;
-  font-size:clamp(65px,12vw,165px);line-height:.9;
-  letter-spacing:-.035em;max-width:1100px;
-}
-.interlude h2 span{color:#c6b1d0}
-.interlude .orb{
-  position:absolute;border:1px solid #ffffff45;border-radius:50%;
-  width:40vw;height:40vw;right:-8vw;top:10%;
-  animation:float 9s ease-in-out infinite alternate;
-}
-.interlude .orb::before{
-  content:"";position:absolute;inset:18%;
-  border:1px solid #ffffff45;border-radius:50%;
-}
-@keyframes float{to{transform:translate(-50px,50px) scale(1.1)}}
 
 .footer{
   padding:35px 7vw;background:var(--black);color:white;
@@ -462,6 +440,7 @@ a{color:inherit;text-decoration:none}
   .topbar{padding:18px 5vw}
   .topbar nav{gap:9px;font-size:8px}
   .topbar nav a:nth-child(2){display:none}
+  .topbar nav a:nth-child(3){display:none}
   .hero{padding:120px 6vw 40px}
   .hero h1{font-size:19vw;margin:13vh 0}
   .hero h1 span{padding-left:5vw}
@@ -474,550 +453,91 @@ a{color:inherit;text-decoration:none}
   .stage-bottom{align-items:start;flex-direction:column}
   .explorer-heading{display:block}
   .explorer-heading p{margin-top:12px}
-  .interlude{min-height:65vh;padding:60px 6vw}
   .footer{flex-direction:column}
   #skipIntro{top:18px;right:5vw;font-size:8px}
 }
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
+
+.signal-section{background:#090909;color:#fff}
+.signal-section .section-index{color:#c45a32}
+.signal-lead{max-width:850px;margin:0 0 55px auto;font-size:clamp(19px,2.4vw,30px);line-height:1.55;color:#d0cbd0}
+.signal-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.signal-city{background:#171717;padding:clamp(24px,4vw,55px);display:grid;grid-template-columns:1fr 1fr;gap:25px;min-height:490px}
+.signal-city-head{grid-column:1/-1;display:flex;justify-content:space-between;align-items:end;gap:20px;border-bottom:1px solid #454045;padding-bottom:20px}
+.signal-city-head h3{font-size:clamp(36px,5vw,66px);line-height:.95;letter-spacing:-.05em;margin:0}
+.signal-city-head .eyebrow{color:#d77a52}
+.signal-visual{min-height:230px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;background:#222}
+.signal-pole{position:absolute;width:8px;height:175px;background:#555;left:50%;top:28px;transform:translateX(-50%);z-index:0}
+.signal-head{z-index:1;background:#080808;border:2px solid #666;border-radius:12px;padding:12px 10px;display:flex;flex-direction:column;gap:12px}
+.lamp{width:37px;height:37px;border-radius:50%;display:block;border:2px solid #555;background:#242424}
+.lamp.red{background:#d12f2f;box-shadow:0 0 20px #d12f2f55}
+.lamp.green{background:#319b5c;box-shadow:0 0 20px #319b5c55}
+.lamp.white{background:#f1f1f1;box-shadow:0 0 20px #ffffff55}
+.signal-caption{position:absolute;bottom:15px;font:8px var(--mono);letter-spacing:.12em;color:#aaa;text-align:center}
+.signal-copy h4{font:10px var(--mono);letter-spacing:.16em;color:#d77a52;margin:0 0 10px}
+.signal-copy p{font-size:11px;line-height:1.85;color:#c8c3c8;margin:0 0 22px}
+.signal-bottom{display:grid;grid-template-columns:1fr 1fr;gap:35px;padding:30px 0;border-top:1px solid #454045;border-bottom:1px solid #454045;margin-top:12px}
+.signal-bottom .eyebrow,.culture-title .eyebrow{color:#d77a52}
+.signal-bottom p,.culture-copy p{font-size:12px;line-height:1.9;color:#c8c3c8}
+.culture-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:50px;padding:75px 0 45px}
+.culture-title h3{font-size:clamp(34px,5vw,65px);line-height:.98;letter-spacing:-.05em;margin:20px 0}
+.culture-copy p{margin:0 0 18px}
+.culture-copy strong{color:#fff}
+.signal-sources{display:flex;flex-wrap:wrap;gap:12px 22px;padding-top:20px;border-top:1px solid #454045;font:8px var(--mono);letter-spacing:.08em;color:#999}
+.signal-sources span{width:100%;color:#d77a52}
+.signal-sources a{text-decoration:underline;text-underline-offset:3px}
+.data-section{padding-left:0;padding-right:0;overflow:hidden}
+.data-section>.section-head,.data-section>.data-intro,.data-section>.evidence-heading,.data-section>.evidence-grid,.data-section>.evidence-note,.data-section>.fieldwork,.data-section>.note{margin-left:7vw;margin-right:7vw}
+.explorer{width:100%;min-height:100svh;grid-template-columns:minmax(180px,.55fr) minmax(0,2.25fr) minmax(220px,.7fr);border-top:1px solid #111;border-bottom:1px solid #111}
+.explorer-menu{padding:35px 22px 35px 7vw}
+.explorer-main{padding:35px 24px;display:flex;flex-direction:column;justify-content:center}
+.circle-stage{min-height:min(65vh,680px)}
+.info-panel{padding:35px 7vw 35px 22px}
+.evidence-heading{padding:100px 0 35px}
+.evidence-heading h3{font-size:clamp(45px,8vw,100px);line-height:.92;letter-spacing:-.06em;margin:20px 0}
+.evidence-heading p{max-width:700px;font-size:14px;line-height:1.8;color:var(--gray)}
+.evidence-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.evidence-city{background:#e9e5eb;padding:clamp(22px,4vw,45px)}
+.evidence-city>.eyebrow{color:var(--purple)}
+.evidence-city h4{font-size:clamp(20px,2.5vw,30px);margin:18px 0 30px}
+.evidence-stat{display:grid;grid-template-columns:110px 1fr;gap:5px 15px;align-items:end;padding:18px 0;border-top:1px solid #c8c0cb}
+.evidence-value{font-size:clamp(35px,5vw,60px);font-weight:800;letter-spacing:-.06em;line-height:.95;color:var(--purple);grid-row:span 2}
+.evidence-value span{font-size:.5em}
+.evidence-label{font-size:11px;line-height:1.5}
+.evidence-bar{height:5px;background:#d0cbd2;grid-column:2}
+.evidence-bar i{display:block;height:100%;background:var(--purple)}
+.evidence-foot{font-size:9px;line-height:1.7;color:#66616b;margin:25px 0 0}
+.evidence-note{margin-top:18px;padding:22px 25px;background:#e5e0e8;border-left:3px solid var(--purple);font-size:11px;line-height:1.8;color:#514a55}
+.evidence-note strong{color:#161216}
+.fieldwork{display:grid;grid-template-columns:1fr 1.2fr;gap:45px;padding:100px 0}
+.fieldwork .eyebrow{color:var(--purple)}
+.fieldwork h3{font-size:clamp(42px,6vw,76px);line-height:.92;letter-spacing:-.05em;margin:20px 0}
+.fieldwork p{font-size:12px;line-height:1.8;color:var(--gray);max-width:450px}
+.fieldwork-items>div{display:grid;grid-template-columns:55px 1fr;gap:15px;padding:17px 0;border-top:1px solid var(--light);font-size:12px;line-height:1.5}
+.fieldwork-items b{font:10px var(--mono);color:var(--purple)}
+@media(max-width:1100px){
+  .explorer{grid-template-columns:180px minmax(0,1fr)}
+  .info-panel{grid-column:1/-1;border-left:0;border-top:1px solid var(--light);padding:25px 6vw;display:grid;grid-template-columns:220px 1fr;gap:25px}
+  .info-panel .info-top,.info-panel .country-tabs{grid-column:1/-1}
+}
+@media(max-width:800px){
+  .signal-grid,.signal-bottom,.culture-grid,.evidence-grid,.fieldwork{grid-template-columns:1fr}
+  .signal-city{grid-template-columns:1fr}
+  .signal-city-head{grid-column:auto}
+  .explorer{grid-template-columns:1fr;min-height:0}
+  .explorer-menu{padding:20px 6vw;display:grid;grid-template-columns:1fr 1fr;gap:0 15px}
+  .explorer-main{padding:25px 6vw}
+  .circle-stage{min-height:65vh}
+  .info-panel{display:block;padding:25px 6vw}
+  .data-section>.section-head,.data-section>.data-intro,.data-section>.evidence-heading,.data-section>.evidence-grid,.data-section>.evidence-note,.data-section>.fieldwork,.data-section>.note{margin-left:6vw;margin-right:6vw}
+}
+
+
+.evidence-link{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px;font:9px var(--mono);letter-spacing:.07em}
+.evidence-link a{color:var(--purple);text-decoration:underline;text-underline-offset:3px}
+.evidence-note .evidence-link{margin-top:12px}
+
 </style>
 </head>
-
-<body class="intro-active">
-
-<div id="intro">
-  <button id="skipIntro" type="button">SALTAR INTRODUCCIÓN ↗</button>
-  <img id="introVector" src="caminar_frames/frame-01.webp" alt="">
-  <h1 id="introTitle">SENTIR<br>LA CALLE.</h1>
-</div>
-
-<div class="progress" id="progress"></div>
-
-<header class="topbar">
-  <a href="#" class="brand">SENTIR LA CALLE.</a>
-  <nav>
-    <a href="#pregunta">PROYECTO</a>
-    <a href="#territorios">TERRITORIOS</a>
-    <a href="#visualizacion">EXPLORAR</a>
-  </nav>
-</header>
-
-<main>
-<section class="hero">
-  <div class="hero-meta eyebrow">
-    <span>Investigación urbana</span>
-    <span>Valparaíso / Buenos Aires</span>
-  </div>
-  <div>
-    <h1>SENTIR<br><span>LA CALLE.</span></h1>
-    <div class="hero-bottom">
-      <p>Caminar es una experiencia construida entre el cuerpo, la infraestructura y las prácticas cotidianas de la ciudad.</p>
-      <div class="scroll-cue">DESPLAZARSE PARA DESCUBRIR ↓</div>
-    </div>
-  </div>
-  <div class="hero-orbit"></div>
-</section>
-
-<div class="marquee">
-  <div class="marquee-track">
-    <span>CAMINAR</span><span>OBSERVAR</span><span>CRUZAR</span><span>HABITAR</span><span>TRANSITAR</span>
-    <span>CAMINAR</span><span>OBSERVAR</span><span>CRUZAR</span><span>HABITAR</span><span>TRANSITAR</span>
-  </div>
-</div>
-
-<section class="section" id="pregunta">
-  <div class="section-head reveal">
-    <div class="section-index">01 / LA PREGUNTA</div>
-    <h2>¿Qué significa realmente poder caminar?</h2>
-  </div>
-  <p class="intro-copy reveal">
-    La calle parece un espacio compartido. Pero <em>no todas las personas la experimentan de la misma manera.</em> Su forma, sus cruces y las decisiones de quienes la recorren transforman cada desplazamiento.
-  </p>
-  <div class="split-statement">
-    <article class="statement reveal">
-      <div class="number">01 / LO QUE EXISTE</div>
-      <h3>La calle construida</h3>
-      <p>Veredas, pavimentos, cruces peatonales, semáforos, intersecciones y condiciones materiales que configuran el recorrido.</p>
-    </article>
-    <article class="statement reveal">
-      <div class="number">02 / LO QUE SE VIVE</div>
-      <h3>La calle percibida</h3>
-      <p>Las decisiones, hábitos, dificultades y experiencias que aparecen cuando las personas se desplazan por el espacio público.</p>
-    </article>
-  </div>
-</section>
-
-<section class="section territories" id="territorios">
-  <div class="section-head reveal">
-    <div class="section-index">02 / DOS CONTEXTOS</div>
-    <h2>Dos territorios.<br>Una pregunta compartida.</h2>
-  </div>
-  <div class="territory-grid">
-    <article class="territory reveal">
-      <div class="territory-number">01 / CHILE</div>
-      <div class="territory-shape"></div>
-      <div>
-        <h3>Barrio Puerto<br>Valparaíso.</h3>
-        <p>Sector de estudio delimitado entre Plaza Sotomayor y Plaza Echaurren.</p>
-      </div>
-    </article>
-    <article class="territory reveal">
-      <div class="territory-number">02 / ARGENTINA</div>
-      <div class="territory-shape"></div>
-      <div>
-        <h3>Buenos<br>Aires.</h3>
-        <p>Sector delimitado entre Avenida Belgrano y Avenida Independencia, según el área de estudio definida.</p>
-      </div>
-    </article>
-  </div>
-</section>
-
-<section class="section data-section" id="visualizacion">
-  <div class="section-head reveal">
-    <div class="section-index">03 / EXPLORACIÓN</div>
-    <h2>Una misma persona.<br>Distintas experiencias.</h2>
-  </div>
-
-  <p class="data-intro reveal">
-    Cada figura representa a una persona encuestada. Al cambiar la dimensión, las figuras caminan y se reorganizan para explorar distintas experiencias del espacio público.
-  </p>
-
-  <div class="explorer reveal">
-    <aside class="explorer-menu">
-      <div class="explorer-menu-label">SELECCIONAR DIMENSIÓN</div>
-      <button class="dimension-button active" data-dimension="0"><span>01</span>Calidad de la calle</button>
-      <button class="dimension-button" data-dimension="1"><span>02</span>Cruces peatonales</button>
-      <button class="dimension-button" data-dimension="2"><span>03</span>Semáforos y circulación</button>
-      <button class="dimension-button" data-dimension="3"><span>04</span>Percepción y prácticas</button>
-    </aside>
-
-    <div class="explorer-main">
-      <div class="explorer-heading">
-        <h3 id="dimensionTitle">Calidad de la calle</h3>
-        <p id="dimensionNumber">DIMENSIÓN 01 / 04</p>
-      </div>
-      <p class="dimension-description" id="dimensionDescription">
-        Condiciones materiales del espacio: veredas, pavimentos, continuidad, obstáculos y accesibilidad.
-      </p>
-
-      <div class="circle-stage" id="circleStage">
-        <div class="people-cloud" id="peopleCloud"></div>
-        <div class="stage-center" id="stageCenter">EXPERIENCIA<br>PEATONAL</div>
-        <div class="group-label" id="groupA">CONTINUIDAD</div>
-        <div class="group-label" id="groupB">CRUCES</div>
-        <div class="group-label" id="groupC">ACCESIBILIDAD</div>
-        <div class="stage-label">FIGURAS INDIVIDUALES / AGRUPACIÓN EXPLORATORIA</div>
-      </div>
-
-      <div class="stage-bottom">
-        <p class="stage-note">Las figuras muestran una interacción exploratoria. Su distribución no representa cantidades ni resultados de encuestas.</p>
-        <button class="reorganize" id="reorganize">HACER CAMINAR ↗</button>
-      </div>
-
-      <div class="city-switch">
-        <button class="active" data-city="comparacion">COMPARACIÓN</button>
-        <button data-city="valparaiso">VALPARAÍSO</button>
-        <button data-city="buenosaires">BUENOS AIRES</button>
-      </div>
-    </div>
-
-    <aside class="info-panel">
-      <div class="info-top">
-        <span>CONTEXTO DE TRÁNSITO</span>
-        <span>04 / 04</span>
-      </div>
-
-      <div>
-        <div class="country-tabs">
-          <button class="country-tab active" data-country="chile">CHILE</button>
-          <button class="country-tab" data-country="argentina">ARGENTINA</button>
-        </div>
-        <h3 class="info-country" id="infoCountry">Chile</h3>
-        <div class="info-subtitle" id="infoSubtitle">LEY DE TRÁNSITO / 18.290</div>
-        <div class="info-tabs">
-          <button class="info-tab active" data-topic="normativa">NORMATIVA</button>
-          <button class="info-tab" data-topic="cruces">CRUCES</button>
-          <button class="info-tab" data-topic="semaforos">SEMÁFOROS</button>
-          <button class="info-tab" data-topic="practicas">PRÁCTICAS</button>
-        </div>
-      </div>
-
-      <div>
-        <div class="info-content" id="infoContent"></div>
-        <div class="info-source" id="infoSource"></div>
-      </div>
-    </aside>
-  </div>
-
-  <div class="note reveal">
-    La normativa describe cómo debería funcionar la circulación. Las prácticas culturales, los hábitos de cruce y el comportamiento efectivo de peatones y conductores deben contrastarse mediante observación y encuestas en los dos territorios.
-  </div>
-</section>
-
-<section class="interlude">
-  <div class="eyebrow">SENTIR LA CALLE / UNA INVESTIGACIÓN EN MOVIMIENTO</div>
-  <div class="orb"></div>
-  <h2>NO SOLO<br>IMPORTA<br><span>POR DÓNDE.</span><br>TAMBIÉN<br>CÓMO.</h2>
-  <div class="eyebrow">VALPARAÍSO — BUENOS AIRES</div>
-</section>
-</main>
-
-<footer class="footer">
-  <span>SENTIR LA CALLE.</span>
-  <span>EXPERIENCIA PEATONAL / 2026</span>
-  <span>INVESTIGACIÓN URBANA</span>
-</footer>
-
-<script>
-const TOTAL_FRAMES=53;
-const FRAME_DURATION=120;
-const FRAME_PATH="caminar_frames/frame-";
-const intro=document.getElementById("intro");
-const introVector=document.getElementById("introVector");
-const skipIntro=document.getElementById("skipIntro");
-let currentFrame=1,sequenceTimer=null,titleTimer=null,introFinished=false;
-
-function frameUrl(number){
-  return FRAME_PATH+String(number).padStart(2,"0")+".webp";
-}
-function finishIntro(){
-  if(introFinished)return;
-  introFinished=true;
-  clearInterval(sequenceTimer);
-  clearTimeout(titleTimer);
-  intro.classList.add("hide");
-  document.body.classList.remove("intro-active");
-  setTimeout(()=>intro.remove(),1100);
-}
-function showIntroTitle(){
-  if(introFinished)return;
-  intro.classList.add("show-title");
-  titleTimer=setTimeout(finishIntro,2300);
-}
-function startIntro(){
-  currentFrame=1;
-  introVector.src=frameUrl(1);
-  sequenceTimer=setInterval(()=>{
-    currentFrame++;
-    if(currentFrame>TOTAL_FRAMES){
-      clearInterval(sequenceTimer);
-      showIntroTitle();
-      return;
-    }
-    introVector.src=frameUrl(currentFrame);
-  },FRAME_DURATION);
-}
-skipIntro.addEventListener("click",finishIntro);
-
-function loadIntro(){
-  const firstFrame=new Image();
-  let started=false;
-  const fallbackTimer=setTimeout(()=>{
-    if(!started){started=true;showIntroTitle()}
-  },5000);
-  firstFrame.onload=()=>{
-    if(started)return;
-    started=true;
-    clearTimeout(fallbackTimer);
-    introVector.src=frameUrl(1);
-    for(let i=2;i<=TOTAL_FRAMES;i++){
-      const image=new Image();
-      image.src=frameUrl(i);
-    }
-    if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)showIntroTitle();
-    else startIntro();
-  };
-  firstFrame.onerror=()=>{
-    if(started)return;
-    started=true;
-    clearTimeout(fallbackTimer);
-    introVector.style.display="none";
-    showIntroTitle();
-  };
-  firstFrame.src=frameUrl(1);
-}
-loadIntro();
-
-const dimensions=[
-  {
-    title:"Calidad de la calle",
-    description:"Condiciones materiales del espacio: veredas, pavimentos, continuidad, obstáculos y accesibilidad.",
-    groups:["CONTINUIDAD","ESTADO FÍSICO","ACCESIBILIDAD"]
-  },
-  {
-    title:"Cruces peatonales",
-    description:"Pasos peatonales, visibilidad, ubicación, demarcación y decisiones que toman las personas al atravesar una calle.",
-    groups:["CRUCES MARCADOS","OTROS CRUCES","DECISIONES"]
-  },
-  {
-    title:"Semáforos y circulación",
-    description:"Señales peatonales, tiempos de espera, tiempos de cruce y relación entre peatones y vehículos.",
-    groups:["ESPERA","CRUCE","CIRCULACIÓN"]
-  },
-  {
-    title:"Percepción y prácticas",
-    description:"Experiencias, hábitos, decisiones y percepciones que se construyen al caminar por el espacio público.",
-    groups:["EXPERIENCIAS","HÁBITOS","PERCEPCIONES"]
-  }
-];
-
-const cloud=document.getElementById("peopleCloud");
-const dimensionButtons=document.querySelectorAll(".dimension-button");
-const cityButtons=document.querySelectorAll(".city-switch button");
-const title=document.getElementById("dimensionTitle");
-const description=document.getElementById("dimensionDescription");
-const number=document.getElementById("dimensionNumber");
-const center=document.getElementById("stageCenter");
-const groupLabels=[
-  document.getElementById("groupA"),
-  document.getElementById("groupB"),
-  document.getElementById("groupC")
-];
-const TOTAL_PEOPLE= thirtySix();
-function thirtySix(){return 36}
-
-let activeDimension=0;
-let activeCity="comparacion";
-let shuffle=0;
-const people=[];
-
-function personSVG(){
-  return `
-  <svg viewBox="0 0 40 70" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <circle class="figure" cx="20" cy="9" r="6"/>
-    <path class="figure" d="M13 19 Q20 15 27 19 L29 39 L24 40 L23 31 L23 44 L29 65 L23 65 L19 48 L15 65 L9 65 L16 40 L11 39 Z"/>
-    <path class="limb arm-left" d="M13 22 L6 36"/>
-    <path class="limb arm-right" d="M27 22 L34 35"/>
-    <path class="limb leg-left" d="M17 43 L12 63"/>
-    <path class="limb leg-right" d="M23 43 L28 63"/>
-  </svg>`;
-}
-
-function createPeople(){
-  for(let i=0;i<TOTAL_PEOPLE;i++){
-    const person=document.createElement("div");
-    person.className="person";
-    person.innerHTML=personSVG();
-    person.setAttribute("aria-label","Persona caminando "+(i+1));
-    cloud.appendChild(person);
-    people.push(person);
-  }
-}
-
-function getPosition(index,mode,offset){
-  const width=cloud.clientWidth;
-  const height=cloud.clientHeight;
-  const centerX=width/2;
-  const centerY=height/2;
-  const group=index%3;
-  const within=Math.floor(index/3);
-  const angle=within*2.399+offset*.18;
-  const radius=16+Math.sqrt(within+1)*13;
-  const groupX=[.2,.5,.8][group]*width;
-  let x,y;
-
-  if(mode===0){
-    x=centerX+Math.cos(index*2.399+offset)*Math.sqrt(index+1)*18;
-    y=centerY+Math.sin(index*2.399+offset)*Math.sqrt(index+1)*19;
-  }else{
-    const spread=mode===1?1:mode===2?.82:1.1;
-    x=groupX+Math.cos(angle)*radius*spread;
-    y=centerY+Math.sin(angle)*radius*1.2;
-  }
-
-  if(activeCity==="valparaiso")x=centerX+(x-centerX)*.78;
-  if(activeCity==="buenosaires")x=centerX+(x-centerX)*1.12;
-
-  return{
-    x:Math.max(14,Math.min(width-14,x)),
-    y:Math.max(18,Math.min(height-25,y))
-  };
-}
-
-function arrangePeople(){
-  shuffle++;
-  const mode=activeDimension;
-  people.forEach((person,index)=>{
-    person.classList.remove("arrived","floating");
-    const startX=cloud.clientWidth*(index%2?.08:.92);
-    const startY=cloud.clientHeight*(index%3?.15:.85);
-    person.style.transitionDelay=(Math.random()*.22)+"s";
-    person.style.left=startX+"px";
-    person.style.top=startY+"px";
-    person.style.opacity="0";
-    const position=getPosition(index,mode,shuffle);
-    setTimeout(()=>{
-      person.style.left=position.x+"px";
-      person.style.top=position.y+"px";
-      person.style.opacity="1";
-      person.classList.add("arrived");
-      setTimeout(()=>person.classList.add("floating"),850+Math.random()*350);
-    },40+Math.random()*250);
-  });
-}
-
-function updateGroups(){
-  const groups=dimensions[activeDimension].groups;
-  const width=cloud.clientWidth;
-  groupLabels.forEach((label,index)=>{
-    label.textContent=groups[index];
-    label.style.left=([.2,.5,.8][index]*width)+"px";
-    label.style.top="18px";
-    label.style.transform="translateX(-50%)";
-    label.classList.add("visible");
-  });
-}
-
-function selectDimension(index){
-  activeDimension=index;
-  const dimension=dimensions[index];
-  dimensionButtons.forEach((button,i)=>button.classList.toggle("active",i===index));
-  title.textContent=dimension.title;
-  description.textContent=dimension.description;
-  number.textContent="DIMENSIÓN 0"+(index+1)+" / 04";
-  center.innerHTML=dimension.groups.join("<br>");
-  arrangePeople();
-  updateGroups();
-}
-
-dimensionButtons.forEach(button=>{
-  button.addEventListener("click",()=>selectDimension(Number(button.dataset.dimension)));
-});
-cityButtons.forEach(button=>{
-  button.addEventListener("click",()=>{
-    activeCity=button.dataset.city;
-    cityButtons.forEach(item=>item.classList.toggle("active",item===button));
-    arrangePeople();
-  });
-});
-document.getElementById("reorganize").addEventListener("click",arrangePeople);
-
-createPeople();
-selectDimension(0);
-window.addEventListener("resize",()=>{
-  arrangePeople();
-  updateGroups();
-});
-
-const countryData={
-  chile:{
-    name:"Chile",
-    subtitle:"LEY DE TRÁNSITO / 18.290",
-    sources:'Fuente: <a href="https://www.bcn.cl/leychile/navegar?idNorma=1007469" target="_blank" rel="noopener">Biblioteca del Congreso Nacional</a>',
-    topics:{
-      normativa:{
-        title:"Reglas para peatones",
-        text:"La Ley de Tránsito establece que los peatones deben circular por las aceras y cruzar por pasos peatonales o pasos a desnivel. En lugares regulados por Carabineros o semáforos, deben respetar las indicaciones antes de iniciar el cruce.",
-        fact:"PREFERENCIA PEATONAL",
-        detail:"En pasos peatonales no regulados, los peatones tienen preferencia respecto de los vehículos. También tienen preferencia frente a vehículos que viran en los pasos peatonales."
-      },
-      cruces:{
-        title:"Pasos peatonales",
-        text:"La normativa indica que el cruce debe realizarse por los pasos habilitados y prohíbe cruzar diagonalmente o por el área de intersección de las calzadas.",
-        fact:"QUÉ OBSERVAR EN TERRENO",
-        detail:"Demarcación, desgaste de las franjas, continuidad entre veredas, visibilidad, vehículos detenidos sobre el cruce y respeto de la preferencia peatonal."
-      },
-      semaforos:{
-        title:"Señales y tiempos",
-        text:"En lugares regulados por semáforos, el peatón debe esperar la indicación que habilita el cruce. Quien ya inició correctamente el cruce puede terminarlo aunque cambie la señal.",
-        fact:"QUÉ OBSERVAR EN TERRENO",
-        detail:"Duración de la espera, tiempo disponible para cruzar, señal visible, sonido de apoyo cuando exista y comportamiento de vehículos que viran."
-      },
-      practicas:{
-        title:"Prácticas peatonales",
-        text:"La ley describe conductas exigidas, pero no permite concluir por sí sola cómo se comportan cotidianamente las personas en Valparaíso.",
-        fact:"PREGUNTAS PARA EL ESTUDIO",
-        detail:"¿Se espera la señal? ¿Se cruza por la esquina? ¿Se evita un cruce? ¿Se camina por la calzada cuando la vereda está obstruida? Estas prácticas deben registrarse en terreno."
-      }
-    }
-  },
-  argentina:{
-    name:"Argentina",
-    subtitle:"LEY NACIONAL DE TRÁNSITO / 24.449",
-    sources:'Fuente: <a href="https://www.argentina.gob.ar/normativa/nacional/818/actualizacion" target="_blank" rel="noopener">Argentina.gob.ar / Ley 24.449</a>',
-    topics:{
-      normativa:{
-        title:"Reglas para peatones",
-        text:"La Ley Nacional de Tránsito establece que en zonas urbanas los peatones deben circular por la acera u otros espacios habilitados y cruzar por la senda peatonal en las intersecciones.",
-        fact:"CRUCE EN INTERSECCIONES",
-        detail:"La normativa establece que los peatones deben utilizar la senda peatonal y respetar las indicaciones de los semáforos."
-      },
-      cruces:{
-        title:"La senda peatonal",
-        text:"La senda peatonal puede estar delimitada por dos líneas blancas paralelas o por franjas blancas paralelas al sentido de circulación, conocidas como cebrado.",
-        fact:"QUÉ OBSERVAR EN TERRENO",
-        detail:"Tipo de demarcación, continuidad, desgaste, ubicación, relación con las esquinas y vehículos detenidos sobre la senda."
-      },
-      semaforos:{
-        title:"Señales y tiempos",
-        text:"En vías semaforizadas, los peatones pueden cruzar cuando tienen una señal peatonal habilitante. Si solo existe semáforo vehicular, deben atender a la señal que habilita el tránsito de vehículos en su misma dirección.",
-        fact:"QUÉ OBSERVAR EN TERRENO",
-        detail:"Señal peatonal, tiempo de espera, duración del cruce, sincronización con los vehículos y respeto de la senda."
-      },
-      practicas:{
-        title:"Prácticas peatonales",
-        text:"La normativa no describe por sí sola los hábitos cotidianos de Buenos Aires. Estos deben estudiarse a partir de observaciones y testimonios.",
-        fact:"PREGUNTAS PARA EL ESTUDIO",
-        detail:"¿Se cruza por la senda? ¿Se espera el semáforo? ¿Cómo se resuelven cruces con mucho flujo? ¿Qué ocurre cuando los vehículos giran?"
-      }
-    }
-  }
-};
-
-let activeCountry="chile";
-let activeTopic="normativa";
-const infoCountry=document.getElementById("infoCountry");
-const infoSubtitle=document.getElementById("infoSubtitle");
-const infoContent=document.getElementById("infoContent");
-const infoSource=document.getElementById("infoSource");
-
-function renderInfo(){
-  const country=countryData[activeCountry];
-  const topic=country.topics[activeTopic];
-  infoCountry.textContent=country.name;
-  infoSubtitle.textContent=country.subtitle;
-  infoContent.innerHTML=`
-    <h4>${topic.title}</h4>
-    <p>${topic.text}</p>
-    <div class="fact">
-      <strong>${topic.fact}</strong>
-      <p>${topic.detail}</p>
-    </div>`;
-  infoSource.innerHTML=country.sources;
-}
-
-document.querySelectorAll(".country-tab").forEach(button=>{
-  button.addEventListener("click",()=>{
-    activeCountry=button.dataset.country;
-    document.querySelectorAll(".country-tab").forEach(item=>item.classList.toggle("active",item===button));
-    renderInfo();
-  });
-});
-document.querySelectorAll(".info-tab").forEach(button=>{
-  button.addEventListener("click",()=>{
-    activeTopic=button.dataset.topic;
-    document.querySelectorAll(".info-tab").forEach(item=>item.classList.toggle("active",item===button));
-    renderInfo();
-  });
-});
-renderInfo();
-
-const observer=new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.classList.add("visible");
-      observer.unobserve(entry.target);
-    }
-  });
-},{threshold:.12});
-document.querySelectorAll(".reveal").forEach(element=>observer.observe(element));
-
-const progress=document.getElementById("progress");
-window.addEventListener("scroll",()=>{
-  const total=document.documentElement.scrollHeight-window.innerHeight;
-  progress.style.width=(total>0?window.scrollY/total*100:0)+"%";
-},{passive:true});
-</script>
-</body>
-</html>
