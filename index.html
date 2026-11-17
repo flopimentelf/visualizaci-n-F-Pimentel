@@ -11,30 +11,41 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
-:root {
+:root{
   --purple:#713B85;
   --mauve:#A69DAA;
   --gray:#77727B;
   --light:#D8D5DA;
+  --paper:#F4F2F5;
   --white:#FFFFFF;
   --black:#000000;
-  --paper:#F4F2F5;
-  --mono:'DM Mono',monospace;
   --font:'Montserrat',sans-serif;
+  --mono:'DM Mono',monospace;
   --ease:cubic-bezier(.2,.8,.2,1);
 }
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--paper);color:var(--black);font-family:var(--font);overflow-x:hidden}
+body{
+  margin:0;background:var(--paper);color:var(--black);
+  font-family:var(--font);overflow-x:hidden;
+}
 body.intro-active{overflow:hidden}
 button,a{font:inherit}
 button{cursor:pointer}
 a{color:inherit;text-decoration:none}
 ::selection{background:var(--purple);color:white}
 
-.mono{font-family:var(--mono);text-transform:uppercase;letter-spacing:.09em}
-.eyebrow{font:10px var(--mono);letter-spacing:.12em;text-transform:uppercase}
+.mono{
+  font-family:var(--mono);
+  text-transform:uppercase;
+  letter-spacing:.16em;
+}
+.eyebrow{
+  font:10px var(--mono);
+  letter-spacing:.19em;
+  text-transform:uppercase;
+}
 .purple{color:var(--purple)}
 .muted{color:var(--gray)}
 
@@ -45,11 +56,14 @@ a{color:inherit;text-decoration:none}
   transition:opacity 1s ease,visibility 1s ease;
 }
 #intro.hide{opacity:0;visibility:hidden;pointer-events:none}
-#introVector{position:absolute;inset:0;width:100vw;height:100vh;height:100dvh;object-fit:contain;object-position:center}
+#introVector{
+  position:absolute;inset:0;width:100vw;height:100vh;height:100dvh;
+  object-fit:contain;object-position:center;
+}
 #introTitle{
   position:absolute;z-index:2;margin:0;color:white;text-align:center;
   font-size:clamp(48px,11vw,140px);font-weight:800;
-  line-height:.9;letter-spacing:-.06em;
+  line-height:.9;letter-spacing:-.025em;
   opacity:0;transform:translateY(25px) scale(.97);
   transition:opacity 1s ease,transform 1s var(--ease);
 }
@@ -59,25 +73,26 @@ a{color:inherit;text-decoration:none}
   position:absolute;right:5vw;top:30px;z-index:4;
   color:white;background:transparent;border:1px solid #777;
   padding:12px 16px;font:10px var(--mono);
-  letter-spacing:.08em;transition:.3s;
+  letter-spacing:.15em;transition:.3s;
 }
 #skipIntro:hover{background:var(--purple);border-color:var(--purple)}
-
-.topbar{
-  position:fixed;top:0;left:0;width:100%;z-index:100;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:22px 5vw;color:white;
-  mix-blend-mode:difference;
-}
-.brand{font-size:11px;font-weight:800;letter-spacing:.04em}
-.topbar nav{display:flex;gap:28px;font:9px var(--mono);letter-spacing:.08em}
-.topbar nav a{opacity:.75;transition:opacity .3s}
-.topbar nav a:hover{opacity:1}
 
 .progress{
   position:fixed;top:0;left:0;height:3px;width:0;
   background:var(--purple);z-index:200;
 }
+.topbar{
+  position:fixed;top:0;left:0;width:100%;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:23px 5vw;color:white;mix-blend-mode:difference;
+}
+.brand{font-size:11px;font-weight:800;letter-spacing:.17em}
+.topbar nav{
+  display:flex;gap:30px;
+  font:9px var(--mono);letter-spacing:.17em;
+}
+.topbar nav a{opacity:.75;transition:opacity .3s}
+.topbar nav a:hover{opacity:1}
 
 .hero{
   min-height:100svh;background:var(--black);color:white;
@@ -85,29 +100,31 @@ a{color:inherit;text-decoration:none}
   display:flex;flex-direction:column;justify-content:space-between;
   overflow:hidden;
 }
-.hero::before{
-  content:"";position:absolute;width:60vw;height:60vw;
-  border:1px solid #29232d;border-radius:50%;
-  right:-18vw;top:12%;pointer-events:none;
+.hero::before,.hero::after{
+  content:"";position:absolute;border:1px solid #302735;
+  border-radius:50%;pointer-events:none;
 }
-.hero::after{
-  content:"";position:absolute;width:36vw;height:36vw;
-  border:1px solid #332b38;border-radius:50%;
-  right:-6vw;top:25%;pointer-events:none;
+.hero::before{width:65vw;height:65vw;right:-20vw;top:5%}
+.hero::after{width:40vw;height:40vw;right:-7vw;top:21%}
+.hero-meta{
+  display:flex;justify-content:space-between;
+  position:relative;z-index:2;
 }
-.hero-meta{display:flex;justify-content:space-between;position:relative;z-index:2}
 .hero h1{
   position:relative;z-index:2;margin:8vh 0 5vh;
   font-size:clamp(76px,16vw,220px);font-weight:800;
-  line-height:.77;letter-spacing:-.09em;
+  line-height:.8;letter-spacing:-.045em;
 }
 .hero h1 span{display:block;color:var(--purple);padding-left:14vw}
 .hero-bottom{
   position:relative;z-index:2;display:flex;
   justify-content:space-between;align-items:end;gap:30px;
 }
-.hero-bottom p{max-width:470px;font-size:clamp(15px,1.6vw,21px);line-height:1.6}
-.scroll-cue{font:10px var(--mono);color:#aaa;letter-spacing:.1em}
+.hero-bottom p{
+  max-width:480px;font-size:clamp(15px,1.6vw,21px);
+  line-height:1.7;letter-spacing:.035em;
+}
+.scroll-cue{font:10px var(--mono);color:#aaa;letter-spacing:.19em}
 .hero-orbit{
   position:absolute;width:13px;height:13px;border-radius:50%;
   background:var(--purple);right:18%;top:42%;
@@ -118,46 +135,52 @@ a{color:inherit;text-decoration:none}
 
 .marquee{
   overflow:hidden;background:var(--purple);color:white;
-  padding:17px 0;white-space:nowrap;
+  padding:18px 0;white-space:nowrap;
 }
-.marquee-track{display:flex;width:max-content;animation:marquee 28s linear infinite}
-.marquee span{font-size:12px;font-weight:700;letter-spacing:.12em;padding:0 25px}
+.marquee-track{
+  display:flex;width:max-content;
+  animation:marquee 28s linear infinite;
+}
+.marquee span{
+  font-size:11px;font-weight:700;
+  letter-spacing:.23em;padding:0 30px;
+}
 @keyframes marquee{to{transform:translateX(-50%)}}
 
 .section{padding:130px 7vw;position:relative}
 .section-dark{background:var(--black);color:white}
 .section-head{
-  display:grid;grid-template-columns:1fr 2fr;gap:30px;
-  margin-bottom:75px;align-items:start;
+  display:grid;grid-template-columns:1fr 2fr;
+  gap:30px;margin-bottom:75px;align-items:start;
 }
-.section-index{font:10px var(--mono);letter-spacing:.12em;color:var(--purple)}
+.section-index{
+  font:10px var(--mono);
+  letter-spacing:.2em;color:var(--purple);
+}
 .section h2{
   margin:0;font-size:clamp(40px,7vw,95px);
-  line-height:.98;letter-spacing:-.065em;font-weight:700;
+  line-height:1.02;letter-spacing:-.035em;font-weight:700;
 }
 .intro-copy{
   max-width:800px;margin-left:auto;
   font-size:clamp(20px,3vw,38px);
-  line-height:1.4;letter-spacing:-.035em;
+  line-height:1.5;letter-spacing:-.015em;
 }
 .intro-copy em{font-style:normal;color:var(--purple)}
-.question-mark{
-  position:absolute;left:5vw;top:45%;
-  font-size:clamp(130px,22vw,300px);
-  color:#713B8512;font-weight:800;line-height:.7;
-  pointer-events:none;
-}
-
 .split-statement{
   display:grid;grid-template-columns:1fr 1fr;
   gap:8vw;margin-top:100px;align-items:start;
 }
-.statement{
-  border-top:1px solid var(--light);padding-top:22px;
+.statement{border-top:1px solid var(--light);padding-top:22px}
+.statement .number{font:10px var(--mono);letter-spacing:.2em;color:var(--purple)}
+.statement h3{
+  font-size:clamp(24px,3vw,40px);
+  letter-spacing:-.025em;margin:30px 0 15px;
 }
-.statement .number{font:11px var(--mono);color:var(--purple)}
-.statement h3{font-size:clamp(24px,3vw,40px);letter-spacing:-.04em;margin:30px 0 15px}
-.statement p{max-width:390px;color:var(--gray);font-size:14px;line-height:1.8}
+.statement p{
+  max-width:390px;color:var(--gray);
+  font-size:13px;line-height:1.9;letter-spacing:.025em;
+}
 
 .territories{background:var(--black);color:white}
 .territory-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
@@ -167,111 +190,214 @@ a{color:inherit;text-decoration:none}
   background:#171419;transition:background .6s var(--ease);
 }
 .territory:hover{background:var(--purple)}
-.territory .territory-number{font:10px var(--mono);color:var(--mauve)}
-.territory h3{
-  font-size:clamp(38px,5vw,68px);line-height:.95;
-  letter-spacing:-.065em;margin:0;position:relative;z-index:2;
+.territory .territory-number{
+  font:10px var(--mono);letter-spacing:.2em;color:var(--mauve);
 }
-.territory p{max-width:330px;font-size:12px;line-height:1.8;color:#c6c0ca}
+.territory h3{
+  font-size:clamp(38px,5vw,68px);line-height:1;
+  letter-spacing:-.035em;margin:0;position:relative;z-index:2;
+}
+.territory p{
+  max-width:330px;font-size:12px;
+  line-height:1.9;letter-spacing:.025em;color:#c6c0ca;
+}
 .territory-shape{
-  position:absolute;width:260px;height:260px;border:1px solid #6c5c72;
-  border-radius:50%;right:-80px;top:90px;transition:transform 1s var(--ease);
+  position:absolute;width:260px;height:260px;
+  border:1px solid #6c5c72;border-radius:50%;
+  right:-80px;top:90px;transition:transform 1s var(--ease);
 }
 .territory-shape::before,.territory-shape::after{
-  content:"";position:absolute;border:1px solid #6c5c72;border-radius:50%;
-  inset:30px;
+  content:"";position:absolute;border:1px solid #6c5c72;
+  border-radius:50%;inset:30px;
 }
 .territory-shape::after{inset:70px}
 .territory:hover .territory-shape{transform:scale(1.35) rotate(30deg)}
 
 .data-section{background:var(--paper)}
 .data-intro{
-  max-width:760px;font-size:clamp(19px,2.4vw,29px);
-  line-height:1.5;margin:0 0 65px;
+  max-width:780px;font-size:clamp(19px,2.4vw,29px);
+  line-height:1.6;letter-spacing:-.015em;margin:0 0 65px;
 }
 .explorer{
-  display:grid;grid-template-columns:250px 1fr;
-  border-top:1px solid var(--black);border-bottom:1px solid var(--black);
-  min-height:650px;
+  display:grid;grid-template-columns:minmax(190px,.65fr) minmax(0,2fr) minmax(230px,.85fr);
+  border-top:1px solid var(--black);
+  border-bottom:1px solid var(--black);
+  min-height:680px;
 }
-.explorer-menu{padding:25px 25px 25px 0;border-right:1px solid var(--light)}
-.explorer-menu-label{font:9px var(--mono);color:var(--gray);margin-bottom:30px}
+.explorer-menu{padding:25px 22px 25px 0;border-right:1px solid var(--light)}
+.explorer-menu-label{
+  font:9px var(--mono);letter-spacing:.18em;
+  color:var(--gray);margin-bottom:30px;
+}
 .dimension-button{
   display:block;width:100%;text-align:left;
-  padding:18px 10px 18px 0;border:0;border-top:1px solid var(--light);
-  background:transparent;color:var(--gray);font-size:13px;
+  padding:18px 8px 18px 0;border:0;
+  border-top:1px solid var(--light);
+  background:transparent;color:var(--gray);
+  font-size:12px;line-height:1.5;letter-spacing:.025em;
   transition:color .3s,padding .4s var(--ease);
 }
-.dimension-button span{display:block;font:9px var(--mono);margin-bottom:8px;color:var(--mauve)}
+.dimension-button span{
+  display:block;font:9px var(--mono);
+  letter-spacing:.2em;margin-bottom:8px;color:var(--mauve);
+}
 .dimension-button.active{color:var(--purple);padding-left:12px}
 .dimension-button:hover{color:var(--purple);padding-left:12px}
-.explorer-main{padding:30px 0 30px 35px;min-width:0}
-.explorer-heading{display:flex;justify-content:space-between;gap:20px;align-items:start}
-.explorer-heading h3{font-size:clamp(27px,4vw,48px);letter-spacing:-.05em;margin:0}
-.explorer-heading p{font:9px var(--mono);color:var(--gray)}
-.dimension-description{font-size:13px;line-height:1.8;color:var(--gray);max-width:570px;margin:20px 0 35px}
+
+.explorer-main{padding:30px 24px;min-width:0}
+.explorer-heading{
+  display:flex;justify-content:space-between;
+  gap:20px;align-items:start;
+}
+.explorer-heading h3{
+  font-size:clamp(24px,3vw,43px);
+  letter-spacing:-.035em;line-height:1.1;margin:0;
+}
+.explorer-heading p{
+  font:9px var(--mono);letter-spacing:.15em;
+  color:var(--gray);white-space:nowrap;
+}
+.dimension-description{
+  font-size:12px;line-height:1.9;letter-spacing:.025em;
+  color:var(--gray);max-width:570px;margin:20px 0 25px;
+}
 .circle-stage{
-  min-height:380px;position:relative;overflow:hidden;
+  min-height:390px;position:relative;overflow:hidden;
   background:#ebe8ed;border-radius:2px;
   display:flex;align-items:center;justify-content:center;
 }
-.circle-stage::before{
-  content:"";position:absolute;width:310px;height:310px;
-  border:1px solid #c7bdcd;border-radius:50%;
+.circle-stage::before,.circle-stage::after{
+  content:"";position:absolute;border:1px solid #c7bdcd;border-radius:50%;
 }
-.circle-stage::after{
-  content:"";position:absolute;width:190px;height:190px;
-  border:1px solid #c7bdcd;border-radius:50%;
-}
+.circle-stage::before{width:310px;height:310px}
+.circle-stage::after{width:190px;height:190px}
 .people-cloud{position:absolute;inset:0;z-index:2}
 .person{
-  position:absolute;width:14px;height:14px;border-radius:50%;
-  background:var(--purple);left:50%;top:50%;
+  position:absolute;width:32px;height:58px;
+  left:50%;top:50%;opacity:0;
   transform:translate(-50%,-50%);
-  transition:left 1.15s var(--ease),top 1.15s var(--ease),
-    background .5s,scale .5s;
-  box-shadow:0 0 0 3px #713b8510;
+  transition:left 1.2s var(--ease),top 1.2s var(--ease),opacity .5s,filter .5s;
 }
-.person::after{
-  content:"";position:absolute;width:4px;height:4px;
-  background:white;border-radius:50%;left:5px;top:5px;
+.person svg{width:100%;height:100%;overflow:visible}
+.person .figure{fill:var(--purple)}
+.person .limb{
+  fill:none;stroke:var(--purple);stroke-width:4;
+  stroke-linecap:round;transform-box:fill-box;
 }
-.person:nth-child(3n){background:var(--gray)}
-.person:nth-child(5n){background:var(--mauve)}
-.person:nth-child(7n){background:#4e3b58}
-.person.moving{scale:1.35}
-.circle-caption{
-  position:absolute;z-index:3;bottom:17px;left:20px;
-  font:9px var(--mono);color:#77727b;
+.person .arm-left{transform-origin:top center;animation:armA .55s ease-in-out infinite alternate}
+.person .arm-right{transform-origin:top center;animation:armB .55s ease-in-out infinite alternate}
+.person .leg-left{transform-origin:top center;animation:legA .55s ease-in-out infinite alternate}
+.person .leg-right{transform-origin:top center;animation:legB .55s ease-in-out infinite alternate}
+.person:nth-child(3n) .figure,.person:nth-child(3n) .limb{fill:var(--gray);stroke:var(--gray)}
+.person:nth-child(4n) .figure,.person:nth-child(4n) .limb{fill:#4e3b58;stroke:#4e3b58}
+.person.arrived{opacity:1}
+.person.floating{animation:personFloat 1.2s ease-in-out}
+@keyframes armA{to{transform:rotate(22deg)}}
+@keyframes armB{to{transform:rotate(-22deg)}}
+@keyframes legA{to{transform:rotate(-28deg)}}
+@keyframes legB{to{transform:rotate(28deg)}}
+@keyframes personFloat{
+  0%,100%{filter:drop-shadow(0 0 0 transparent)}
+  50%{filter:drop-shadow(0 7px 5px #713b8530);translate:0 -7px}
 }
-.circle-center{
-  position:absolute;z-index:4;font:9px var(--mono);
-  color:var(--purple);text-align:center;letter-spacing:.08em;
+.stage-label{
+  position:absolute;z-index:4;bottom:14px;left:17px;
+  font:8px var(--mono);letter-spacing:.16em;color:#77727b;
 }
+.stage-center{
+  position:absolute;z-index:4;font:8px var(--mono);
+  color:var(--purple);text-align:center;letter-spacing:.17em;
+  pointer-events:none;
+}
+.group-label{
+  position:absolute;z-index:3;font:8px var(--mono);
+  letter-spacing:.13em;color:#77727b;opacity:0;
+  transition:opacity .5s;
+}
+.group-label.visible{opacity:1}
 .stage-bottom{
-  display:flex;justify-content:space-between;align-items:center;
-  gap:20px;margin-top:20px;
+  display:flex;justify-content:space-between;
+  align-items:center;gap:15px;margin-top:20px;
 }
-.stage-note{font-size:10px;line-height:1.7;color:var(--gray);max-width:420px}
+.stage-note{
+  font-size:9px;line-height:1.8;
+  letter-spacing:.025em;color:var(--gray);max-width:340px;
+}
 .reorganize{
   border:0;background:var(--purple);color:white;
-  padding:15px 20px;font:10px var(--mono);
-  letter-spacing:.07em;transition:transform .3s,background .3s;
+  padding:14px 15px;font:9px var(--mono);
+  letter-spacing:.16em;white-space:nowrap;
+  transition:transform .3s,background .3s;
 }
 .reorganize:hover{background:#4d2a5c;transform:translateY(-4px)}
-.city-switch{
-  display:flex;gap:7px;margin-top:25px;flex-wrap:wrap;
-}
+.city-switch{display:flex;gap:6px;margin-top:22px;flex-wrap:wrap}
 .city-switch button{
   border:1px solid var(--light);background:transparent;
-  padding:10px 13px;font:9px var(--mono);color:var(--gray);
+  padding:9px 11px;font:8px var(--mono);
+  letter-spacing:.13em;color:var(--gray);
 }
 .city-switch button.active{background:var(--black);color:white;border-color:var(--black)}
 
+.info-panel{
+  border-left:1px solid var(--light);
+  padding:25px 0 25px 22px;min-width:0;
+}
+.info-top{
+  display:flex;justify-content:space-between;
+  align-items:center;gap:10px;margin-bottom:20px;
+}
+.info-top span{font:9px var(--mono);letter-spacing:.17em;color:var(--gray)}
+.country-tabs{display:flex;gap:5px;margin-bottom:28px}
+.country-tab{
+  flex:1;padding:10px 6px;border:1px solid var(--light);
+  background:transparent;font:8px var(--mono);
+  letter-spacing:.12em;color:var(--gray);
+}
+.country-tab.active{background:var(--purple);color:white;border-color:var(--purple)}
+.info-country{
+  font-size:clamp(23px,2.3vw,32px);
+  line-height:1.05;letter-spacing:-.035em;margin:0 0 10px;
+}
+.info-subtitle{
+  font:8px var(--mono);letter-spacing:.16em;
+  color:var(--purple);margin-bottom:25px;
+}
+.info-tabs{
+  display:flex;flex-wrap:wrap;gap:6px;
+  border-bottom:1px solid var(--light);padding-bottom:12px;
+}
+.info-tab{
+  border:0;background:transparent;padding:7px 0;
+  margin-right:10px;font:8px var(--mono);
+  letter-spacing:.1em;color:var(--gray);
+}
+.info-tab.active{color:var(--purple);border-bottom:1px solid var(--purple)}
+.info-content{padding-top:22px;min-height:265px}
+.info-content h4{
+  font-size:15px;letter-spacing:-.02em;margin:0 0 12px;
+}
+.info-content p{
+  font-size:10px;line-height:1.9;
+  letter-spacing:.015em;color:#66616b;margin:0 0 14px;
+}
+.info-content .fact{
+  border-top:1px solid var(--light);
+  padding:13px 0;margin-top:13px;
+}
+.info-content .fact strong{
+  display:block;font:8px var(--mono);
+  letter-spacing:.13em;color:var(--purple);margin-bottom:7px;
+}
+.info-source{
+  border-top:1px solid var(--light);padding-top:15px;
+  font:8px var(--mono);line-height:1.8;
+  letter-spacing:.06em;color:var(--gray);
+}
+.info-source a{text-decoration:underline;text-underline-offset:3px}
 .note{
-  margin-top:25px;padding:20px 22px;
+  margin-top:25px;padding:18px 20px;
   background:#e8e3eb;border-left:3px solid var(--purple);
-  font-size:11px;line-height:1.7;color:#514a55;
+  font-size:10px;line-height:1.9;letter-spacing:.025em;color:#514a55;
 }
 
 .interlude{
@@ -281,8 +407,8 @@ a{color:inherit;text-decoration:none}
 }
 .interlude h2{
   position:relative;z-index:2;margin:0;
-  font-size:clamp(65px,12vw,165px);line-height:.84;
-  letter-spacing:-.08em;max-width:1100px;
+  font-size:clamp(65px,12vw,165px);line-height:.9;
+  letter-spacing:-.035em;max-width:1100px;
 }
 .interlude h2 span{color:#c6b1d0}
 .interlude .orb{
@@ -291,38 +417,46 @@ a{color:inherit;text-decoration:none}
   animation:float 9s ease-in-out infinite alternate;
 }
 .interlude .orb::before{
-  content:"";position:absolute;inset:18%;border:1px solid #ffffff45;border-radius:50%;
+  content:"";position:absolute;inset:18%;
+  border:1px solid #ffffff45;border-radius:50%;
 }
 @keyframes float{to{transform:translate(-50px,50px) scale(1.1)}}
 
 .footer{
   padding:35px 7vw;background:var(--black);color:white;
   display:flex;justify-content:space-between;gap:20px;
-  font:9px var(--mono);letter-spacing:.1em;
+  font:9px var(--mono);letter-spacing:.18em;
 }
-
 .reveal{
   opacity:0;transform:translateY(45px);
   transition:opacity .9s var(--ease),transform .9s var(--ease);
 }
 .reveal.visible{opacity:1;transform:translateY(0)}
-.float-in{animation:floatIn 1.1s var(--ease) both}
-@keyframes floatIn{
-  0%{opacity:0;transform:translateY(45px) scale(.96);filter:blur(8px)}
-  70%{opacity:1;transform:translateY(-7px) scale(1.01);filter:blur(0)}
-  100%{opacity:1;transform:translateY(0) scale(1)}
-}
 
+@media(max-width:1100px){
+  .explorer{grid-template-columns:180px minmax(0,1fr)}
+  .info-panel{
+    grid-column:1/-1;border-left:0;border-top:1px solid var(--light);
+    padding:25px 0;display:grid;grid-template-columns:220px 1fr;gap:25px;
+  }
+  .info-panel .info-top,.info-panel .country-tabs{grid-column:1/-1}
+  .info-panel .info-top{margin-bottom:0}
+  .info-panel .info-content{min-height:180px}
+}
 @media(max-width:800px){
-  .topbar nav{gap:12px}
+  .topbar nav{gap:13px}
   .section{padding:90px 6vw}
   .section-head{grid-template-columns:1fr;gap:20px;margin-bottom:45px}
   .split-statement,.territory-grid{grid-template-columns:1fr}
   .territory{min-height:350px}
   .explorer{grid-template-columns:1fr}
-  .explorer-menu{border-right:0;padding:15px 0;display:grid;grid-template-columns:1fr 1fr;gap:0 15px}
+  .explorer-menu{
+    border-right:0;padding:15px 0;
+    display:grid;grid-template-columns:1fr 1fr;gap:0 15px;
+  }
   .explorer-menu-label{grid-column:1/-1}
-  .explorer-main{padding:30px 0}
+  .explorer-main{padding:25px 0}
+  .info-panel{display:block}
 }
 @media(max-width:520px){
   .topbar{padding:18px 5vw}
@@ -335,10 +469,11 @@ a{color:inherit;text-decoration:none}
   .scroll-cue{margin-top:35px}
   .hero-meta{font-size:8px}
   .territory{min-height:310px;padding:25px}
-  .circle-stage{min-height:320px}
-  .person{width:11px;height:11px}
-  .person::after{width:3px;height:3px;left:4px;top:4px}
+  .circle-stage{min-height:350px}
+  .person{width:25px;height:48px}
   .stage-bottom{align-items:start;flex-direction:column}
+  .explorer-heading{display:block}
+  .explorer-heading p{margin-top:12px}
   .interlude{min-height:65vh;padding:60px 6vw}
   .footer{flex-direction:column}
   #skipIntro{top:18px;right:5vw;font-size:8px}
@@ -386,7 +521,8 @@ a{color:inherit;text-decoration:none}
 
 <div class="marquee">
   <div class="marquee-track">
-    <span>CAMINAR</span><span>OBSERVAR</span><span>CRUZAR</span><span>HABITAR</span><span>TRANSITAR</span><span>CAMINAR</span><span>OBSERVAR</span><span>CRUZAR</span><span>HABITAR</span><span>TRANSITAR</span>
+    <span>CAMINAR</span><span>OBSERVAR</span><span>CRUZAR</span><span>HABITAR</span><span>TRANSITAR</span>
+    <span>CAMINAR</span><span>OBSERVAR</span><span>CRUZAR</span><span>HABITAR</span><span>TRANSITAR</span>
   </div>
 </div>
 
@@ -395,12 +531,9 @@ a{color:inherit;text-decoration:none}
     <div class="section-index">01 / LA PREGUNTA</div>
     <h2>¿Qué significa realmente poder caminar?</h2>
   </div>
-
-  <div class="question-mark">?</div>
   <p class="intro-copy reveal">
     La calle parece un espacio compartido. Pero <em>no todas las personas la experimentan de la misma manera.</em> Su forma, sus cruces y las decisiones de quienes la recorren transforman cada desplazamiento.
   </p>
-
   <div class="split-statement">
     <article class="statement reveal">
       <div class="number">01 / LO QUE EXISTE</div>
@@ -420,7 +553,6 @@ a{color:inherit;text-decoration:none}
     <div class="section-index">02 / DOS CONTEXTOS</div>
     <h2>Dos territorios.<br>Una pregunta compartida.</h2>
   </div>
-
   <div class="territory-grid">
     <article class="territory reveal">
       <div class="territory-number">01 / CHILE</div>
@@ -448,24 +580,16 @@ a{color:inherit;text-decoration:none}
   </div>
 
   <p class="data-intro reveal">
-    Cada figura representa a una persona encuestada. Al cambiar la dimensión, el conjunto se reorganiza para abrir nuevas formas de observar la experiencia peatonal.
+    Cada figura representa a una persona encuestada. Al cambiar la dimensión, las figuras caminan y se reorganizan para explorar distintas experiencias del espacio público.
   </p>
 
   <div class="explorer reveal">
     <aside class="explorer-menu">
       <div class="explorer-menu-label">SELECCIONAR DIMENSIÓN</div>
-      <button class="dimension-button active" data-dimension="0">
-        <span>01</span>Calidad de la calle
-      </button>
-      <button class="dimension-button" data-dimension="1">
-        <span>02</span>Cruces peatonales
-      </button>
-      <button class="dimension-button" data-dimension="2">
-        <span>03</span>Semáforos y circulación
-      </button>
-      <button class="dimension-button" data-dimension="3">
-        <span>04</span>Percepción y prácticas
-      </button>
+      <button class="dimension-button active" data-dimension="0"><span>01</span>Calidad de la calle</button>
+      <button class="dimension-button" data-dimension="1"><span>02</span>Cruces peatonales</button>
+      <button class="dimension-button" data-dimension="2"><span>03</span>Semáforos y circulación</button>
+      <button class="dimension-button" data-dimension="3"><span>04</span>Percepción y prácticas</button>
     </aside>
 
     <div class="explorer-main">
@@ -474,18 +598,21 @@ a{color:inherit;text-decoration:none}
         <p id="dimensionNumber">DIMENSIÓN 01 / 04</p>
       </div>
       <p class="dimension-description" id="dimensionDescription">
-        ¿Cómo son las condiciones materiales del espacio por el que caminamos? Esta dimensión observa veredas, pavimentos, continuidad, obstáculos y accesibilidad.
+        Condiciones materiales del espacio: veredas, pavimentos, continuidad, obstáculos y accesibilidad.
       </p>
 
       <div class="circle-stage" id="circleStage">
         <div class="people-cloud" id="peopleCloud"></div>
-        <div class="circle-center" id="circleCenter">EXPERIENCIA<br>PEATONAL</div>
-        <div class="circle-caption" id="circleCaption">FIGURAS INDIVIDUALES / ORGANIZACIÓN VISUAL</div>
+        <div class="stage-center" id="stageCenter">EXPERIENCIA<br>PEATONAL</div>
+        <div class="group-label" id="groupA">CONTINUIDAD</div>
+        <div class="group-label" id="groupB">CRUCES</div>
+        <div class="group-label" id="groupC">ACCESIBILIDAD</div>
+        <div class="stage-label">FIGURAS INDIVIDUALES / AGRUPACIÓN EXPLORATORIA</div>
       </div>
 
       <div class="stage-bottom">
-        <p class="stage-note" id="stageNote">Visualización de estructura. La distribución de las figuras es exploratoria y no representa resultados de encuestas.</p>
-        <button class="reorganize" id="reorganize">REORGANIZAR FIGURAS ↗</button>
+        <p class="stage-note">Las figuras muestran una interacción exploratoria. Su distribución no representa cantidades ni resultados de encuestas.</p>
+        <button class="reorganize" id="reorganize">HACER CAMINAR ↗</button>
       </div>
 
       <div class="city-switch">
@@ -494,10 +621,37 @@ a{color:inherit;text-decoration:none}
         <button data-city="buenosaires">BUENOS AIRES</button>
       </div>
     </div>
+
+    <aside class="info-panel">
+      <div class="info-top">
+        <span>CONTEXTO DE TRÁNSITO</span>
+        <span>04 / 04</span>
+      </div>
+
+      <div>
+        <div class="country-tabs">
+          <button class="country-tab active" data-country="chile">CHILE</button>
+          <button class="country-tab" data-country="argentina">ARGENTINA</button>
+        </div>
+        <h3 class="info-country" id="infoCountry">Chile</h3>
+        <div class="info-subtitle" id="infoSubtitle">LEY DE TRÁNSITO / 18.290</div>
+        <div class="info-tabs">
+          <button class="info-tab active" data-topic="normativa">NORMATIVA</button>
+          <button class="info-tab" data-topic="cruces">CRUCES</button>
+          <button class="info-tab" data-topic="semaforos">SEMÁFOROS</button>
+          <button class="info-tab" data-topic="practicas">PRÁCTICAS</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="info-content" id="infoContent"></div>
+        <div class="info-source" id="infoSource"></div>
+      </div>
+    </aside>
   </div>
 
   <div class="note reveal">
-    Esta versión presenta la estructura interactiva de la visualización. No contiene resultados ni porcentajes de encuestas. Las figuras se reorganizan como recurso exploratorio y deberán vincularse a las respuestas reales cuando esté disponible el levantamiento de datos.
+    La normativa describe cómo debería funcionar la circulación. Las prácticas culturales, los hábitos de cruce y el comportamiento efectivo de peatones y conductores deben contrastarse mediante observación y encuestas en los dos territorios.
   </div>
 </section>
 
@@ -522,15 +676,11 @@ const FRAME_PATH="caminar_frames/frame-";
 const intro=document.getElementById("intro");
 const introVector=document.getElementById("introVector");
 const skipIntro=document.getElementById("skipIntro");
-let currentFrame=1;
-let sequenceTimer=null;
-let titleTimer=null;
-let introFinished=false;
+let currentFrame=1,sequenceTimer=null,titleTimer=null,introFinished=false;
 
 function frameUrl(number){
   return FRAME_PATH+String(number).padStart(2,"0")+".webp";
 }
-
 function finishIntro(){
   if(introFinished)return;
   introFinished=true;
@@ -540,13 +690,11 @@ function finishIntro(){
   document.body.classList.remove("intro-active");
   setTimeout(()=>intro.remove(),1100);
 }
-
 function showIntroTitle(){
   if(introFinished)return;
   intro.classList.add("show-title");
   titleTimer=setTimeout(finishIntro,2300);
 }
-
 function startIntro(){
   currentFrame=1;
   introVector.src=frameUrl(1);
@@ -560,19 +708,14 @@ function startIntro(){
     introVector.src=frameUrl(currentFrame);
   },FRAME_DURATION);
 }
-
 skipIntro.addEventListener("click",finishIntro);
 
 function loadIntro(){
   const firstFrame=new Image();
   let started=false;
   const fallbackTimer=setTimeout(()=>{
-    if(!started){
-      started=true;
-      showIntroTitle();
-    }
+    if(!started){started=true;showIntroTitle()}
   },5000);
-
   firstFrame.onload=()=>{
     if(started)return;
     started=true;
@@ -582,13 +725,9 @@ function loadIntro(){
       const image=new Image();
       image.src=frameUrl(i);
     }
-    if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){
-      showIntroTitle();
-    }else{
-      startIntro();
-    }
+    if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)showIntroTitle();
+    else startIntro();
   };
-
   firstFrame.onerror=()=>{
     if(started)return;
     started=true;
@@ -603,91 +742,96 @@ loadIntro();
 const dimensions=[
   {
     title:"Calidad de la calle",
-    description:"¿Cómo son las condiciones materiales del espacio por el que caminamos? Esta dimensión observa veredas, pavimentos, continuidad, obstáculos y accesibilidad.",
-    groups:["Continuidad","Estado físico","Accesibilidad"]
+    description:"Condiciones materiales del espacio: veredas, pavimentos, continuidad, obstáculos y accesibilidad.",
+    groups:["CONTINUIDAD","ESTADO FÍSICO","ACCESIBILIDAD"]
   },
   {
     title:"Cruces peatonales",
-    description:"¿Qué ocurre cuando necesitamos atravesar la calle? Se observan pasos peatonales, visibilidad, ubicación y decisiones de cruce.",
-    groups:["Cruces marcados","Cruces no marcados","Decisiones"]
+    description:"Pasos peatonales, visibilidad, ubicación, demarcación y decisiones que toman las personas al atravesar una calle.",
+    groups:["CRUCES MARCADOS","OTROS CRUCES","DECISIONES"]
   },
   {
     title:"Semáforos y circulación",
-    description:"¿Cómo se relacionan los tiempos, las señales y los movimientos de peatones y vehículos? Se observan esperas, tiempos de cruce y comportamientos.",
-    groups:["Esperar","Cruzar","Interactuar"]
+    description:"Señales peatonales, tiempos de espera, tiempos de cruce y relación entre peatones y vehículos.",
+    groups:["ESPERA","CRUCE","CIRCULACIÓN"]
   },
   {
     title:"Percepción y prácticas",
-    description:"¿Cómo se experimenta el desplazamiento? Se exploran hábitos, experiencias, decisiones y percepciones construidas al caminar.",
-    groups:["Experiencias","Hábitos","Percepciones"]
+    description:"Experiencias, hábitos, decisiones y percepciones que se construyen al caminar por el espacio público.",
+    groups:["EXPERIENCIAS","HÁBITOS","PERCEPCIONES"]
   }
 ];
 
 const cloud=document.getElementById("peopleCloud");
-const buttons=document.querySelectorAll(".dimension-button");
+const dimensionButtons=document.querySelectorAll(".dimension-button");
+const cityButtons=document.querySelectorAll(".city-switch button");
 const title=document.getElementById("dimensionTitle");
 const description=document.getElementById("dimensionDescription");
 const number=document.getElementById("dimensionNumber");
-const center=document.getElementById("circleCenter");
-const stageNote=document.getElementById("stageNote");
-const cityButtons=document.querySelectorAll(".city-switch button");
-const TOTAL_PEOPLE=50;
+const center=document.getElementById("stageCenter");
+const groupLabels=[
+  document.getElementById("groupA"),
+  document.getElementById("groupB"),
+  document.getElementById("groupC")
+];
+const TOTAL_PEOPLE= thirtySix();
+function thirtySix(){return 36}
+
 let activeDimension=0;
 let activeCity="comparacion";
 let shuffle=0;
-
 const people=[];
+
+function personSVG(){
+  return `
+  <svg viewBox="0 0 40 70" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <circle class="figure" cx="20" cy="9" r="6"/>
+    <path class="figure" d="M13 19 Q20 15 27 19 L29 39 L24 40 L23 31 L23 44 L29 65 L23 65 L19 48 L15 65 L9 65 L16 40 L11 39 Z"/>
+    <path class="limb arm-left" d="M13 22 L6 36"/>
+    <path class="limb arm-right" d="M27 22 L34 35"/>
+    <path class="limb leg-left" d="M17 43 L12 63"/>
+    <path class="limb leg-right" d="M23 43 L28 63"/>
+  </svg>`;
+}
 
 function createPeople(){
   for(let i=0;i<TOTAL_PEOPLE;i++){
     const person=document.createElement("div");
     person.className="person";
-    person.setAttribute("aria-label","Figura individual "+(i+1));
+    person.innerHTML=personSVG();
+    person.setAttribute("aria-label","Persona caminando "+(i+1));
     cloud.appendChild(person);
     people.push(person);
   }
 }
 
-function positionsFor(index,mode,offset){
+function getPosition(index,mode,offset){
   const width=cloud.clientWidth;
   const height=cloud.clientHeight;
   const centerX=width/2;
   const centerY=height/2;
-  const angle=(index*2.399963)+(offset*.16);
-  const spread=Math.sqrt(index+1);
+  const group=index%3;
+  const within=Math.floor(index/3);
+  const angle=within*2.399+offset*.18;
+  const radius=16+Math.sqrt(within+1)*13;
+  const groupX=[.2,.5,.8][group]*width;
   let x,y;
 
   if(mode===0){
-    const radius=13+spread*17;
-    x=centerX+Math.cos(angle)*radius;
-    y=centerY+Math.sin(angle)*radius*.78;
-  }else if(mode===1){
-    const group=index%3;
-    const groupAngle=(Math.PI*2/3)*group-Math.PI/2;
-    const radius=22+Math.sqrt(Math.floor(index/3))*15;
-    x=centerX+Math.cos(groupAngle)*95+Math.cos(angle)*radius;
-    y=centerY+Math.sin(groupAngle)*75+Math.sin(angle)*radius;
-  }else if(mode===2){
-    const group=index%3;
-    const groupX=[.25,.5,.75][group]*width;
-    const groupY=height*.5;
-    x=groupX+Math.cos(angle)*Math.sqrt(Math.floor(index/3)+1)*15;
-    y=groupY+Math.sin(angle)*Math.sqrt(Math.floor(index/3)+1)*18;
+    x=centerX+Math.cos(index*2.399+offset)*Math.sqrt(index+1)*18;
+    y=centerY+Math.sin(index*2.399+offset)*Math.sqrt(index+1)*19;
   }else{
-    const column=index%10;
-    const row=Math.floor(index/10);
-    x=width*.17+column*(width*.073);
-    y=height*.25+row*(height*.16);
-    x+=(Math.sin(angle)*8);
-    y+=(Math.cos(angle)*8);
+    const spread=mode===1?1:mode===2?.82:1.1;
+    x=groupX+Math.cos(angle)*radius*spread;
+    y=centerY+Math.sin(angle)*radius*1.2;
   }
 
-  if(activeCity==="valparaiso")x=width*.5+(x-width*.5)*.82;
-  if(activeCity==="buenosaires")x=width*.5+(x-width*.5)*1.12;
+  if(activeCity==="valparaiso")x=centerX+(x-centerX)*.78;
+  if(activeCity==="buenosaires")x=centerX+(x-centerX)*1.12;
 
-  return {
-    x:Math.max(8,Math.min(width-8,x)),
-    y:Math.max(8,Math.min(height-8,y))
+  return{
+    x:Math.max(14,Math.min(width-14,x)),
+    y:Math.max(18,Math.min(height-25,y))
   };
 }
 
@@ -695,33 +839,51 @@ function arrangePeople(){
   shuffle++;
   const mode=activeDimension;
   people.forEach((person,index)=>{
-    person.classList.add("moving");
-    const position=positionsFor(index,mode,shuffle);
-    person.style.left=position.x+"px";
-    person.style.top=position.y+"px";
-    person.style.transitionDelay=(Math.random()*.24)+"s";
-    setTimeout(()=>person.classList.remove("moving"),1100);
+    person.classList.remove("arrived","floating");
+    const startX=cloud.clientWidth*(index%2?.08:.92);
+    const startY=cloud.clientHeight*(index%3?.15:.85);
+    person.style.transitionDelay=(Math.random()*.22)+"s";
+    person.style.left=startX+"px";
+    person.style.top=startY+"px";
+    person.style.opacity="0";
+    const position=getPosition(index,mode,shuffle);
+    setTimeout(()=>{
+      person.style.left=position.x+"px";
+      person.style.top=position.y+"px";
+      person.style.opacity="1";
+      person.classList.add("arrived");
+      setTimeout(()=>person.classList.add("floating"),850+Math.random()*350);
+    },40+Math.random()*250);
+  });
+}
+
+function updateGroups(){
+  const groups=dimensions[activeDimension].groups;
+  const width=cloud.clientWidth;
+  groupLabels.forEach((label,index)=>{
+    label.textContent=groups[index];
+    label.style.left=([.2,.5,.8][index]*width)+"px";
+    label.style.top="18px";
+    label.style.transform="translateX(-50%)";
+    label.classList.add("visible");
   });
 }
 
 function selectDimension(index){
   activeDimension=index;
   const dimension=dimensions[index];
-  buttons.forEach((button,i)=>button.classList.toggle("active",i===index));
+  dimensionButtons.forEach((button,i)=>button.classList.toggle("active",i===index));
   title.textContent=dimension.title;
   description.textContent=dimension.description;
   number.textContent="DIMENSIÓN 0"+(index+1)+" / 04";
   center.innerHTML=dimension.groups.join("<br>");
-  stageNote.textContent="Organización visual exploratoria de figuras individuales. No representa cantidades ni resultados de encuestas.";
   arrangePeople();
+  updateGroups();
 }
 
-buttons.forEach(button=>{
-  button.addEventListener("click",()=>{
-    selectDimension(Number(button.dataset.dimension));
-  });
+dimensionButtons.forEach(button=>{
+  button.addEventListener("click",()=>selectDimension(Number(button.dataset.dimension)));
 });
-
 cityButtons.forEach(button=>{
   button.addEventListener("click",()=>{
     activeCity=button.dataset.city;
@@ -729,15 +891,117 @@ cityButtons.forEach(button=>{
     arrangePeople();
   });
 });
-
 document.getElementById("reorganize").addEventListener("click",arrangePeople);
 
 createPeople();
 selectDimension(0);
-
 window.addEventListener("resize",()=>{
   arrangePeople();
+  updateGroups();
 });
+
+const countryData={
+  chile:{
+    name:"Chile",
+    subtitle:"LEY DE TRÁNSITO / 18.290",
+    sources:'Fuente: <a href="https://www.bcn.cl/leychile/navegar?idNorma=1007469" target="_blank" rel="noopener">Biblioteca del Congreso Nacional</a>',
+    topics:{
+      normativa:{
+        title:"Reglas para peatones",
+        text:"La Ley de Tránsito establece que los peatones deben circular por las aceras y cruzar por pasos peatonales o pasos a desnivel. En lugares regulados por Carabineros o semáforos, deben respetar las indicaciones antes de iniciar el cruce.",
+        fact:"PREFERENCIA PEATONAL",
+        detail:"En pasos peatonales no regulados, los peatones tienen preferencia respecto de los vehículos. También tienen preferencia frente a vehículos que viran en los pasos peatonales."
+      },
+      cruces:{
+        title:"Pasos peatonales",
+        text:"La normativa indica que el cruce debe realizarse por los pasos habilitados y prohíbe cruzar diagonalmente o por el área de intersección de las calzadas.",
+        fact:"QUÉ OBSERVAR EN TERRENO",
+        detail:"Demarcación, desgaste de las franjas, continuidad entre veredas, visibilidad, vehículos detenidos sobre el cruce y respeto de la preferencia peatonal."
+      },
+      semaforos:{
+        title:"Señales y tiempos",
+        text:"En lugares regulados por semáforos, el peatón debe esperar la indicación que habilita el cruce. Quien ya inició correctamente el cruce puede terminarlo aunque cambie la señal.",
+        fact:"QUÉ OBSERVAR EN TERRENO",
+        detail:"Duración de la espera, tiempo disponible para cruzar, señal visible, sonido de apoyo cuando exista y comportamiento de vehículos que viran."
+      },
+      practicas:{
+        title:"Prácticas peatonales",
+        text:"La ley describe conductas exigidas, pero no permite concluir por sí sola cómo se comportan cotidianamente las personas en Valparaíso.",
+        fact:"PREGUNTAS PARA EL ESTUDIO",
+        detail:"¿Se espera la señal? ¿Se cruza por la esquina? ¿Se evita un cruce? ¿Se camina por la calzada cuando la vereda está obstruida? Estas prácticas deben registrarse en terreno."
+      }
+    }
+  },
+  argentina:{
+    name:"Argentina",
+    subtitle:"LEY NACIONAL DE TRÁNSITO / 24.449",
+    sources:'Fuente: <a href="https://www.argentina.gob.ar/normativa/nacional/818/actualizacion" target="_blank" rel="noopener">Argentina.gob.ar / Ley 24.449</a>',
+    topics:{
+      normativa:{
+        title:"Reglas para peatones",
+        text:"La Ley Nacional de Tránsito establece que en zonas urbanas los peatones deben circular por la acera u otros espacios habilitados y cruzar por la senda peatonal en las intersecciones.",
+        fact:"CRUCE EN INTERSECCIONES",
+        detail:"La normativa establece que los peatones deben utilizar la senda peatonal y respetar las indicaciones de los semáforos."
+      },
+      cruces:{
+        title:"La senda peatonal",
+        text:"La senda peatonal puede estar delimitada por dos líneas blancas paralelas o por franjas blancas paralelas al sentido de circulación, conocidas como cebrado.",
+        fact:"QUÉ OBSERVAR EN TERRENO",
+        detail:"Tipo de demarcación, continuidad, desgaste, ubicación, relación con las esquinas y vehículos detenidos sobre la senda."
+      },
+      semaforos:{
+        title:"Señales y tiempos",
+        text:"En vías semaforizadas, los peatones pueden cruzar cuando tienen una señal peatonal habilitante. Si solo existe semáforo vehicular, deben atender a la señal que habilita el tránsito de vehículos en su misma dirección.",
+        fact:"QUÉ OBSERVAR EN TERRENO",
+        detail:"Señal peatonal, tiempo de espera, duración del cruce, sincronización con los vehículos y respeto de la senda."
+      },
+      practicas:{
+        title:"Prácticas peatonales",
+        text:"La normativa no describe por sí sola los hábitos cotidianos de Buenos Aires. Estos deben estudiarse a partir de observaciones y testimonios.",
+        fact:"PREGUNTAS PARA EL ESTUDIO",
+        detail:"¿Se cruza por la senda? ¿Se espera el semáforo? ¿Cómo se resuelven cruces con mucho flujo? ¿Qué ocurre cuando los vehículos giran?"
+      }
+    }
+  }
+};
+
+let activeCountry="chile";
+let activeTopic="normativa";
+const infoCountry=document.getElementById("infoCountry");
+const infoSubtitle=document.getElementById("infoSubtitle");
+const infoContent=document.getElementById("infoContent");
+const infoSource=document.getElementById("infoSource");
+
+function renderInfo(){
+  const country=countryData[activeCountry];
+  const topic=country.topics[activeTopic];
+  infoCountry.textContent=country.name;
+  infoSubtitle.textContent=country.subtitle;
+  infoContent.innerHTML=`
+    <h4>${topic.title}</h4>
+    <p>${topic.text}</p>
+    <div class="fact">
+      <strong>${topic.fact}</strong>
+      <p>${topic.detail}</p>
+    </div>`;
+  infoSource.innerHTML=country.sources;
+}
+
+document.querySelectorAll(".country-tab").forEach(button=>{
+  button.addEventListener("click",()=>{
+    activeCountry=button.dataset.country;
+    document.querySelectorAll(".country-tab").forEach(item=>item.classList.toggle("active",item===button));
+    renderInfo();
+  });
+});
+document.querySelectorAll(".info-tab").forEach(button=>{
+  button.addEventListener("click",()=>{
+    activeTopic=button.dataset.topic;
+    document.querySelectorAll(".info-tab").forEach(item=>item.classList.toggle("active",item===button));
+    renderInfo();
+  });
+});
+renderInfo();
 
 const observer=new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
@@ -747,14 +1011,12 @@ const observer=new IntersectionObserver(entries=>{
     }
   });
 },{threshold:.12});
-
 document.querySelectorAll(".reveal").forEach(element=>observer.observe(element));
 
 const progress=document.getElementById("progress");
 window.addEventListener("scroll",()=>{
   const total=document.documentElement.scrollHeight-window.innerHeight;
-  const amount=total>0?window.scrollY/total*100:0;
-  progress.style.width=amount+"%";
+  progress.style.width=(total>0?window.scrollY/total*100:0)+"%";
 },{passive:true});
 </script>
 </body>
