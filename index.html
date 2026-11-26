@@ -2,2125 +2,2237 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#080808">
-    <title>SENTIR LA CALLE | Transitabilidad</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-    <style>
-        :root {
-            --green: #174B36;
-            --green-light: #9DBBA3;
-            --green-pale: #DCE7DC;
-            --black: #080808;
-            --white: #F5F3EF;
-            --gray: #777;
-            --line: #D7D4D0;
-            --mono: 'DM Mono', monospace;
-            --font: 'Montserrat', sans-serif;
-            --ease: cubic-bezier(.2,.8,.2,1);
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            margin: 0;
-            background: var(--white);
-            color: var(--black);
-            font-family: var(--font);
-            overflow-x: hidden;
-        }
-
-        body.intro-active {
-            overflow: hidden;
-        }
-
-        button {
-            font: inherit;
-            cursor: pointer;
-        }
-
-        .mono,
-        .eyebrow {
-            font-family: var(--mono);
-            text-transform: uppercase;
-            letter-spacing: .15em;
-        }
-
-        .eyebrow {
-            font-size: 10px;
-        }
-
-        #intro {
-            position: fixed;
-            inset: 0;
-            z-index: 10000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            background: #000;
-            transition: opacity 1s, visibility 1s;
-        }
-
-        #intro.hide {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        #introVector {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            transition: opacity 1s;
-        }
-
-        #intro.show-title #introVector {
-            opacity: 0;
-        }
-
-        #introTitle {
-            position: absolute;
-            z-index: 2;
-            margin: 0;
-            color: white;
-            text-align: center;
-            font-size: clamp(48px, 11vw, 140px);
-            font-weight: 900;
-            line-height: .9;
-            letter-spacing: -.06em;
-            opacity: 0;
-            transform: translateY(25px);
-            transition: 1s;
-        }
-
-        #intro.show-title #introTitle {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .intro-controls {
-            position: absolute;
-            z-index: 4;
-            top: 25px;
-            right: 5vw;
-            display: flex;
-            gap: 8px;
-        }
-
-        .intro-controls button {
-            padding: 12px 15px;
-            border: 1px solid #777;
-            background: transparent;
-            color: white;
-            font: 9px var(--mono);
-            letter-spacing: .1em;
-            transition: .3s;
-        }
-
-        .intro-controls button:hover {
-            background: var(--green);
-            border-color: var(--green);
-        }
-
-        .progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 200;
-            height: 3px;
-            width: 0;
-            background: var(--green);
-        }
-
-        .topbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            padding: 23px 5vw;
-            color: white;
-            mix-blend-mode: difference;
-        }
-
-        .brand {
-            font-size: 11px;
-            font-weight: 900;
-            letter-spacing: .17em;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .topbar nav {
-            display: flex;
-            gap: 30px;
-            font: 9px var(--mono);
-            letter-spacing: .15em;
-        }
-
-        .topbar nav a {
-            color: inherit;
-            text-decoration: none;
-            opacity: .75;
-        }
-
-        .topbar nav a:hover {
-            opacity: 1;
-        }
-
-        .sound-toggle {
-            position: fixed;
-            z-index: 300;
-            right: 20px;
-            bottom: 20px;
-            padding: 12px 16px;
-            border: 1px solid var(--green);
-            background: var(--green);
-            color: white;
-            font: 9px var(--mono);
-            letter-spacing: .1em;
-        }
-
-        .hero {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-height: 100svh;
-            padding: 140px 5vw 55px;
-            overflow: hidden;
-            background: var(--black);
-            color: white;
-        }
-
-        .hero::before,
-        .hero::after {
-            position: absolute;
-            right: -20vw;
-            top: 5%;
-            width: 65vw;
-            height: 65vw;
-            border: 1px solid #333;
-            border-radius: 50%;
-            content: "";
-            pointer-events: none;
-        }
-
-        .hero::after {
-            top: 21%;
-            right: -7vw;
-            width: 40vw;
-            height: 40vw;
-        }
-
-        .hero-meta {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .hero h1 {
-            position: relative;
-            z-index: 2;
-            margin: 8vh 0 5vh;
-            font-size: clamp(76px, 16vw, 220px);
-            font-weight: 900;
-            line-height: .8;
-            letter-spacing: -.075em;
-        }
-
-        .hero h1 span {
-            display: block;
-            padding-left: 14vw;
-            color: var(--green-light);
-        }
-
-        .hero-bottom {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            align-items: end;
-            justify-content: space-between;
-            gap: 30px;
-        }
-
-        .hero-bottom p {
-            max-width: 480px;
-            font-size: clamp(15px, 1.6vw, 21px);
-            line-height: 1.7;
-        }
-
-        .scroll-cue {
-            color: #aaa;
-            font: 10px var(--mono);
-            letter-spacing: .19em;
-        }
-
-        .hero-orbit {
-            position: absolute;
-            top: 42%;
-            right: 18%;
-            width: 13px;
-            height: 13px;
-            border-radius: 50%;
-            background: var(--green-light);
-            box-shadow: 0 0 50px 20px #174B3640;
-            animation: orbit 7s ease-in-out infinite alternate;
-        }
-
-        @keyframes orbit {
-            to {
-                transform: translate(-90px, 120px) scale(1.8);
-            }
-        }
-
-        .marquee {
-            overflow: hidden;
-            padding: 18px 0;
-            background: var(--green);
-            color: white;
-            white-space: nowrap;
-        }
-
-        .marquee-track {
-            display: flex;
-            width: max-content;
-            animation: marquee 28s linear infinite;
-        }
-
-        .marquee span {
-            padding: 0 30px;
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: .23em;
-        }
-
-        @keyframes marquee {
-            to {
-                transform: translateX(-50%);
-            }
-        }
-
-        .section {
-            position: relative;
-            padding: 110px 7vw;
-        }
-
-        .section-dark {
-            background: var(--black);
-            color: white;
-        }
-
-        .section-head {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            align-items: start;
-            gap: 30px;
-            margin-bottom: 65px;
-        }
-
-        .section-index {
-            color: var(--green);
-            font: 10px var(--mono);
-            letter-spacing: .2em;
-        }
-
-        .section h2 {
-            margin: 0;
-            font-size: clamp(40px, 7vw, 95px);
-            font-weight: 800;
-            line-height: 1.02;
-            letter-spacing: -.065em;
-        }
-
-        .intro-copy {
-            max-width: 800px;
-            margin-left: auto;
-            font-size: clamp(20px, 3vw, 38px);
-            line-height: 1.5;
-            letter-spacing: -.02em;
-        }
-
-        .intro-copy em {
-            color: var(--green);
-            font-style: normal;
-        }
-
-        .split-statement {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8vw;
-            margin-top: 100px;
-        }
-
-        .statement {
-            padding-top: 22px;
-            border-top: 1px solid var(--line);
-        }
-
-        .statement .number {
-            color: var(--green);
-            font: 10px var(--mono);
-            letter-spacing: .2em;
-        }
-
-        .statement h3 {
-            margin: 30px 0 15px;
-            font-size: clamp(24px, 3vw, 40px);
-            letter-spacing: -.025em;
-        }
-
-        .statement p {
-            max-width: 390px;
-            color: var(--gray);
-            font-size: 13px;
-            line-height: 1.9;
-        }
-
-        .territories {
-            background: var(--black);
-            color: white;
-        }
-
-        .territory-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
-        .territory {
-            position: relative;
-            display: flex;
-            min-height: 440px;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 35px;
-            overflow: hidden;
-            background: #171717;
-            transition: background .6s;
-        }
-
-        .territory:hover {
-            background: #17372A;
-        }
-
-        .territory-number {
-            color: #aaa;
-            font: 10px var(--mono);
-            letter-spacing: .2em;
-        }
-
-        .territory h3 {
-            position: relative;
-            z-index: 2;
-            margin: 0;
-            font-size: clamp(38px, 5vw, 68px);
-            line-height: 1;
-            letter-spacing: -.05em;
-        }
-
-        .territory p {
-            max-width: 330px;
-            color: #c6c6c6;
-            font-size: 12px;
-            line-height: 1.9;
-        }
-
-        .territory-shape {
-            position: absolute;
-            top: 90px;
-            right: -80px;
-            width: 260px;
-            height: 260px;
-            border: 1px solid #555;
-            border-radius: 50%;
-            transition: transform 1s;
-        }
-
-        .territory-shape::before,
-        .territory-shape::after {
-            position: absolute;
-            inset: 30px;
-            border: 1px solid #555;
-            border-radius: 50%;
-            content: "";
-        }
-
-        .territory-shape::after {
-            inset: 70px;
-        }
-
-        .territory:hover .territory-shape {
-            transform: scale(1.35) rotate(30deg);
-        }
-
-        .data-section {
-            background: var(--white);
-        }
-
-        .data-intro {
-            max-width: 780px;
-            margin: 0 0 55px;
-            font-size: clamp(19px, 2.4vw, 29px);
-            line-height: 1.6;
-            letter-spacing: -.02em;
-        }
-
-        .filters {
-            display: flex;
-            justify-content: space-between;
-            align-items: end;
-            flex-wrap: wrap;
-            gap: 25px;
-            margin-bottom: 35px;
-        }
-
-        .filter-label {
-            margin-bottom: 12px;
-            color: var(--gray);
-            font: 9px var(--mono);
-            letter-spacing: .16em;
-        }
-
-        .filter-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-
-        .filter-button {
-            padding: 11px 14px;
-            border: 1px solid var(--line);
-            background: transparent;
-            color: #777;
-            font: 9px var(--mono);
-            letter-spacing: .08em;
-            transition: .3s;
-        }
-
-        .filter-button.active,
-        .filter-button:hover {
-            border-color: var(--green);
-            background: var(--green);
-            color: white;
-        }
-
-        .chart-heading {
-            display: flex;
-            justify-content: space-between;
-            align-items: end;
-            gap: 25px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid var(--black);
-        }
-
-        .chart-heading h3 {
-            margin: 10px 0 0;
-            font-size: clamp(30px, 5vw, 58px);
-            line-height: .95;
-            letter-spacing: -.065em;
-        }
-
-        .chart-heading p {
-            max-width: 310px;
-            color: var(--gray);
-            font: 10px var(--mono);
-            line-height: 1.8;
-        }
-
-        .chart-wrapper {
-            margin-top: 20px;
-            padding: 15px 5px;
-            overflow: hidden;
-            background: #fff;
-        }
-
-        #streetChart {
-            display: block;
-            width: 100%;
-            height: auto;
-            overflow: visible;
-        }
-
-        .curve-base {
-            fill: none;
-            stroke: #E3E8E1;
-            stroke-width: 10;
-        }
-
-        .curve-positive {
-            fill: none;
-            stroke: var(--green);
-            stroke-width: 10;
-            stroke-linecap: butt;
-            transition: stroke-dasharray 1.2s var(--ease), stroke-width .4s;
-        }
-
-        .curve-negative {
-            fill: none;
-            stroke: var(--green-light);
-            stroke-width: 10;
-            stroke-linecap: butt;
-            transition: stroke-dasharray 1.2s var(--ease), stroke-width .4s;
-        }
-
-        .curve-pending {
-            fill: none;
-            stroke: #CBD3C9;
-            stroke-width: 8;
-            stroke-dasharray: 3 9;
-        }
-
-        .curve-group {
-            cursor: pointer;
-            transition: opacity .4s;
-        }
-
-        .curve-group.selected .curve-positive,
-        .curve-group.selected .curve-negative {
-            stroke-width: 15;
-        }
-
-        .curve-group.dimmed {
-            opacity: .15;
-        }
-
-        .curve-name {
-            fill: #171A17;
-            font: 11px var(--mono);
-        }
-
-        .curve-city {
-            fill: #858A82;
-            font: 8px var(--mono);
-        }
-
-        .day-point {
-            stroke: white;
-            stroke-width: 2;
-        }
-
-        .day-point.selected {
-            stroke: #111;
-            stroke-width: 3;
-        }
-
-        .axis-line {
-            stroke: #B7BEB5;
-            stroke-width: 1;
-        }
-
-        .axis-label {
-            fill: #858A82;
-            font: 9px var(--mono);
-        }
-
-        .chart-legend {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 15px;
-            padding: 18px 5px 5px;
-            border-top: 1px solid var(--line);
-            font: 9px var(--mono);
-        }
-
-        .legend-items {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 18px;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-        }
-
-        .legend-dot {
-            width: 9px;
-            height: 9px;
-            border-radius: 50%;
-        }
-
-        .detail-grid {
-            display: grid;
-            grid-template-columns: 1.3fr repeat(3, 1fr);
-            margin-top: 25px;
-            background: var(--green);
-            color: white;
-        }
-
-        .detail-cell {
-            min-width: 0;
-            padding: 20px;
-            border-right: 1px solid #ffffff35;
-        }
-
-        .detail-cell:last-child {
-            border: none;
-        }
-
-        .detail-label {
-            color: #B8CCB8;
-            font: 9px var(--mono);
-            letter-spacing: .12em;
-        }
-
-        .detail-number {
-            margin-top: 13px;
-            font-size: clamp(27px, 4vw, 45px);
-            font-weight: 800;
-            letter-spacing: -.06em;
-        }
-
-        .detail-name {
-            margin-top: 12px;
-            font-size: 16px;
-            font-weight: 700;
-        }
-
-        .detail-note {
-            margin-top: 7px;
-            color: #D4E2D7;
-            font: 9px var(--mono);
-        }
-
-        .day-table {
-            margin-top: 70px;
-        }
-
-        .day-table h3 {
-            margin: 10px 0 25px;
-            font-size: clamp(30px, 5vw, 55px);
-            letter-spacing: -.07em;
-        }
-
-        .day-row {
-            display: grid;
-            grid-template-columns: 150px 1fr 100px;
-            align-items: center;
-            gap: 20px;
-            padding: 17px 5px;
-            border-top: 1px solid var(--line);
-        }
-
-        .day-name {
-            font: 10px var(--mono);
-        }
-
-        .day-bar {
-            display: flex;
-            height: 12px;
-            overflow: hidden;
-            background: #E8EBE5;
-        }
-
-        .day-bar-positive {
-            height: 100%;
-            background: var(--green);
-            transition: width .8s;
-        }
-
-        .day-bar-negative {
-            height: 100%;
-            background: var(--green-light);
-            transition: width .8s;
-        }
-
-        .day-total {
-            text-align: right;
-            font: 10px var(--mono);
-        }
-
-        .street-section {
-            margin-top: 85px;
-        }
-
-        .street-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-        }
-
-        .street-card {
-            min-width: 0;
-            min-height: 205px;
-            padding: 17px;
-            border-top: 3px solid var(--green);
-            background: white;
-            cursor: pointer;
-            transition: .3s;
-        }
-
-        .street-card:hover,
-        .street-card.selected {
-            transform: translateY(-4px);
-            background: var(--green-pale);
-        }
-
-        .street-card.pending {
-            border-color: #B8C4B8;
-        }
-
-        .street-card h4 {
-            margin: 12px 0;
-            font-size: 17px;
-        }
-
-        .street-city {
-            color: var(--gray);
-            font: 9px var(--mono);
-            text-transform: uppercase;
-        }
-
-        .person-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px;
-            min-height: 29px;
-            margin: 17px 0;
-        }
-
-        .person-icon {
-            width: 14px;
-            height: 25px;
-            animation: appear .5s forwards;
-            opacity: 0;
-        }
-
-        .person-icon svg {
-            width: 100%;
-            height: 100%;
-        }
-
-        .person-icon.positive {
-            color: var(--green);
-        }
-
-        .person-icon.negative {
-            color: var(--green-light);
-        }
-
-        @keyframes appear {
-            from {
-                opacity: 0;
-                transform: translateY(8px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .card-data {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 8px;
-            padding-top: 10px;
-            border-top: 1px solid var(--line);
-            font: 9px var(--mono);
-        }
-
-        .card-data strong {
-            font-size: 15px;
-        }
-
-        .pending-text {
-            color: var(--gray);
-            font: 9px var(--mono);
-            line-height: 1.8;
-        }
-
-        .summary {
-            position: relative;
-            min-height: 75vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 75px 7vw;
-            overflow: hidden;
-            background: var(--green);
-            color: white;
-        }
-
-        .summary h2 {
-            position: relative;
-            z-index: 2;
-            max-width: 1000px;
-            margin: 30px 0;
-            font-size: clamp(50px, 10vw, 125px);
-            line-height: .9;
-            letter-spacing: -.075em;
-        }
-
-        .summary-number {
-            position: relative;
-            z-index: 2;
-            font-size: clamp(65px, 12vw, 140px);
-            font-weight: 900;
-            letter-spacing: -.1em;
-        }
-
-        .summary p {
-            position: relative;
-            z-index: 2;
-            max-width: 600px;
-            color: #D4E2D7;
-            font: 11px var(--mono);
-            line-height: 1.9;
-        }
-
-        .summary-orbit {
-            position: absolute;
-            top: 10%;
-            right: -10%;
-            width: 50vw;
-            height: 50vw;
-            border: 1px solid #ffffff35;
-            border-radius: 50%;
-            animation: float 9s ease-in-out infinite alternate;
-        }
-
-        .summary-orbit::before,
-        .summary-orbit::after {
-            position: absolute;
-            inset: 15%;
-            border: 1px solid #ffffff35;
-            border-radius: 50%;
-            content: "";
-        }
-
-        .summary-orbit::after {
-            inset: 30%;
-        }
-
-        @keyframes float {
-            to {
-                transform: translate(-50px, 50px) scale(1.1);
-            }
-        }
-
-        .summary-footer {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 15px;
-            padding-top: 18px;
-            border-top: 1px solid #ffffff40;
-            color: #D4E2D7;
-            font: 9px var(--mono);
-        }
-
-        .interlude {
-            position: relative;
-            display: flex;
-            min-height: 75vh;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 80px 7vw;
-            overflow: hidden;
-            background: var(--black);
-            color: white;
-        }
-
-        .interlude h2 {
-            position: relative;
-            z-index: 2;
-            max-width: 1100px;
-            margin: 0;
-            font-size: clamp(65px, 12vw, 165px);
-            line-height: .9;
-            letter-spacing: -.06em;
-        }
-
-        .interlude h2 span {
-            color: var(--green-light);
-        }
-
-        .footer {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-            padding: 35px 7vw;
-            background: #000;
-            color: white;
-            font: 9px var(--mono);
-            letter-spacing: .15em;
-        }
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity .9s var(--ease), transform .9s var(--ease);
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        @media(max-width: 1000px) {
-            .street-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .detail-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .detail-cell:nth-child(2) {
-                border-right: none;
-            }
-        }
-
-        @media(max-width: 800px) {
-            .section {
-                padding: 85px 6vw;
-            }
-
-            .section-head {
-                grid-template-columns: 1fr;
-                gap: 20px;
-                margin-bottom: 45px;
-            }
-
-            .split-statement,
-            .territory-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .territory {
-                min-height: 340px;
-            }
-
-            .chart-heading {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
-
-        @media(max-width: 560px) {
-            .topbar {
-                padding: 18px 5vw;
-            }
-
-            .topbar nav {
-                gap: 12px;
-                font-size: 8px;
-            }
-
-            .topbar nav a:nth-child(2) {
-                display: none;
-            }
-
-            .hero {
-                padding: 120px 6vw 40px;
-            }
-
-            .hero h1 {
-                margin: 13vh 0;
-                font-size: 19vw;
-            }
-
-            .hero h1 span {
-                padding-left: 5vw;
-            }
-
-            .hero-bottom {
-                display: block;
-            }
-
-            .scroll-cue {
-                margin-top: 35px;
-            }
-
-            .hero-meta {
-                font-size: 8px;
-            }
-
-            .filters {
-                align-items: flex-start;
-            }
-
-            .filter-button {
-                padding: 9px;
-                font-size: 8px;
-            }
-
-            .chart-wrapper {
-                padding: 10px 0;
-            }
-
-            .detail-cell {
-                padding: 14px;
-            }
-
-            .street-grid {
-                gap: 8px;
-            }
-
-            .street-card {
-                min-height: 170px;
-                padding: 12px;
-            }
-
-            .street-card h4 {
-                font-size: 14px;
-            }
-
-            .day-row {
-                grid-template-columns: 85px 1fr 65px;
-                gap: 9px;
-                font-size: 8px;
-            }
-
-            .summary {
-                min-height: 65vh;
-                padding: 55px 6vw;
-            }
-
-            .interlude {
-                min-height: 65vh;
-                padding: 60px 6vw;
-            }
-
-            .footer {
-                flex-direction: column;
-            }
-
-            .intro-controls {
-                top: 15px;
-                right: 12px;
-                flex-direction: column;
-            }
-
-            .intro-controls button {
-                padding: 9px;
-                font-size: 8px;
-            }
-        }
-
-        @media(prefers-reduced-motion: reduce) {
-            *,
-            *::before,
-            *::after {
-                animation-duration: .01ms !important;
-                transition-duration: .01ms !important;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#000000">
+<title>SENTIR LA CALLE</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --green: #174B36;
+    --green-light: #A8C3AB;
+    --green-pale: #E0E9DF;
+    --black: #080808;
+    --white: #F5F3EF;
+    --gray: #777;
+    --line: #D7D4D0;
+    --font: 'Montserrat', sans-serif;
+    --mono: 'DM Mono', monospace;
+    --ease: cubic-bezier(.2,.8,.2,1);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background: var(--white);
+    color: var(--black);
+    font-family: var(--font);
+    overflow-x: hidden;
+}
+
+body.intro-active {
+    overflow: hidden;
+}
+
+button {
+    font: inherit;
+    cursor: pointer;
+}
+
+.mono,
+.eyebrow {
+    font-family: var(--mono);
+    text-transform: uppercase;
+    letter-spacing: .16em;
+}
+
+.eyebrow {
+    font-size: 10px;
+}
+
+#intro {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #000;
+    transition: opacity 1s, visibility 1s;
+}
+
+#intro.hide {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+#introVector {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: opacity 1s;
+}
+
+#intro.show-title #introVector {
+    opacity: 0;
+}
+
+#introTitle {
+    position: absolute;
+    z-index: 2;
+    margin: 0;
+    color: white;
+    text-align: center;
+    font-size: clamp(48px, 11vw, 140px);
+    font-weight: 900;
+    line-height: .9;
+    letter-spacing: -.06em;
+    opacity: 0;
+    transform: translateY(25px);
+    transition: 1s;
+}
+
+#intro.show-title #introTitle {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.intro-controls {
+    position: absolute;
+    top: 25px;
+    right: 5vw;
+    z-index: 4;
+    display: flex;
+    gap: 8px;
+}
+
+.intro-controls button {
+    padding: 12px 15px;
+    border: 1px solid #777;
+    background: transparent;
+    color: white;
+    font: 9px var(--mono);
+    letter-spacing: .1em;
+    transition: .3s;
+}
+
+.intro-controls button:hover {
+    background: var(--green);
+    border-color: var(--green);
+}
+
+.progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 200;
+    height: 3px;
+    width: 0;
+    background: var(--green);
+}
+
+.topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 23px 5vw;
+    color: white;
+    mix-blend-mode: difference;
+}
+
+.brand {
+    color: inherit;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: .17em;
+    text-decoration: none;
+}
+
+.topbar nav {
+    display: flex;
+    gap: 30px;
+    font: 9px var(--mono);
+    letter-spacing: .15em;
+}
+
+.topbar nav a {
+    color: inherit;
+    text-decoration: none;
+    opacity: .75;
+}
+
+.topbar nav a:hover {
+    opacity: 1;
+}
+
+.sound-toggle {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 300;
+    padding: 12px 16px;
+    border: 1px solid var(--green);
+    background: var(--green);
+    color: white;
+    font: 9px var(--mono);
+    letter-spacing: .1em;
+}
+
+.hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100svh;
+    padding: 140px 5vw 55px;
+    overflow: hidden;
+    background: var(--black);
+    color: white;
+}
+
+.hero::before,
+.hero::after {
+    position: absolute;
+    border: 1px solid #333;
+    border-radius: 50%;
+    content: "";
+    pointer-events: none;
+}
+
+.hero::before {
+    top: 5%;
+    right: -20vw;
+    width: 65vw;
+    height: 65vw;
+}
+
+.hero::after {
+    top: 21%;
+    right: -7vw;
+    width: 40vw;
+    height: 40vw;
+}
+
+.hero-meta {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+}
+
+.hero h1 {
+    position: relative;
+    z-index: 2;
+    margin: 8vh 0 5vh;
+    font-size: clamp(76px, 16vw, 220px);
+    font-weight: 900;
+    line-height: .8;
+    letter-spacing: -.075em;
+}
+
+.hero h1 span {
+    display: block;
+    padding-left: 14vw;
+    color: var(--green-light);
+}
+
+.hero-bottom {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.hero-bottom p {
+    max-width: 480px;
+    font-size: clamp(15px, 1.6vw, 21px);
+    line-height: 1.7;
+}
+
+.scroll-cue {
+    color: #aaa;
+    font: 10px var(--mono);
+    letter-spacing: .19em;
+}
+
+.hero-orbit {
+    position: absolute;
+    top: 42%;
+    right: 18%;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: var(--green-light);
+    box-shadow: 0 0 50px 20px #174B3640;
+    animation: orbit 7s ease-in-out infinite alternate;
+}
+
+@keyframes orbit {
+    to {
+        transform: translate(-90px,120px) scale(1.8);
+    }
+}
+
+.marquee {
+    overflow: hidden;
+    padding: 18px 0;
+    background: var(--green);
+    color: white;
+    white-space: nowrap;
+}
+
+.marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 28s linear infinite;
+}
+
+.marquee span {
+    padding: 0 30px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .23em;
+}
+
+@keyframes marquee {
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+.section {
+    position: relative;
+    padding: 110px 7vw;
+}
+
+.section-dark {
+    background: var(--black);
+    color: white;
+}
+
+.section-head {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    align-items: start;
+    gap: 30px;
+    margin-bottom: 65px;
+}
+
+.section-index {
+    color: var(--green);
+    font: 10px var(--mono);
+    letter-spacing: .2em;
+}
+
+.section h2 {
+    margin: 0;
+    font-size: clamp(40px, 7vw, 95px);
+    font-weight: 800;
+    line-height: 1.02;
+    letter-spacing: -.065em;
+}
+
+.intro-copy {
+    max-width: 800px;
+    margin-left: auto;
+    font-size: clamp(20px, 3vw, 38px);
+    line-height: 1.5;
+    letter-spacing: -.02em;
+}
+
+.intro-copy em {
+    color: var(--green);
+    font-style: normal;
+}
+
+.split-statement {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8vw;
+    margin-top: 100px;
+}
+
+.statement {
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+}
+
+.statement .number {
+    color: var(--green);
+    font: 10px var(--mono);
+    letter-spacing: .2em;
+}
+
+.statement h3 {
+    margin: 30px 0 15px;
+    font-size: clamp(24px, 3vw, 40px);
+    letter-spacing: -.025em;
+}
+
+.statement p {
+    max-width: 390px;
+    color: var(--gray);
+    font-size: 13px;
+    line-height: 1.9;
+}
+
+.territories {
+    background: var(--black);
+    color: white;
+}
+
+.territory-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.territory {
+    position: relative;
+    display: flex;
+    min-height: 440px;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 35px;
+    overflow: hidden;
+    background: #171717;
+    transition: background .6s;
+}
+
+.territory:hover {
+    background: #17372A;
+}
+
+.territory-number {
+    color: #aaa;
+    font: 10px var(--mono);
+    letter-spacing: .2em;
+}
+
+.territory h3 {
+    position: relative;
+    z-index: 2;
+    margin: 0;
+    font-size: clamp(38px, 5vw, 68px);
+    line-height: 1;
+    letter-spacing: -.05em;
+}
+
+.territory p {
+    max-width: 330px;
+    color: #c6c6c6;
+    font-size: 12px;
+    line-height: 1.9;
+}
+
+.territory-shape {
+    position: absolute;
+    top: 90px;
+    right: -80px;
+    width: 260px;
+    height: 260px;
+    border: 1px solid #555;
+    border-radius: 50%;
+    transition: transform 1s;
+}
+
+.territory-shape::before,
+.territory-shape::after {
+    position: absolute;
+    inset: 30px;
+    border: 1px solid #555;
+    border-radius: 50%;
+    content: "";
+}
+
+.territory-shape::after {
+    inset: 70px;
+}
+
+.territory:hover .territory-shape {
+    transform: scale(1.35) rotate(30deg);
+}
+
+.data-intro {
+    max-width: 780px;
+    margin: 0 0 55px;
+    font-size: clamp(19px, 2.4vw, 29px);
+    line-height: 1.6;
+    letter-spacing: -.02em;
+}
+
+.filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    flex-wrap: wrap;
+    gap: 25px;
+    margin-bottom: 35px;
+}
+
+.filter-label {
+    margin-bottom: 12px;
+    color: var(--gray);
+    font: 9px var(--mono);
+    letter-spacing: .16em;
+}
+
+.filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.filter-button {
+    padding: 11px 14px;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: #777;
+    font: 9px var(--mono);
+    letter-spacing: .08em;
+    transition: .3s;
+}
+
+.filter-button.active,
+.filter-button:hover {
+    border-color: var(--green);
+    background: var(--green);
+    color: white;
+}
+
+.chart-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 25px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--black);
+}
+
+.chart-heading h3 {
+    margin: 10px 0 0;
+    font-size: clamp(30px, 5vw, 58px);
+    line-height: .95;
+    letter-spacing: -.065em;
+}
+
+.chart-heading p {
+    max-width: 310px;
+    color: var(--gray);
+    font: 10px var(--mono);
+    line-height: 1.8;
+}
+
+.chart-wrapper {
+    margin-top: 20px;
+    padding: 20px 5px;
+    overflow: hidden;
+    background: white;
+}
+
+#streetChart {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+}
+
+.curve-base {
+    fill: none;
+    stroke: #E3E8E1;
+    stroke-width: 11;
+}
+
+.curve-positive {
+    fill: none;
+    stroke: var(--green);
+    stroke-width: 11;
+    stroke-linecap: round;
+    transition: stroke-dasharray 1.2s var(--ease), stroke-width .4s;
+}
+
+.curve-negative {
+    fill: none;
+    stroke: var(--green-light);
+    stroke-width: 11;
+    stroke-linecap: round;
+    transition: stroke-dasharray 1.2s var(--ease), stroke-width .4s;
+}
+
+.curve-pending {
+    fill: none;
+    stroke: #CBD3C9;
+    stroke-width: 8;
+    stroke-dasharray: 3 9;
+}
+
+.curve-group {
+    cursor: pointer;
+    transition: opacity .4s;
+}
+
+.curve-group.selected .curve-positive,
+.curve-group.selected .curve-negative {
+    stroke-width: 16;
+}
+
+.curve-group.dimmed {
+    opacity: .16;
+}
+
+.curve-name {
+    fill: #171A17;
+    font: 11px var(--mono);
+}
+
+.curve-city {
+    fill: #858A82;
+    font: 8px var(--mono);
+}
+
+.day-point {
+    stroke: white;
+    stroke-width: 2;
+}
+
+.day-point.selected {
+    stroke: #111;
+    stroke-width: 3;
+}
+
+.axis-line {
+    stroke: #B7BEB5;
+    stroke-width: 1;
+}
+
+.axis-label {
+    fill: #858A82;
+    font: 9px var(--mono);
+}
+
+.chart-legend {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 18px 5px 5px;
+    border-top: 1px solid var(--line);
+    font: 9px var(--mono);
+}
+
+.legend-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.legend-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+}
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: 1.3fr repeat(3, 1fr);
+    margin-top: 25px;
+    background: var(--green);
+    color: white;
+}
+
+.detail-cell {
+    min-width: 0;
+    padding: 20px;
+    border-right: 1px solid #ffffff35;
+}
+
+.detail-cell:last-child {
+    border: none;
+}
+
+.detail-label {
+    color: #B8CCB8;
+    font: 9px var(--mono);
+    letter-spacing: .12em;
+}
+
+.detail-number {
+    margin-top: 13px;
+    font-size: clamp(27px, 4vw, 45px);
+    font-weight: 800;
+    letter-spacing: -.06em;
+}
+
+.detail-name {
+    margin-top: 12px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.detail-note {
+    margin-top: 7px;
+    color: #D4E2D7;
+    font: 9px var(--mono);
+}
+
+.day-table {
+    margin-top: 70px;
+}
+
+.day-table h3 {
+    margin: 10px 0 25px;
+    font-size: clamp(30px, 5vw, 55px);
+    letter-spacing: -.07em;
+}
+
+.day-row {
+    display: grid;
+    grid-template-columns: 150px 1fr 100px;
+    align-items: center;
+    gap: 20px;
+    padding: 17px 5px;
+    border-top: 1px solid var(--line);
+}
+
+.day-name {
+    font: 10px var(--mono);
+}
+
+.day-bar {
+    display: flex;
+    height: 12px;
+    overflow: hidden;
+    background: #E8EBE5;
+}
+
+.day-bar-positive {
+    height: 100%;
+    background: var(--green);
+    transition: width .8s;
+}
+
+.day-bar-negative {
+    height: 100%;
+    background: var(--green-light);
+    transition: width .8s;
+}
+
+.day-total {
+    text-align: right;
+    font: 10px var(--mono);
+}
+
+.street-section {
+    margin-top: 85px;
+}
+
+.street-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.street-card {
+    min-width: 0;
+    min-height: 205px;
+    padding: 17px;
+    border-top: 3px solid var(--green);
+    background: white;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.street-card:hover,
+.street-card.selected {
+    transform: translateY(-4px);
+    background: var(--green-pale);
+}
+
+.street-card.pending {
+    border-color: #B8C4B8;
+}
+
+.street-card h4 {
+    margin: 12px 0;
+    font-size: 17px;
+}
+
+.street-city {
+    color: var(--gray);
+    font: 9px var(--mono);
+    text-transform: uppercase;
+}
+
+.person-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    min-height: 29px;
+    margin: 17px 0;
+}
+
+.person-icon {
+    width: 14px;
+    height: 25px;
+    animation: appear .5s forwards;
+    opacity: 0;
+}
+
+.person-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.person-icon.positive {
+    color: var(--green);
+}
+
+.person-icon.negative {
+    color: var(--green-light);
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card-data {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
+    font: 9px var(--mono);
+}
+
+.card-data strong {
+    font-size: 15px;
+}
+
+.pending-text {
+    color: var(--gray);
+    font: 9px var(--mono);
+    line-height: 1.8;
+}
+
+.summary {
+    position: relative;
+    display: flex;
+    min-height: 75vh;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 75px 7vw;
+    overflow: hidden;
+    background: var(--green);
+    color: white;
+}
+
+.summary h2 {
+    position: relative;
+    z-index: 2;
+    max-width: 1000px;
+    margin: 30px 0;
+    font-size: clamp(50px, 10vw, 125px);
+    line-height: .9;
+    letter-spacing: -.075em;
+}
+
+.summary-number {
+    position: relative;
+    z-index: 2;
+    font-size: clamp(65px, 12vw, 140px);
+    font-weight: 900;
+    letter-spacing: -.1em;
+}
+
+.summary p {
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+    color: #D4E2D7;
+    font: 11px var(--mono);
+    line-height: 1.9;
+}
+
+.summary-orbit {
+    position: absolute;
+    top: 10%;
+    right: -10%;
+    width: 50vw;
+    height: 50vw;
+    border: 1px solid #ffffff35;
+    border-radius: 50%;
+    animation: float 9s ease-in-out infinite alternate;
+}
+
+.summary-orbit::before,
+.summary-orbit::after {
+    position: absolute;
+    inset: 15%;
+    border: 1px solid #ffffff35;
+    border-radius: 50%;
+    content: "";
+}
+
+.summary-orbit::after {
+    inset: 30%;
+}
+
+@keyframes float {
+    to {
+        transform: translate(-50px,50px) scale(1.1);
+    }
+}
+
+.summary-footer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding-top: 18px;
+    border-top: 1px solid #ffffff40;
+    color: #D4E2D7;
+    font: 9px var(--mono);
+}
+
+.interlude {
+    position: relative;
+    display: flex;
+    min-height: 75vh;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 80px 7vw;
+    overflow: hidden;
+    background: var(--black);
+    color: white;
+}
+
+.interlude h2 {
+    position: relative;
+    z-index: 2;
+    max-width: 1100px;
+    margin: 0;
+    font-size: clamp(65px, 12vw, 165px);
+    line-height: .9;
+    letter-spacing: -.06em;
+}
+
+.interlude h2 span {
+    color: var(--green-light);
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 35px 7vw;
+    background: #000;
+    color: white;
+    font: 9px var(--mono);
+    letter-spacing: .18em;
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity .9s var(--ease), transform .9s var(--ease);
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media(max-width: 1000px) {
+    .street-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .detail-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .detail-cell:nth-child(2) {
+        border-right: none;
+    }
+}
+
+@media(max-width: 800px) {
+    .section {
+        padding: 85px 6vw;
+    }
+
+    .section-head {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        margin-bottom: 45px;
+    }
+
+    .split-statement,
+    .territory-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .territory {
+        min-height: 340px;
+    }
+
+    .chart-heading {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media(max-width: 560px) {
+    .topbar {
+        padding: 18px 5vw;
+    }
+
+    .topbar nav {
+        gap: 9px;
+        font-size: 8px;
+    }
+
+    .topbar nav a:nth-child(2) {
+        display: none;
+    }
+
+    .hero {
+        padding: 120px 6vw 40px;
+    }
+
+    .hero h1 {
+        margin: 13vh 0;
+        font-size: 19vw;
+    }
+
+    .hero h1 span {
+        padding-left: 5vw;
+    }
+
+    .hero-bottom {
+        display: block;
+    }
+
+    .scroll-cue {
+        margin-top: 35px;
+    }
+
+    .hero-meta {
+        font-size: 8px;
+    }
+
+    .filters {
+        align-items: flex-start;
+    }
+
+    .filter-button {
+        padding: 9px;
+        font-size: 8px;
+    }
+
+    .chart-wrapper {
+        padding: 10px 0;
+    }
+
+    .detail-cell {
+        padding: 14px;
+    }
+
+    .street-grid {
+        gap: 8px;
+    }
+
+    .street-card {
+        min-height: 170px;
+        padding: 12px;
+    }
+
+    .street-card h4 {
+        font-size: 14px;
+    }
+
+    .day-row {
+        grid-template-columns: 85px 1fr 65px;
+        gap: 9px;
+    }
+
+    .summary {
+        min-height: 65vh;
+        padding: 55px 6vw;
+    }
+
+    .interlude {
+        min-height: 65vh;
+        padding: 60px 6vw;
+    }
+
+    .footer {
+        flex-direction: column;
+    }
+
+    .intro-controls {
+        top: 15px;
+        right: 12px;
+        flex-direction: column;
+    }
+
+    .intro-controls button {
+        padding: 9px;
+        font-size: 8px;
+    }
+}
+
+@media(prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+</style>
 </head>
 
 <body class="intro-active">
 
-    <div id="intro">
-        <div class="intro-controls">
-            <button id="musicIntro" type="button">♫ ACTIVAR MÚSICA</button>
-            <button id="skipIntro" type="button">SALTAR INTRODUCCIÓN ↗</button>
-        </div>
-
-        <img id="introVector" src="caminar_frames/frame-01.webp" alt="Secuencia de una persona caminando">
-
-        <h1 id="introTitle">SENTIR<br>LA CALLE.</h1>
+<div id="intro">
+    <div class="intro-controls">
+        <button id="musicIntro" type="button">♫ ACTIVAR MÚSICA</button>
+        <button id="skipIntro" type="button">SALTAR INTRODUCCIÓN ↗</button>
     </div>
 
-    <div class="progress" id="progress"></div>
+    <img id="introVector" src="caminar_frames/frame-01.webp" alt="Secuencia de una persona caminando">
 
-    <header class="topbar">
-        <a href="#" class="brand">SENTIR LA CALLE.</a>
+    <h1 id="introTitle">SENTIR<br>LA CALLE.</h1>
+</div>
 
-        <nav>
-            <a href="#pregunta">PROYECTO</a>
-            <a href="#territorios">TERRITORIOS</a>
-            <a href="#visualizacion">EXPLORAR</a>
-        </nav>
-    </header>
+<div class="progress" id="progress"></div>
 
-    <button class="sound-toggle" id="soundToggle">♫ ACTIVAR SONIDO</button>
+<header class="topbar">
+    <a href="#" class="brand">SENTIR LA CALLE.</a>
 
-    <main>
+    <nav>
+        <a href="#pregunta">PROYECTO</a>
+        <a href="#territorios">TERRITORIOS</a>
+        <a href="#visualizacion">EXPLORAR</a>
+    </nav>
+</header>
 
-        <section class="hero">
+<button class="sound-toggle" id="soundToggle">♫ ACTIVAR SONIDO</button>
 
-            <div class="hero-meta eyebrow">
-                <span>Investigación urbana</span>
-                <span>Valparaíso / Buenos Aires</span>
+<main>
+
+<section class="hero">
+
+    <div class="hero-meta eyebrow">
+        <span>Investigación urbana</span>
+        <span>Valparaíso / Buenos Aires</span>
+    </div>
+
+    <div>
+        <h1>SENTIR<br><span>LA CALLE.</span></h1>
+
+        <div class="hero-bottom">
+            <p>
+                Caminar es una experiencia construida entre el cuerpo,
+                la infraestructura y las prácticas cotidianas de la ciudad.
+            </p>
+
+            <div class="scroll-cue">
+                DESPLAZARSE PARA DESCUBRIR ↓
             </div>
+        </div>
+    </div>
+
+    <div class="hero-orbit"></div>
+
+</section>
+
+<div class="marquee">
+    <div class="marquee-track">
+        <span>CAMINAR</span>
+        <span>OBSERVAR</span>
+        <span>CRUZAR</span>
+        <span>HABITAR</span>
+        <span>TRANSITAR</span>
+        <span>CAMINAR</span>
+        <span>OBSERVAR</span>
+        <span>CRUZAR</span>
+        <span>HABITAR</span>
+        <span>TRANSITAR</span>
+    </div>
+</div>
+
+<section class="section" id="pregunta">
+
+    <div class="section-head reveal">
+        <div class="section-index">01 / LA PREGUNTA</div>
+        <h2>¿Qué significa realmente poder caminar?</h2>
+    </div>
+
+    <p class="intro-copy reveal">
+        La calle parece un espacio compartido. Pero
+        <em>no todas las personas la experimentan de la misma manera.</em>
+        Su forma, sus cruces y las decisiones de quienes la recorren
+        transforman cada desplazamiento.
+    </p>
+
+    <div class="split-statement">
+
+        <article class="statement reveal">
+            <div class="number">01 / LO QUE EXISTE</div>
+            <h3>La calle construida</h3>
+            <p>
+                Veredas, pavimentos, cruces peatonales, semáforos,
+                intersecciones y condiciones materiales que configuran
+                el recorrido.
+            </p>
+        </article>
+
+        <article class="statement reveal">
+            <div class="number">02 / LO QUE SE VIVE</div>
+            <h3>La calle percibida</h3>
+            <p>
+                Las decisiones, hábitos, dificultades y experiencias
+                que aparecen cuando las personas se desplazan por
+                el espacio público.
+            </p>
+        </article>
+
+    </div>
+</section>
+
+<section class="section territories" id="territorios">
+
+    <div class="section-head reveal">
+        <div class="section-index">02 / DOS CONTEXTOS</div>
+        <h2>Dos territorios.<br>Una pregunta compartida.</h2>
+    </div>
+
+    <div class="territory-grid">
+
+        <article class="territory reveal">
+            <div class="territory-number">01 / CHILE</div>
+            <div class="territory-shape"></div>
 
             <div>
-                <h1>SENTIR<br><span>LA CALLE.</span></h1>
-
-                <div class="hero-bottom">
-                    <p>
-                        Caminar es una experiencia construida entre el cuerpo,
-                        la infraestructura y las prácticas cotidianas de la ciudad.
-                    </p>
-
-                    <div class="scroll-cue">
-                        DESPLAZARSE PARA DESCUBRIR ↓
-                    </div>
-                </div>
+                <h3>Barrio Puerto<br>Valparaíso.</h3>
+                <p>
+                    Cuatro calles para observar las condiciones
+                    y experiencias de transitabilidad.
+                </p>
             </div>
+        </article>
 
-            <div class="hero-orbit"></div>
+        <article class="territory reveal">
+            <div class="territory-number">02 / ARGENTINA</div>
+            <div class="territory-shape"></div>
 
-        </section>
+            <div>
+                <h3>Buenos<br>Aires.</h3>
+                <p>
+                    Cuatro calles para construir una lectura
+                    comparativa de la experiencia peatonal.
+                </p>
+            </div>
+        </article>
 
-        <div class="marquee">
-            <div class="marquee-track">
-                <span>CAMINAR</span>
-                <span>OBSERVAR</span>
-                <span>CRUZAR</span>
-                <span>HABITAR</span>
-                <span>TRANSITAR</span>
-                <span>CAMINAR</span>
-                <span>OBSERVAR</span>
-                <span>CRUZAR</span>
-                <span>HABITAR</span>
-                <span>TRANSITAR</span>
+    </div>
+</section>
+
+<section class="section" id="visualizacion">
+
+    <div class="section-head reveal">
+        <div class="section-index">03 / EXPLORACIÓN</div>
+        <h2>Ocho calles.<br>Distintas experiencias.</h2>
+    </div>
+
+    <p class="data-intro reveal">
+        Cada trayectoria representa una calle y reúne las respuestas
+        registradas durante tres jornadas. Las curvas permiten
+        comparar las valoraciones de transitabilidad entre ambos territorios.
+    </p>
+
+    <div class="filters reveal">
+
+        <div>
+            <div class="filter-label">01 / SELECCIONAR TERRITORIO</div>
+
+            <div class="filter-buttons">
+                <button class="filter-button active" data-city="all">AMBOS</button>
+                <button class="filter-button" data-city="valparaiso">BARRIO PUERTO</button>
+                <button class="filter-button" data-city="buenosaires">BUENOS AIRES</button>
             </div>
         </div>
 
-        <section class="section" id="pregunta">
+        <div>
+            <div class="filter-label">02 / SELECCIONAR JORNADA</div>
 
-            <div class="section-head reveal">
-                <div class="section-index">01 / LA PREGUNTA</div>
-                <h2>¿Qué significa realmente poder caminar?</h2>
+            <div class="filter-buttons">
+                <button class="filter-button active" data-day="all">ACUMULADO</button>
+                <button class="filter-button" data-day="0">DÍA 01</button>
+                <button class="filter-button" data-day="1">DÍA 02</button>
+                <button class="filter-button" data-day="2">DÍA 03</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="chart-heading reveal">
+        <div>
+            <div class="section-index">04 / TRAYECTORIAS DE PERCEPCIÓN</div>
+            <h3>La forma<br>de transitar.</h3>
+        </div>
+
+        <p>
+            Cada curva corresponde a una calle.
+            Los segmentos verdes representan respuestas positivas
+            y los verdes claros respuestas negativas.
+            Selecciona una trayectoria para explorar.
+        </p>
+    </div>
+
+    <div class="chart-wrapper reveal">
+
+        <svg id="streetChart"
+            viewBox="0 0 1000 620"
+            role="img"
+            aria-label="Curvas de transitabilidad de ocho calles">
+        </svg>
+
+        <div class="chart-legend">
+
+            <div class="legend-items">
+                <span class="legend-item">
+                    <i class="legend-dot" style="background:#174B36"></i>
+                    POSITIVA
+                </span>
+
+                <span class="legend-item">
+                    <i class="legend-dot" style="background:#A8C3AB"></i>
+                    NEGATIVA
+                </span>
+
+                <span class="legend-item">
+                    <i class="legend-dot" style="background:#CBD3C9"></i>
+                    SIN DATOS
+                </span>
             </div>
 
-            <p class="intro-copy reveal">
-                La calle parece un espacio compartido. Pero
-                <em>no todas las personas la experimentan de la misma manera.</em>
-                Su forma, sus cruces y las decisiones de quienes la recorren
-                transforman cada desplazamiento.
-            </p>
+            <span>SELECCIONA UNA CURVA</span>
 
-            <div class="split-statement">
+        </div>
 
-                <article class="statement reveal">
-                    <div class="number">01 / LO QUE EXISTE</div>
-                    <h3>La calle construida</h3>
-                    <p>
-                        Veredas, pavimentos, cruces peatonales, semáforos,
-                        intersecciones y condiciones materiales que configuran
-                        el recorrido.
-                    </p>
-                </article>
+    </div>
 
-                <article class="statement reveal">
-                    <div class="number">02 / LO QUE SE VIVE</div>
-                    <h3>La calle percibida</h3>
-                    <p>
-                        Las decisiones, hábitos, dificultades y experiencias
-                        que aparecen cuando las personas se desplazan por
-                        el espacio público.
-                    </p>
-                </article>
+    <div class="detail-grid reveal">
 
-            </div>
-        </section>
+        <div class="detail-cell">
+            <div class="detail-label">CALLE SELECCIONADA</div>
+            <div class="detail-name" id="detailName">Serrano</div>
+            <div class="detail-note" id="detailCity">BARRIO PUERTO</div>
+        </div>
 
-        <section class="section territories" id="territorios">
+        <div class="detail-cell">
+            <div class="detail-label">POSITIVAS</div>
+            <div class="detail-number" id="detailPositive">—</div>
+            <div class="detail-note">RESPUESTAS</div>
+        </div>
 
-            <div class="section-head reveal">
-                <div class="section-index">02 / DOS CONTEXTOS</div>
-                <h2>Dos territorios.<br>Una pregunta compartida.</h2>
-            </div>
+        <div class="detail-cell">
+            <div class="detail-label">NEGATIVAS</div>
+            <div class="detail-number" id="detailNegative">—</div>
+            <div class="detail-note">RESPUESTAS</div>
+        </div>
 
-            <div class="territory-grid">
+        <div class="detail-cell">
+            <div class="detail-label">TOTAL</div>
+            <div class="detail-number" id="detailTotal">—</div>
+            <div class="detail-note">REGISTROS</div>
+        </div>
 
-                <article class="territory reveal">
-                    <div class="territory-number">01 / CHILE</div>
-                    <div class="territory-shape"></div>
+    </div>
 
-                    <div>
-                        <h3>Barrio Puerto<br>Valparaíso.</h3>
-                        <p>
-                            Cuatro calles para observar las condiciones
-                            y experiencias de transitabilidad.
-                        </p>
-                    </div>
-                </article>
+    <section class="day-table reveal">
 
-                <article class="territory reveal">
-                    <div class="territory-number">02 / ARGENTINA</div>
-                    <div class="territory-shape"></div>
+        <div class="section-index">05 / EVOLUCIÓN TEMPORAL</div>
+        <h3>La transitabilidad<br>día a día.</h3>
 
-                    <div>
-                        <h3>Buenos<br>Aires.</h3>
-                        <p>
-                            Cuatro calles para construir una lectura
-                            comparativa de la experiencia peatonal.
-                        </p>
-                    </div>
-                </article>
+        <div id="dayTable"></div>
 
-            </div>
-        </section>
+    </section>
 
-        <section class="section data-section" id="visualizacion">
+    <section class="street-section">
 
-            <div class="section-head reveal">
-                <div class="section-index">03 / EXPLORACIÓN</div>
-                <h2>Ocho calles.<br>Distintas experiencias.</h2>
-            </div>
+        <div class="section-head reveal">
+            <div class="section-index">06 / DESGLOSE TERRITORIAL</div>
+            <h2>Las calles<br>en detalle.</h2>
+        </div>
 
-            <p class="data-intro reveal">
-                Cada trayectoria representa una calle y reúne las respuestas
-                registradas durante tres jornadas. Las curvas permiten
-                comparar las valoraciones de transitabilidad entre ambos territorios.
-            </p>
+        <div class="street-grid" id="streetCards"></div>
 
-            <div class="filters reveal">
+    </section>
 
-                <div>
-                    <div class="filter-label">01 / SELECCIONAR TERRITORIO</div>
+</section>
 
-                    <div class="filter-buttons">
-                        <button class="filter-button active" data-city="all">AMBOS</button>
-                        <button class="filter-button" data-city="valparaiso">BARRIO PUERTO</button>
-                        <button class="filter-button" data-city="buenosaires">BUENOS AIRES</button>
-                    </div>
-                </div>
+<section class="summary">
 
-                <div>
-                    <div class="filter-label">02 / SELECCIONAR JORNADA</div>
+    <div class="eyebrow">07 / LECTURA GENERAL</div>
 
-                    <div class="filter-buttons">
-                        <button class="filter-button active" data-day="all">ACUMULADO</button>
-                        <button class="filter-button" data-day="0">DÍA 01</button>
-                        <button class="filter-button" data-day="1">DÍA 02</button>
-                        <button class="filter-button" data-day="2">DÍA 03</button>
-                    </div>
-                </div>
+    <div class="summary-orbit"></div>
 
-            </div>
+    <div>
+        <h2>La experiencia<br>de caminar<br>deja huellas.</h2>
 
-            <div class="chart-heading reveal">
-                <div>
-                    <div class="section-index">04 / TRAYECTORIAS DE PERCEPCIÓN</div>
-                    <h3>La forma<br>de transitar.</h3>
-                </div>
+        <div class="summary-number" id="summaryPercentage">—</div>
 
-                <p>
-                    Cada curva corresponde a una calle.
-                    Los segmentos verdes representan respuestas positivas
-                    y los verdes claros respuestas negativas.
-                    Selecciona una trayectoria para explorar.
-                </p>
-            </div>
+        <p id="summaryText">
+            Porcentaje de respuestas positivas sobre el total
+            de respuestas registradas.
+        </p>
+    </div>
 
-            <div class="chart-wrapper reveal">
-
-                <svg id="streetChart"
-                    viewBox="0 0 1000 620"
-                    role="img"
-                    aria-label="Curvas de transitabilidad de ocho calles">
-                </svg>
-
-                <div class="chart-legend">
-
-                    <div class="legend-items">
-                        <span class="legend-item">
-                            <i class="legend-dot" style="background:#174B36"></i>
-                            POSITIVA
-                        </span>
-
-                        <span class="legend-item">
-                            <i class="legend-dot" style="background:#9DBBA3"></i>
-                            NEGATIVA
-                        </span>
-
-                        <span class="legend-item">
-                            <i class="legend-dot" style="background:#CBD3C9"></i>
-                            SIN DATOS
-                        </span>
-                    </div>
-
-                    <span>SELECCIONA UNA CURVA</span>
-
-                </div>
-
-            </div>
-
-            <div class="detail-grid reveal">
-
-                <div class="detail-cell">
-                    <div class="detail-label">CALLE SELECCIONADA</div>
-                    <div class="detail-name" id="detailName">Serrano</div>
-                    <div class="detail-note" id="detailCity">BARRIO PUERTO</div>
-                </div>
-
-                <div class="detail-cell">
-                    <div class="detail-label">POSITIVAS</div>
-                    <div class="detail-number" id="detailPositive">—</div>
-                    <div class="detail-note">RESPUESTAS</div>
-                </div>
-
-                <div class="detail-cell">
-                    <div class="detail-label">NEGATIVAS</div>
-                    <div class="detail-number" id="detailNegative">—</div>
-                    <div class="detail-note">RESPUESTAS</div>
-                </div>
-
-                <div class="detail-cell">
-                    <div class="detail-label">TOTAL</div>
-                    <div class="detail-number" id="detailTotal">—</div>
-                    <div class="detail-note">REGISTROS</div>
-                </div>
-
-            </div>
-
-            <section class="day-table reveal">
-
-                <div class="section-index">05 / EVOLUCIÓN TEMPORAL</div>
-                <h3>La transitabilidad<br>día a día.</h3>
-
-                <div id="dayTable"></div>
-
-            </section>
-
-            <section class="street-section">
-
-                <div class="section-head reveal">
-                    <div class="section-index">06 / DESGLOSE TERRITORIAL</div>
-                    <h2>Las calles<br>en detalle.</h2>
-                </div>
-
-                <div class="street-grid" id="streetCards"></div>
-
-            </section>
-
-        </section>
-
-        <section class="summary">
-
-            <div class="eyebrow">07 / LECTURA GENERAL</div>
-
-            <div class="summary-orbit"></div>
-
-            <div>
-                <h2>La experiencia<br>de caminar<br>deja huellas.</h2>
-
-                <div class="summary-number" id="summaryPercentage">—</div>
-
-                <p id="summaryText">
-                    Porcentaje de respuestas positivas sobre el total
-                    de respuestas registradas.
-                </p>
-            </div>
-
-            <div class="summary-footer">
-                <span>SENTIR LA CALLE.</span>
-                <span>VALPARAÍSO × BUENOS AIRES</span>
-                <span>TRANSITABILIDAD / 2026</span>
-            </div>
-
-        </section>
-
-        <section class="interlude">
-            <div class="eyebrow">SENTIR LA CALLE / UNA INVESTIGACIÓN EN MOVIMIENTO</div>
-
-            <h2>
-                NO SOLO<br>
-                IMPORTA<br>
-                <span>POR DÓNDE.</span><br>
-                TAMBIÉN<br>
-                CÓMO.
-            </h2>
-
-            <div class="eyebrow">VALPARAÍSO — BUENOS AIRES</div>
-        </section>
-
-    </main>
-
-    <footer class="footer">
+    <div class="summary-footer">
         <span>SENTIR LA CALLE.</span>
-        <span>EXPERIENCIA PEATONAL / 2026</span>
-        <span>INVESTIGACIÓN URBANA</span>
-    </footer>
+        <span>VALPARAÍSO × BUENOS AIRES</span>
+        <span>TRANSITABILIDAD / 2026</span>
+    </div>
 
-    <script>
-        const TOTAL_FRAMES = 53;
-        const FRAME_DURATION = 120;
-        const FRAME_PATH = "caminar_frames/frame-";
+</section>
 
-        const intro = document.getElementById("intro");
-        const introVector = document.getElementById("introVector");
-        const skipIntro = document.getElementById("skipIntro");
+<section class="interlude">
 
-        let currentFrame = 1;
-        let sequenceTimer = null;
-        let titleTimer = null;
-        let introFinished = false;
+    <div class="eyebrow">SENTIR LA CALLE / UNA INVESTIGACIÓN EN MOVIMIENTO</div>
 
-        function frameUrl(number) {
-            return FRAME_PATH + String(number).padStart(2, "0") + ".webp";
-        }
+    <h2>
+        NO SOLO<br>
+        IMPORTA<br>
+        <span>POR DÓNDE.</span><br>
+        TAMBIÉN<br>
+        CÓMO.
+    </h2>
 
-        function finishIntro() {
-            if (introFinished) return;
+    <div class="eyebrow">VALPARAÍSO — BUENOS AIRES</div>
 
-            introFinished = true;
+</section>
 
+</main>
+
+<footer class="footer">
+    <span>SENTIR LA CALLE.</span>
+    <span>EXPERIENCIA PEATONAL / 2026</span>
+    <span>INVESTIGACIÓN URBANA</span>
+</footer>
+
+<script>
+const TOTAL_FRAMES = 53;
+const FRAME_DURATION = 120;
+const FRAME_PATH = "caminar_frames/frame-";
+
+const intro = document.getElementById("intro");
+const introVector = document.getElementById("introVector");
+
+let currentFrame = 1;
+let sequenceTimer = null;
+let titleTimer = null;
+let introFinished = false;
+
+function frameUrl(number) {
+    return FRAME_PATH + String(number).padStart(2, "0") + ".webp";
+}
+
+function finishIntro() {
+    if (introFinished) return;
+
+    introFinished = true;
+
+    clearInterval(sequenceTimer);
+    clearTimeout(titleTimer);
+
+    intro.classList.add("hide");
+    document.body.classList.remove("intro-active");
+
+    setTimeout(() => intro.remove(), 1100);
+}
+
+function showIntroTitle() {
+    if (introFinished) return;
+
+    intro.classList.add("show-title");
+    titleTimer = setTimeout(finishIntro, 3000);
+}
+
+function startIntro() {
+    currentFrame = 1;
+    introVector.src = frameUrl(1);
+
+    sequenceTimer = setInterval(() => {
+        currentFrame++;
+
+        if (currentFrame > TOTAL_FRAMES) {
             clearInterval(sequenceTimer);
-            clearTimeout(titleTimer);
-
-            intro.classList.add("hide");
-            document.body.classList.remove("intro-active");
-
-            setTimeout(() => intro.remove(), 1100);
+            showIntroTitle();
+            return;
         }
 
-        function showIntroTitle() {
-            if (introFinished) return;
+        introVector.src = frameUrl(currentFrame);
 
-            intro.classList.add("show-title");
-            titleTimer = setTimeout(finishIntro, 2300);
+    }, FRAME_DURATION);
+}
+
+document.getElementById("skipIntro").addEventListener("click", finishIntro);
+
+function loadIntro() {
+    const firstFrame = new Image();
+    let started = false;
+
+    const fallbackTimer = setTimeout(() => {
+        if (!started) {
+            started = true;
+            showIntroTitle();
+        }
+    }, 5000);
+
+    firstFrame.onload = () => {
+        if (started) return;
+
+        started = true;
+        clearTimeout(fallbackTimer);
+
+        introVector.src = frameUrl(1);
+
+        for (let i = 2; i <= TOTAL_FRAMES; i++) {
+            const image = new Image();
+            image.src = frameUrl(i);
         }
 
-        function startIntro() {
-            currentFrame = 1;
-            introVector.src = frameUrl(1);
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            showIntroTitle();
+        } else {
+            startIntro();
+        }
+    };
 
-            sequenceTimer = setInterval(() => {
-                currentFrame++;
+    firstFrame.onerror = () => {
+        if (started) return;
 
-                if (currentFrame > TOTAL_FRAMES) {
-                    clearInterval(sequenceTimer);
-                    showIntroTitle();
-                    return;
-                }
+        started = true;
+        clearTimeout(fallbackTimer);
 
-                introVector.src = frameUrl(currentFrame);
+        introVector.style.display = "none";
+        showIntroTitle();
+    };
 
-            }, FRAME_DURATION);
+    firstFrame.src = frameUrl(1);
+}
+
+loadIntro();
+
+/* Música original de estilo caricatura clásica */
+
+const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+
+let audio = null;
+let musicOn = false;
+let musicTimer = null;
+let musicIndex = 0;
+let activeVoices = [];
+
+const melody = [
+    [659, 784, 988, 784],
+    [659, 523, 587, 659],
+    [784, 880, 1046, 880],
+    [784, 659, 587, 659],
+    [784, 988, 1174, 988],
+    [880, 784, 659, 523],
+    [587, 659, 784, 659],
+    [523, 587, 659, 784]
+];
+
+const bass = [
+    [131, 165, 196, 165],
+    [110, 147, 175, 147],
+    [123, 155, 185, 155],
+    [98, 131, 165, 131]
+];
+
+function playInstrument(frequency, duration, volume, type, detune = 0, harmonic = false) {
+    if (!audio || !musicOn) return;
+
+    const now = audio.currentTime;
+    const oscillator = audio.createOscillator();
+    const gain = audio.createGain();
+    const filter = audio.createBiquadFilter();
+
+    oscillator.type = type;
+    oscillator.frequency.setValueAtTime(frequency, now);
+    oscillator.detune.setValueAtTime(detune, now);
+
+    filter.type = "lowpass";
+    filter.frequency.value = harmonic ? 4500 : 3000;
+
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(volume, now + 0.025);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+    oscillator.connect(filter);
+    filter.connect(gain);
+    gain.connect(audio.destination);
+
+    oscillator.start(now);
+    oscillator.stop(now + duration + 0.04);
+
+    activeVoices.push({oscillator, gain});
+}
+
+function piano(frequency, duration) {
+    playInstrument(frequency, duration, 0.045, "triangle", -5);
+    playInstrument(frequency * 2, duration * 0.55, 0.009, "sine");
+    playInstrument(frequency * 1.003, duration * 0.7, 0.012, "triangle", 4);
+}
+
+function clarinet(frequency, duration) {
+    playInstrument(frequency, duration, 0.025, "square", -9, true);
+    playInstrument(frequency * 1.5, duration * 0.6, 0.009, "triangle", 3);
+}
+
+function uprightBass(frequency, duration) {
+    playInstrument(frequency, duration, 0.055, "triangle", -3);
+}
+
+function bell(frequency) {
+    playInstrument(frequency, 0.2, 0.018, "sine");
+    playInstrument(frequency * 2, 0.12, 0.007, "sine");
+}
+
+function percussion() {
+    if (!audio || !musicOn) return;
+
+    const now = audio.currentTime;
+    const length = Math.floor(audio.sampleRate * 0.11);
+    const buffer = audio.createBuffer(1, length, audio.sampleRate);
+    const channel = buffer.getChannelData(0);
+
+    for (let i = 0; i < length; i++) {
+        channel[i] = (Math.random() * 2 - 1) * (1 - i / length);
+    }
+
+    const source = audio.createBufferSource();
+    const filter = audio.createBiquadFilter();
+    const gain = audio.createGain();
+
+    source.buffer = buffer;
+
+    filter.type = "highpass";
+    filter.frequency.value = 4500;
+
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(0.018, now + 0.005);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.09);
+
+    source.connect(filter);
+    filter.connect(gain);
+    gain.connect(audio.destination);
+
+    source.start(now);
+}
+
+function musicStep() {
+    if (!musicOn) return;
+
+    const section = Math.floor(musicIndex / 16) % melody.length;
+    const noteIndex = musicIndex % 4;
+    const frequency = melody[section][noteIndex];
+
+    const duration = noteIndex === 2 ? 0.29 : 0.17;
+
+    piano(frequency, duration);
+
+    if (musicIndex % 2 === 0) {
+        clarinet(frequency * 1.5, duration * 0.8);
+    }
+
+    if (musicIndex % 4 === 0) {
+        const bassSection = bass[section % bass.length];
+
+        uprightBass(bassSection[noteIndex], 0.25);
+    }
+
+    if (musicIndex % 4 === 2) {
+        bell(frequency * 2);
+    }
+
+    if (musicIndex % 2 === 0) {
+        percussion();
+    }
+
+    musicIndex++;
+
+    const swing = musicIndex % 2 === 0 ? 210 : 155;
+
+    musicTimer = setTimeout(musicStep, swing);
+}
+
+async function startMusic() {
+    if (!AudioContextClass) return;
+
+    if (!audio) {
+        audio = new AudioContextClass();
+    }
+
+    if (audio.state === "suspended") {
+        await audio.resume();
+    }
+
+    musicOn = true;
+    musicIndex = 0;
+
+    clearTimeout(musicTimer);
+    musicStep();
+
+    updateMusicButtons();
+}
+
+function stopMusic() {
+    musicOn = false;
+
+    clearTimeout(musicTimer);
+
+    activeVoices.forEach(voice => {
+        try {
+            voice.gain.gain.cancelScheduledValues(audio.currentTime);
+            voice.gain.gain.setTargetAtTime(0.0001, audio.currentTime, 0.025);
+            voice.oscillator.stop(audio.currentTime + 0.12);
+        } catch (error) {}
+    });
+
+    activeVoices = [];
+
+    updateMusicButtons();
+}
+
+function updateMusicButtons() {
+    const label = musicOn ? "♫ SILENCIAR" : "♫ ACTIVAR SONIDO";
+
+    document.getElementById("musicIntro").textContent = label;
+    document.getElementById("soundToggle").textContent = label;
+}
+
+document.getElementById("musicIntro").addEventListener("click", () => {
+    musicOn ? stopMusic() : startMusic();
+});
+
+document.getElementById("soundToggle").addEventListener("click", () => {
+    musicOn ? stopMusic() : startMusic();
+});
+
+/* Datos de las ocho calles */
+
+const days = [
+    "JORNADA 01",
+    "JORNADA 02",
+    "JORNADA 03"
+];
+
+const streets = [
+    {
+        id: "serrano",
+        name: "Serrano",
+        city: "valparaiso",
+        cityName: "Barrio Puerto",
+        values: [null, null, null]
+    },
+    {
+        id: "cochrane",
+        name: "Cochrane",
+        city: "valparaiso",
+        cityName: "Barrio Puerto",
+        values: [null, null, null]
+    },
+    {
+        id: "blanco",
+        name: "Blanco",
+        city: "valparaiso",
+        cityName: "Barrio Puerto",
+        values: [null, null, null]
+    },
+    {
+        id: "errazuriz",
+        name: "Errázuriz",
+        city: "valparaiso",
+        cityName: "Barrio Puerto",
+        values: [null, null, null]
+    },
+    {
+        id: "colon",
+        name: "Avenida Colón",
+        city: "buenosaires",
+        cityName: "Buenos Aires",
+        values: [null, null, null]
+    },
+    {
+        id: "azopardo",
+        name: "Azopardo",
+        city: "buenosaires",
+        cityName: "Buenos Aires",
+        values: [null, null, null]
+    },
+    {
+        id: "huergo",
+        name: "Av. Huergo",
+        city: "buenosaires",
+        cityName: "Buenos Aires",
+        values: [null, null, null]
+    },
+    {
+        id: "alicia",
+        name: "Av. Alicia",
+        city: "buenosaires",
+        cityName: "Buenos Aires",
+        values: [null, null, null]
+    }
+];
+
+let selectedCity = "all";
+let selectedDay = "all";
+let selectedStreet = "serrano";
+
+function visibleStreets() {
+    return streets.filter(street =>
+        selectedCity === "all" || street.city === selectedCity
+    );
+}
+
+function getValues(street) {
+    if (selectedDay === "all") {
+        if (street.values.some(value => value === null)) {
+            return null;
         }
 
-        skipIntro.addEventListener("click", finishIntro);
+        return street.values.reduce(
+            (total, value) => [
+                total[0] + value[0],
+                total[1] + value[1]
+            ],
+            [0, 0]
+        );
+    }
 
-        function loadIntro() {
-            const firstFrame = new Image();
-            let started = false;
+    return street.values[Number(selectedDay)];
+}
 
-            const fallbackTimer = setTimeout(() => {
-                if (!started) {
-                    started = true;
-                    showIntroTitle();
-                }
-            }, 5000);
+function getTotals(list) {
+    return list.reduce((total, street) => {
+        const values = getValues(street);
 
-            firstFrame.onload = () => {
-                if (started) return;
-
-                started = true;
-                clearTimeout(fallbackTimer);
-
-                introVector.src = frameUrl(1);
-
-                for (let i = 2; i <= TOTAL_FRAMES; i++) {
-                    const image = new Image();
-                    image.src = frameUrl(i);
-                }
-
-                if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-                    showIntroTitle();
-                } else {
-                    startIntro();
-                }
-            };
-
-            firstFrame.onerror = () => {
-                if (started) return;
-
-                started = true;
-                clearTimeout(fallbackTimer);
-
-                introVector.style.display = "none";
-                showIntroTitle();
-            };
-
-            firstFrame.src = frameUrl(1);
+        if (values) {
+            total.positive += values[0];
+            total.negative += values[1];
         }
 
-        loadIntro();
+        return total;
+    }, {positive: 0, negative: 0});
+}
 
-        const audioContext = window.AudioContext || window.webkitAudioContext;
+/* Construcción de las curvas */
 
-        let audio = null;
-        let musicOn = false;
-        let musicTimer = null;
-        let musicIndex = 0;
+function curvePath(index) {
+    const y = 65 + index * 68;
 
-        const melody = [
-            [659, .14], [784, .14], [988, .2], [784, .14],
-            [659, .14], [523, .2], [587, .14], [659, .2],
-            [784, .14], [880, .14], [784, .14], [659, .2],
-            [587, .14], [659, .14], [784, .24], [659, .2],
-            [523, .14], [587, .14], [659, .2], [784, .14],
-            [659, .14], [523, .24], [440, .2], [523, .2]
-        ];
+    return `
+        M 55 ${y}
+        C 140 ${y - 65},
+          240 ${y + 65},
+          340 ${y}
+        S 540 ${y - 65},
+          650 ${y}
+    `;
+}
 
-        function playNote(frequency, duration, volume, type) {
-            if (!audio || !musicOn) return;
+function pointOnCurve(index, progress) {
+    const y = 65 + index * 68;
 
-            const now = audio.currentTime;
-            const oscillator = audio.createOscillator();
-            const gain = audio.createGain();
+    const x = 55 + progress * 595;
 
-            oscillator.type = type;
-            oscillator.frequency.setValueAtTime(frequency, now);
+    const wave = Math.sin(progress * Math.PI * 2) * 32;
 
-            gain.gain.setValueAtTime(.0001, now);
-            gain.gain.exponentialRampToValueAtTime(volume, now + .02);
-            gain.gain.exponentialRampToValueAtTime(.0001, now + duration);
+    return {
+        x,
+        y: y + wave
+    };
+}
 
-            oscillator.connect(gain);
-            gain.connect(audio.destination);
+function drawChart() {
+    const svg = document.getElementById("streetChart");
+    const visible = visibleStreets();
 
-            oscillator.start(now);
-            oscillator.stop(now + duration + .03);
+    let html = `
+        <line class="axis-line" x1="55" y1="590" x2="680" y2="590"/>
+        <text class="axis-label" x="55" y="610">INICIO</text>
+        <text class="axis-label" x="620" y="610">RECORRIDO</text>
+    `;
+
+    visible.forEach(street => {
+        const index = streets.indexOf(street);
+        const path = curvePath(index);
+        const values = getValues(street);
+        const selected = street.id === selectedStreet;
+
+        const positive = values ? values[0] : 0;
+        const negative = values ? values[1] : 0;
+        const total = positive + negative;
+
+        const positivePercent = total
+            ? positive / total * 100
+            : 0;
+
+        const negativePercent = total
+            ? negative / total * 100
+            : 0;
+
+        const labelX = 715;
+        const labelY = 65 + index * 68;
+
+        html += `
+            <g class="curve-group ${selected ? "selected" : ""} ${selectedStreet && !selected ? "dimmed" : ""}"
+                data-street="${street.id}">
+
+                <path class="curve-base" d="${path}" pathLength="100"/>
+        `;
+
+        if (values === null) {
+            html += `<path class="curve-pending" d="${path}"/>`;
+        } else {
+            html += `
+                <path
+                    class="curve-positive"
+                    d="${path}"
+                    pathLength="100"
+                    stroke-dasharray="${positivePercent} ${100 - positivePercent}"
+                />
+
+                <path
+                    class="curve-negative"
+                    d="${path}"
+                    pathLength="100"
+                    stroke-dasharray="${negativePercent} ${100 - negativePercent}"
+                    stroke-dashoffset="${-positivePercent}"
+                />
+            `;
         }
 
-        function musicStep() {
-            if (!musicOn) return;
-
-            const [frequency, duration] = melody[musicIndex % melody.length];
-
-            playNote(frequency, duration, .075, "triangle");
-
-            if (musicIndex % 4 === 0) {
-                const bass = [131, 165, 196, 165][
-                    Math.floor(musicIndex / 4) % 4
-                ];
-
-                playNote(bass, .22, .045, "sine");
-            }
-
-            if (musicIndex % 2 === 0) {
-                playNote(1200, .035, .01, "square");
-            }
-
-            musicIndex++;
-
-            musicTimer = setTimeout(musicStep, 190);
-        }
-
-        async function startMusic() {
-            if (!audio) {
-                audio = new audioContext();
-            }
-
-            if (audio.state === "suspended") {
-                await audio.resume();
-            }
-
-            musicOn = true;
-            musicIndex = 0;
-
-            clearTimeout(musicTimer);
-            musicStep();
-            updateMusicButtons();
-        }
-
-        function stopMusic() {
-            musicOn = false;
-            clearTimeout(musicTimer);
-            updateMusicButtons();
-        }
-
-        function updateMusicButtons() {
-            const text = musicOn ? "♫ SILENCIAR" : "♫ ACTIVAR SONIDO";
-
-            document.getElementById("musicIntro").textContent = text;
-            document.getElementById("soundToggle").textContent = text;
-        }
-
-        document.getElementById("musicIntro").addEventListener("click", () => {
-            musicOn ? stopMusic() : startMusic();
-        });
-
-        document.getElementById("soundToggle").addEventListener("click", () => {
-            musicOn ? stopMusic() : startMusic();
-        });
-
-        const days = [
-            "JORNADA 01",
-            "JORNADA 02",
-            "JORNADA 03"
-        ];
-
-        const streets = [
-            {
-                id: "serrano",
-                name: "Serrano",
-                city: "valparaiso",
-                cityName: "Barrio Puerto",
-                values: [null, null, null]
-            },
-            {
-                id: "cochrane",
-                name: "Cochrane",
-                city: "valparaiso",
-                cityName: "Barrio Puerto",
-                values: [null, null, null]
-            },
-            {
-                id: "blanco",
-                name: "Blanco",
-                city: "valparaiso",
-                cityName: "Barrio Puerto",
-                values: [null, null, null]
-            },
-            {
-                id: "errazuriz",
-                name: "Errázuriz",
-                city: "valparaiso",
-                cityName: "Barrio Puerto",
-                values: [null, null, null]
-            },
-            {
-                id: "colon",
-                name: "Avenida Colón",
-                city: "buenosaires",
-                cityName: "Buenos Aires",
-                values: [null, null, null]
-            },
-            {
-                id: "azopardo",
-                name: "Azopardo",
-                city: "buenosaires",
-                cityName: "Buenos Aires",
-                values: [null, null, null]
-            },
-            {
-                id: "huergo",
-                name: "Av. Huergo",
-                city: "buenosaires",
-                cityName: "Buenos Aires",
-                values: [null, null, null]
-            },
-            {
-                id: "alicia",
-                name: "Av. Alicia",
-                city: "buenosaires",
-                cityName: "Buenos Aires",
-                values: [null, null, null]
-            }
-        ];
-
-        let selectedCity = "all";
-        let selectedDay = "all";
-        let selectedStreet = "serrano";
-
-        function visibleStreets() {
-            return streets.filter(street =>
-                selectedCity === "all" || street.city === selectedCity
+        street.values.forEach((dayValues, dayIndex) => {
+            const point = pointOnCurve(
+                index,
+                .2 + dayIndex * .3
             );
-        }
 
-        function getValues(street) {
-            if (selectedDay === "all") {
-                if (street.values.some(value => value === null)) {
-                    return null;
-                }
+            const color = !dayValues
+                ? "#CBD3C9"
+                : dayValues[0] >= dayValues[1]
+                    ? "#174B36"
+                    : "#A8C3AB";
 
-                return street.values.reduce(
-                    (total, value) => [
-                        total[0] + value[0],
-                        total[1] + value[1]
-                    ],
-                    [0, 0]
-                );
-            }
-
-            return street.values[Number(selectedDay)];
-        }
-
-        function getTotals(list) {
-            return list.reduce((total, street) => {
-                const values = getValues(street);
-
-                if (values) {
-                    total.positive += values[0];
-                    total.negative += values[1];
-                }
-
-                return total;
-            }, {positive: 0, negative: 0});
-        }
-
-        function arcPath(radius) {
-            const cx = 350;
-            const cy = 310;
-
-            return `M ${cx - radius} ${cy} A ${radius} ${radius} 0 0 1 ${cx + radius} ${cy}`;
-        }
-
-        function pointOnArc(radius, progress) {
-            const angle = Math.PI * (1 - progress);
-
-            return {
-                x: 350 + radius * Math.cos(angle),
-                y: 310 - radius * Math.sin(angle)
-            };
-        }
-
-        function drawChart() {
-            const svg = document.getElementById("streetChart");
-            const visible = visibleStreets();
-
-            let html = `
-                <line class="axis-line" x1="55" y1="310" x2="670" y2="310"/>
-                <line class="axis-line" x1="350" y1="35" x2="350" y2="570"/>
-                <text class="axis-label" x="55" y="338">INICIO DEL RECORRIDO</text>
-                <text class="axis-label" x="590" y="338">FINAL</text>
-                <text class="axis-label" x="350" y="22" text-anchor="middle">TRAYECTORIAS</text>
+            html += `
+                <circle
+                    class="day-point ${selectedDay === String(dayIndex) ? "selected" : ""}"
+                    cx="${point.x}"
+                    cy="${point.y}"
+                    r="${selected ? 6 : 4}"
+                    fill="${color}"
+                >
+                    <title>${days[dayIndex]}: ${dayValues ? dayValues[0] + " positivas / " + dayValues[1] + " negativas" : "Sin registros"}</title>
+                </circle>
             `;
-
-            visible.forEach(street => {
-                const index = streets.indexOf(street);
-                const radius = 92 + index * 23;
-                const path = arcPath(radius);
-                const values = getValues(street);
-                const selected = street.id === selectedStreet;
-
-                const positive = values ? values[0] : 0;
-                const negative = values ? values[1] : 0;
-                const total = positive + negative;
-
-                const positivePercent = total
-                    ? positive / total * 100
-                    : 0;
-
-                const negativePercent = total
-                    ? negative / total * 100
-                    : 0;
-
-                const labelX = 625;
-                const labelY = 314 + (index - 3.5) * 20;
-
-                html += `
-                    <g class="curve-group ${selected ? "selected" : ""} ${selectedStreet && !selected ? "dimmed" : ""}"
-                        data-street="${street.id}">
-
-                        <path class="curve-base" d="${path}" pathLength="100"/>
-                `;
-
-                if (values === null) {
-                    html += `<path class="curve-pending" d="${path}"/>`;
-                } else {
-                    html += `
-                        <path
-                            class="curve-positive"
-                            d="${path}"
-                            pathLength="100"
-                            stroke-dasharray="${positivePercent} ${100 - positivePercent}"
-                        />
-
-                        <path
-                            class="curve-negative"
-                            d="${path}"
-                            pathLength="100"
-                            stroke-dasharray="${negativePercent} ${100 - negativePercent}"
-                            stroke-dashoffset="${-positivePercent}"
-                        />
-                    `;
-                }
-
-                street.values.forEach((dayValues, dayIndex) => {
-                    const point = pointOnArc(
-                        radius,
-                        .18 + dayIndex * .32
-                    );
-
-                    const color = !dayValues
-                        ? "#CBD3C9"
-                        : dayValues[0] >= dayValues[1]
-                            ? "#174B36"
-                            : "#9DBBA3";
-
-                    const isDaySelected =
-                        selectedDay === "all" ||
-                        selectedDay === String(dayIndex);
-
-                    html += `
-                        <circle
-                            class="day-point ${isDaySelected && selected ? "selected" : ""}"
-                            cx="${point.x}"
-                            cy="${point.y}"
-                            r="${selected ? 6 : 4}"
-                            fill="${color}"
-                        >
-                            <title>${days[dayIndex]}: ${dayValues ? dayValues[0] + " positivas / " + dayValues[1] + " negativas" : "Sin registros"}</title>
-                        </circle>
-                    `;
-                });
-
-                html += `
-                        <text class="curve-name" x="${labelX}" y="${labelY}">
-                            ${street.name}
-                        </text>
-
-                        <text class="curve-city" x="${labelX}" y="${labelY + 13}">
-                            ${street.cityName}
-                        </text>
-
-                    </g>
-                `;
-            });
-
-            svg.innerHTML = html;
-
-            svg.querySelectorAll(".curve-group").forEach(group => {
-                group.addEventListener("click", () => {
-                    selectedStreet = group.dataset.street;
-                    update();
-                });
-            });
-        }
-
-        function personSVG() {
-            return `
-                <svg viewBox="0 0 24 36" fill="currentColor">
-                    <circle cx="12" cy="5" r="4"/>
-                    <path d="M9 10 Q5 11 6 17 L4 25 Q3 29 7 30 L10 21 L9 32 L5 35 L11 35 L13 27 L16 35 L22 35 L17 30 L16 20 L20 25 Q23 28 24 24 L19 16 Q17 11 13 10Z"/>
-                </svg>
-            `;
-        }
-
-        function drawCards() {
-            const container = document.getElementById("streetCards");
-            container.innerHTML = "";
-
-            visibleStreets().forEach(street => {
-                const values = getValues(street);
-                const card = document.createElement("article");
-
-                card.className = "street-card" +
-                    (values ? "" : " pending") +
-                    (selectedStreet === street.id ? " selected" : "");
-
-                if (values) {
-                    let people = "";
-
-                    for (let i = 0; i < values[0]; i++) {
-                        people += `
-                            <span class="person-icon positive"
-                                style="animation-delay:${i * .04}s">
-                                ${personSVG()}
-                            </span>
-                        `;
-                    }
-
-                    for (let i = 0; i < values[1]; i++) {
-                        people += `
-                            <span class="person-icon negative"
-                                style="animation-delay:${(i + values[0]) * .04}s">
-                                ${personSVG()}
-                            </span>
-                        `;
-                    }
-
-                    card.innerHTML = `
-                        <div class="street-city">${street.cityName}</div>
-                        <h4>${street.name}</h4>
-                        <div class="person-row">${people}</div>
-                        <div class="card-data">
-                            <span>+ <strong>${values[0]}</strong></span>
-                            <span>− <strong>${values[1]}</strong></span>
-                            <span>TOTAL <strong>${values[0] + values[1]}</strong></span>
-                        </div>
-                    `;
-                } else {
-                    card.innerHTML = `
-                        <div class="street-city">${street.cityName}</div>
-                        <h4>${street.name}</h4>
-                        <p class="pending-text">
-                            DATOS PENDIENTES DE INCORPORAR
-                        </p>
-                    `;
-                }
-
-                card.addEventListener("click", () => {
-                    selectedStreet = street.id;
-                    update();
-                });
-
-                container.appendChild(card);
-            });
-        }
-
-        function updateDetail() {
-            const street = streets.find(item => item.id === selectedStreet);
-
-            if (!street) return;
-
-            const values = getValues(street);
-
-            document.getElementById("detailName").textContent = street.name;
-            document.getElementById("detailCity").textContent = street.cityName.toUpperCase();
-
-            document.getElementById("detailPositive").textContent =
-                values ? values[0] : "—";
-
-            document.getElementById("detailNegative").textContent =
-                values ? values[1] : "—";
-
-            document.getElementById("detailTotal").textContent =
-                values ? values[0] + values[1] : "—";
-        }
-
-        function updateDayTable() {
-            const container = document.getElementById("dayTable");
-
-            const totals = [0, 1, 2].map(dayIndex => {
-                let positive = 0;
-                let negative = 0;
-
-                visibleStreets().forEach(street => {
-                    const values = street.values[dayIndex];
-
-                    if (values) {
-                        positive += values[0];
-                        negative += values[1];
-                    }
-                });
-
-                return {
-                    positive,
-                    negative,
-                    total: positive + negative
-                };
-            });
-
-            container.innerHTML = totals.map((day, index) => {
-                const positiveWidth = day.total
-                    ? day.positive / day.total * 100
-                    : 0;
-
-                const negativeWidth = day.total
-                    ? day.negative / day.total * 100
-                    : 0;
-
-                return `
-                    <div class="day-row">
-                        <div class="day-name">${days[index]}</div>
-
-                        <div class="day-bar">
-                            <div class="day-bar-positive" style="width:${positiveWidth}%"></div>
-                            <div class="day-bar-negative" style="width:${negativeWidth}%"></div>
-                        </div>
-
-                        <div class="day-total">
-                            ${day.total ? day.total + " RESP." : "SIN DATOS"}
-                        </div>
-                    </div>
-                `;
-            }).join("");
-        }
-
-        function updateSummary() {
-            const totals = getTotals(visibleStreets());
-            const total = totals.positive + totals.negative;
-
-            const percentage = total
-                ? totals.positive / total * 100
-                : null;
-
-            document.getElementById("summaryPercentage").textContent =
-                percentage === null
-                    ? "—"
-                    : percentage.toFixed(1).replace(".", ",") + "%";
-
-            document.getElementById("summaryText").textContent =
-                total
-                    ? `${totals.positive} respuestas positivas y ${totals.negative} negativas de un total de ${total} registros. El porcentaje corresponde a las respuestas incorporadas.`
-                    : "Los resultados aparecerán aquí cuando se incorporen los registros de las entrevistas.";
-        }
-
-        function update() {
-            const visible = visibleStreets();
-
-            if (!visible.some(street => street.id === selectedStreet)) {
-                selectedStreet = visible[0]?.id || null;
-            }
-
-            drawChart();
-            drawCards();
-            updateDetail();
-            updateDayTable();
-            updateSummary();
-        }
-
-        document.querySelectorAll("[data-city]").forEach(button => {
-            button.addEventListener("click", () => {
-                selectedCity = button.dataset.city;
-
-                document.querySelectorAll("[data-city]").forEach(item => {
-                    item.classList.toggle("active", item === button);
-                });
-
-                update();
-            });
         });
 
-        document.querySelectorAll("[data-day]").forEach(button => {
-            button.addEventListener("click", () => {
-                selectedDay = button.dataset.day;
+        html += `
+                <text class="curve-name" x="${labelX}" y="${labelY}">
+                    ${street.name}
+                </text>
 
-                document.querySelectorAll("[data-day]").forEach(item => {
-                    item.classList.toggle("active", item === button);
-                });
+                <text class="curve-city" x="${labelX}" y="${labelY + 14}">
+                    ${street.cityName}
+                </text>
 
-                update();
-            });
+            </g>
+        `;
+    });
+
+    svg.innerHTML = html;
+
+    svg.querySelectorAll(".curve-group").forEach(group => {
+        group.addEventListener("click", () => {
+            selectedStreet = group.dataset.street;
+            update();
+        });
+    });
+}
+
+/* Figuras vectoriales de las tarjetas */
+
+function personSVG() {
+    return `
+        <svg viewBox="0 0 24 36" fill="currentColor">
+            <circle cx="12" cy="5" r="4"/>
+            <path d="M9 10 Q5 11 6 17 L4 25 Q3 29 7 30 L10 21 L9 32 L5 35 L11 35 L13 27 L16 35 L22 35 L17 30 L16 20 L20 25 Q23 28 24 24 L19 16 Q17 11 13 10Z"/>
+        </svg>
+    `;
+}
+
+function drawCards() {
+    const container = document.getElementById("streetCards");
+
+    container.innerHTML = "";
+
+    visibleStreets().forEach(street => {
+        const values = getValues(street);
+
+        const card = document.createElement("article");
+
+        card.className = "street-card" +
+            (values ? "" : " pending") +
+            (selectedStreet === street.id ? " selected" : "");
+
+        if (values) {
+            let people = "";
+
+            for (let i = 0; i < values[0]; i++) {
+                people += `
+                    <span class="person-icon positive"
+                        style="animation-delay:${i * .04}s">
+                        ${personSVG()}
+                    </span>
+                `;
+            }
+
+            for (let i = 0; i < values[1]; i++) {
+                people += `
+                    <span class="person-icon negative"
+                        style="animation-delay:${(i + values[0]) * .04}s">
+                        ${personSVG()}
+                    </span>
+                `;
+            }
+
+            card.innerHTML = `
+                <div class="street-city">${street.cityName}</div>
+                <h4>${street.name}</h4>
+                <div class="person-row">${people}</div>
+                <div class="card-data">
+                    <span>+ <strong>${values[0]}</strong></span>
+                    <span>− <strong>${values[1]}</strong></span>
+                    <span>TOTAL <strong>${values[0] + values[1]}</strong></span>
+                </div>
+            `;
+        } else {
+            card.innerHTML = `
+                <div class="street-city">${street.cityName}</div>
+                <h4>${street.name}</h4>
+                <p class="pending-text">
+                    DATOS PENDIENTES DE INCORPORAR
+                </p>
+            `;
+        }
+
+        card.addEventListener("click", () => {
+            selectedStreet = street.id;
+            update();
+        });
+
+        container.appendChild(card);
+    });
+}
+
+function updateDetail() {
+    const street = streets.find(item => item.id === selectedStreet);
+
+    if (!street) return;
+
+    const values = getValues(street);
+
+    document.getElementById("detailName").textContent = street.name;
+    document.getElementById("detailCity").textContent = street.cityName.toUpperCase();
+
+    document.getElementById("detailPositive").textContent =
+        values ? values[0] : "—";
+
+    document.getElementById("detailNegative").textContent =
+        values ? values[1] : "—";
+
+    document.getElementById("detailTotal").textContent =
+        values ? values[0] + values[1] : "—";
+}
+
+function updateDayTable() {
+    const container = document.getElementById("dayTable");
+
+    const totals = [0, 1, 2].map(dayIndex => {
+        let positive = 0;
+        let negative = 0;
+
+        visibleStreets().forEach(street => {
+            const values = street.values[dayIndex];
+
+            if (values) {
+                positive += values[0];
+                negative += values[1];
+            }
+        });
+
+        return {
+            positive,
+            negative,
+            total: positive + negative
+        };
+    });
+
+    container.innerHTML = totals.map((day, index) => {
+        const positiveWidth = day.total
+            ? day.positive / day.total * 100
+            : 0;
+
+        const negativeWidth = day.total
+            ? day.negative / day.total * 100
+            : 0;
+
+        return `
+            <div class="day-row">
+                <div class="day-name">${days[index]}</div>
+
+                <div class="day-bar">
+                    <div class="day-bar-positive" style="width:${positiveWidth}%"></div>
+                    <div class="day-bar-negative" style="width:${negativeWidth}%"></div>
+                </div>
+
+                <div class="day-total">
+                    ${day.total ? day.total + " RESP." : "SIN DATOS"}
+                </div>
+            </div>
+        `;
+    }).join("");
+}
+
+function updateSummary() {
+    const totals = getTotals(visibleStreets());
+    const total = totals.positive + totals.negative;
+
+    const percentage = total
+        ? totals.positive / total * 100
+        : null;
+
+    document.getElementById("summaryPercentage").textContent =
+        percentage === null
+            ? "—"
+            : percentage.toFixed(1).replace(".", ",") + "%";
+
+    document.getElementById("summaryText").textContent =
+        total
+            ? `${totals.positive} respuestas positivas y ${totals.negative} negativas de un total de ${total} registros.`
+            : "Los resultados aparecerán aquí cuando se incorporen los registros de las entrevistas.";
+}
+
+function update() {
+    const visible = visibleStreets();
+
+    if (!visible.some(street => street.id === selectedStreet)) {
+        selectedStreet = visible[0]?.id || null;
+    }
+
+    drawChart();
+    drawCards();
+    updateDetail();
+    updateDayTable();
+    updateSummary();
+}
+
+document.querySelectorAll("[data-city]").forEach(button => {
+    button.addEventListener("click", () => {
+        selectedCity = button.dataset.city;
+
+        document.querySelectorAll("[data-city]").forEach(item => {
+            item.classList.toggle("active", item === button);
         });
 
         update();
+    });
+});
 
-        const revealObserver = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add("visible");
-                    revealObserver.unobserve(entry.target);
-                }
-            });
-        }, {
-            threshold: .12
+document.querySelectorAll("[data-day]").forEach(button => {
+    button.addEventListener("click", () => {
+        selectedDay = button.dataset.day;
+
+        document.querySelectorAll("[data-day]").forEach(item => {
+            item.classList.toggle("active", item === button);
         });
 
-        document.querySelectorAll(".reveal").forEach(element => {
-            revealObserver.observe(element);
-        });
+        update();
+    });
+});
 
-        window.addEventListener("scroll", () => {
-            const max = document.documentElement.scrollHeight - window.innerHeight;
+update();
 
-            document.getElementById("progress").style.width =
-                (max > 0 ? window.scrollY / max * 100 : 0) + "%";
-        });
-    </script>
+/* Animaciones de aparición */
+
+const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            revealObserver.unobserve(entry.target);
+        }
+    });
+}, {
+    threshold: .12
+});
+
+document.querySelectorAll(".reveal").forEach(element => {
+    revealObserver.observe(element);
+});
+
+window.addEventListener("scroll", () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+
+    document.getElementById("progress").style.width =
+        (max > 0 ? window.scrollY / max * 100 : 0) + "%";
+});
+</script>
 
 </body>
 </html>
