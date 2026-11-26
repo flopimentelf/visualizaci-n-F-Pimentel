@@ -20,6 +20,7 @@
             --ink: #171A17;
             --muted: #858A82;
             --line: #D9DCD4;
+            --white: #FFFFFF;
         }
 
         * {
@@ -42,170 +43,155 @@
             cursor: pointer;
         }
 
+        .mono {
+            font-family: 'DM Mono', monospace;
+        }
+
         #intro {
-            position: fixed;
-            inset: 0;
-            z-index: 1000;
-            background: var(--paper);
+            position: relative;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 100vh;
             overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 1s, visibility 1s;
+            background: white;
         }
 
-        #intro.hide {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        #introCanvas {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        .intro-content {
+        .hero-copy {
             position: relative;
             z-index: 2;
-            width: 100%;
-            height: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            padding: 30px 5vw;
-            pointer-events: none;
+            padding: 28px 34px 24px;
+            min-width: 0;
         }
 
-        .intro-top,
-        .intro-bottom {
+        .hero-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
             gap: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--line);
+            font: 10px 'DM Mono';
+            line-height: 1.6;
         }
 
-        .intro-label {
-            font: 11px 'DM Mono';
-            letter-spacing: 1px;
+        .hero-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 50px 0;
+        }
+
+        .kicker {
+            margin-bottom: 24px;
+            padding: 8px 11px;
+            border: 1px solid var(--green);
+            color: var(--green);
+            font: 10px 'DM Mono';
+            letter-spacing: .08em;
             text-transform: uppercase;
         }
 
-        .intro-counter {
-            font: 11px 'DM Mono';
-        }
-
-        .intro-middle {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 90%;
-            text-align: center;
-        }
-
-        .frame {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity .8s;
-            pointer-events: none;
-        }
-
-        .frame.active {
-            opacity: 1;
-        }
-
-        .frame h1 {
-            font-size: clamp(48px, 10vw, 130px);
-            line-height: .85;
+        .hero-title {
+            margin: 0;
+            font-size: clamp(48px, 7.2vw, 105px);
+            line-height: .86;
             letter-spacing: -.085em;
             font-weight: 900;
-            margin: 0;
         }
 
-        .frame h1 span {
+        .hero-title span {
             color: var(--green);
         }
 
-        .frame p {
-            font: 12px 'DM Mono';
-            line-height: 1.8;
-            margin-top: 25px;
+        .hero-description {
+            max-width: 360px;
+            margin-top: 30px;
+            font-size: 13px;
+            line-height: 1.7;
         }
 
-        .walker {
-            width: 90px;
-            height: 150px;
-            color: var(--green);
-            margin-bottom: 35px;
+        .hero-note {
+            margin-top: 24px;
+            color: #777;
+            font: 10px 'DM Mono';
+            line-height: 1.7;
         }
 
-        .walker svg {
+        .hero-footer {
+            padding-top: 14px;
+            border-top: 1px solid var(--line);
+            font: 9px 'DM Mono';
+            text-transform: uppercase;
+        }
+
+        .hero-divider {
+            position: absolute;
+            z-index: 3;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 1px;
+            background: rgba(23, 26, 23, .3);
+        }
+
+        #rain {
+            position: absolute;
+            inset: 0 0 0 50%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        #rain canvas {
+            display: block;
             width: 100%;
             height: 100%;
-            overflow: visible;
+            mix-blend-mode: multiply;
         }
 
-        .frame.active .walker {
-            animation: walk .55s ease-in-out infinite alternate;
-        }
-
-        @keyframes walk {
-            from {
-                transform: translateY(0) rotate(-4deg);
-            }
-
-            to {
-                transform: translateY(-9px) rotate(4deg);
-            }
-        }
-
-        .intro-actions {
+        .hero-controls {
             display: flex;
-            gap: 10px;
             align-items: center;
+            gap: 10px;
+            margin-top: 22px;
             pointer-events: auto;
         }
 
-        .intro-btn {
+        .hero-button {
+            padding: 11px 15px;
+            border: 1px solid var(--green);
             background: var(--green);
             color: white;
-            border: 1px solid var(--green);
-            padding: 13px 20px;
-            font: 11px 'DM Mono';
+            font: 10px 'DM Mono';
             text-transform: uppercase;
         }
 
-        .intro-btn.secondary {
-            background: transparent;
-            color: var(--ink);
-            border-color: var(--ink);
+        .hero-button.secondary {
+            background: white;
+            color: var(--green);
         }
 
-        .sound-control {
+        .sound-button {
             position: fixed;
-            z-index: 1002;
-            right: 5vw;
-            top: 25px;
+            z-index: 100;
+            top: 18px;
+            right: 20px;
+            padding: 10px 13px;
             border: 1px solid var(--line);
             background: var(--paper);
-            padding: 10px 13px;
+            color: var(--green);
             font: 10px 'DM Mono';
         }
 
-        #soundToggle {
+        .sound-button.hidden {
             display: none;
         }
 
         header {
-            padding: 28px 5vw 18px;
+            padding: 25px 5vw 35px;
             border-bottom: 1px solid var(--line);
         }
 
@@ -213,201 +199,292 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font: 11px 'DM Mono';
+            gap: 15px;
+            font: 10px 'DM Mono';
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: .07em;
         }
 
         .tag {
+            padding: 9px 13px;
             background: var(--green);
             color: white;
-            padding: 9px 13px;
         }
 
-        h1 {
-            font-size: clamp(43px, 8vw, 104px);
-            line-height: .85;
-            letter-spacing: -6px;
+        .main-title {
             margin: 65px 0 20px;
+            font-size: clamp(50px, 9vw, 115px);
+            line-height: .83;
+            letter-spacing: -.09em;
             font-weight: 900;
-            max-width: 900px;
         }
 
-        header h1 span {
+        .main-title span {
             color: var(--green);
         }
 
         .subtitle {
-            font: 13px 'DM Mono';
-            max-width: 500px;
-            line-height: 1.7;
-            color: #62685F;
+            max-width: 550px;
+            font: 12px 'DM Mono';
+            line-height: 1.8;
+            color: #666;
         }
 
         main {
-            padding: 30px 5vw 80px;
+            padding: 35px 5vw 85px;
         }
 
-        .controls {
+        .toolbar {
             display: flex;
             justify-content: space-between;
-            gap: 20px;
+            align-items: end;
             flex-wrap: wrap;
-            align-items: center;
-            margin: 25px 0 35px;
+            gap: 25px;
+            margin-bottom: 35px;
         }
 
-        .group {
+        .section-label {
+            color: var(--muted);
+            font: 10px 'DM Mono';
+            letter-spacing: .09em;
+            text-transform: uppercase;
+        }
+
+        .button-group {
             display: flex;
-            gap: 7px;
             flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 10px;
         }
 
-        .control {
+        .filter-button {
+            padding: 10px 14px;
             border: 1px solid var(--line);
             background: transparent;
-            padding: 11px 16px;
-            font-size: 10px;
-            font-weight: 700;
+            color: var(--ink);
+            font: 10px 'DM Mono';
             text-transform: uppercase;
-            letter-spacing: .7px;
+            transition: .25s;
         }
 
-        .control.active {
+        .filter-button:hover,
+        .filter-button.active {
             background: var(--green);
             color: white;
             border-color: var(--green);
         }
 
-        .section-label {
-            font: 11px 'DM Mono';
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: var(--muted);
-        }
-
-        .visual-grid {
-            display: grid;
-            grid-template-columns: minmax(0, 1.25fr) minmax(280px, .75fr);
-            gap: 30px;
-            align-items: center;
-        }
-
-        .radial-panel {
-            background: white;
-            padding: 20px;
-            min-height: 490px;
+        .chart-heading {
             display: flex;
-            align-items: center;
-            justify-content: center;
+            justify-content: space-between;
+            align-items: end;
+            gap: 20px;
+            border-bottom: 2px solid var(--ink);
+            padding-bottom: 16px;
+        }
+
+        .chart-heading h2 {
+            margin: 9px 0 0;
+            font-size: clamp(28px, 4.5vw, 53px);
+            line-height: .95;
+            letter-spacing: -.065em;
+        }
+
+        .chart-heading p {
+            max-width: 300px;
+            margin: 0;
+            color: var(--muted);
+            font: 10px 'DM Mono';
+            line-height: 1.7;
+        }
+
+        .chart-container {
+            margin-top: 20px;
+            padding: 20px 10px 10px;
+            background: white;
             overflow: hidden;
         }
 
-        #radial {
+        #curves {
+            display: block;
             width: 100%;
-            max-width: 550px;
+            height: auto;
+            min-height: 300px;
             overflow: visible;
         }
 
-        .ring {
+        .curve-base {
             fill: none;
-            stroke: var(--line);
-            stroke-width: 15;
+            stroke: #E5E9E2;
+            stroke-width: 12;
         }
 
-        .ring-positive {
+        .curve-positive {
             fill: none;
             stroke: var(--green);
-            stroke-width: 15;
-            transition: stroke-dasharray 1s;
+            stroke-width: 12;
+            stroke-linecap: round;
+            transition: stroke-dasharray 1s, opacity .4s;
         }
 
-        .ring-negative {
+        .curve-negative {
             fill: none;
             stroke: var(--light);
-            stroke-width: 15;
-            transition: stroke-dasharray 1s;
+            stroke-width: 12;
+            stroke-linecap: round;
+            transition: stroke-dasharray 1s, opacity .4s;
         }
 
-        .ring-label {
-            font: 11px 'DM Mono';
+        .curve-pending {
+            fill: none;
+            stroke: #D5DAD2;
+            stroke-width: 8;
+            stroke-dasharray: 3 8;
+        }
+
+        .curve-group {
+            cursor: pointer;
+            transition: opacity .4s;
+        }
+
+        .curve-group:hover .curve-base,
+        .curve-group.selected .curve-base {
+            stroke: #DCE6DB;
+        }
+
+        .curve-group.selected .curve-positive,
+        .curve-group.selected .curve-negative {
+            stroke-width: 17;
+        }
+
+        .curve-group.dimmed {
+            opacity: .16;
+        }
+
+        .curve-name {
             fill: var(--ink);
+            font: 11px 'DM Mono';
         }
 
-        .center-title {
-            font: 700 17px 'Montserrat';
-            fill: var(--green);
-        }
-
-        .center-small {
-            font: 10px 'DM Mono';
+        .curve-city {
             fill: var(--muted);
+            font: 9px 'DM Mono';
         }
 
-        .legend {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
+        .day-point {
+            stroke: white;
+            stroke-width: 2;
+            cursor: pointer;
+        }
+
+        .day-point.selected {
+            stroke: var(--ink);
+            stroke-width: 3;
+        }
+
+        .axis-line {
+            stroke: #A8AEA5;
+            stroke-width: 1;
+        }
+
+        .axis-label {
+            fill: #747A71;
             font: 10px 'DM Mono';
-            margin-top: 15px;
         }
 
-        .dot {
-            display: inline-block;
+        .chart-legend {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 18px 5px 5px;
+            border-top: 1px solid var(--line);
+            font: 10px 'DM Mono';
+        }
+
+        .legend-items {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .legend-dot {
             width: 9px;
             height: 9px;
             border-radius: 50%;
-            margin-right: 6px;
         }
 
-        .stats {
-            display: grid;
-            gap: 12px;
-        }
-
-        .stat {
-            border-bottom: 1px solid var(--line);
-            padding: 18px 0;
-        }
-
-        .stat-number {
-            font-size: clamp(44px, 6vw, 75px);
-            font-weight: 900;
-            letter-spacing: -4px;
-            color: var(--green);
-            line-height: 1;
-        }
-
-        .stat-name {
-            font: 11px 'DM Mono';
-            text-transform: uppercase;
-            margin-top: 9px;
-        }
-
-        .stat-detail {
-            font-size: 11px;
+        .chart-instruction {
             color: var(--muted);
+        }
+
+        .data-detail {
+            display: grid;
+            grid-template-columns: 1.2fr repeat(3, 1fr);
+            margin-top: 25px;
+            background: var(--green);
+            color: white;
+        }
+
+        .detail-cell {
+            padding: 20px;
+            border-right: 1px solid rgba(255,255,255,.2);
+        }
+
+        .detail-cell:last-child {
+            border: none;
+        }
+
+        .detail-label {
+            color: #B8CCB8;
+            font: 9px 'DM Mono';
+            text-transform: uppercase;
+        }
+
+        .detail-number {
+            margin-top: 12px;
+            font-size: clamp(26px, 4vw, 45px);
+            font-weight: 800;
+            letter-spacing: -.06em;
+        }
+
+        .detail-name {
+            margin-top: 8px;
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .detail-note {
             margin-top: 5px;
+            color: #D4E2D7;
+            font: 9px 'DM Mono';
         }
 
         .street-section {
-            margin-top: 75px;
+            margin-top: 80px;
         }
 
         .section-heading {
             display: flex;
             justify-content: space-between;
             align-items: end;
+            gap: 20px;
             border-bottom: 2px solid var(--ink);
-            padding-bottom: 14px;
+            padding-bottom: 15px;
             margin-bottom: 20px;
-            gap: 15px;
         }
 
-        h2 {
-            font-size: clamp(25px, 4vw, 42px);
-            letter-spacing: -2px;
-            margin: 8px 0 0;
+        .section-heading h2 {
+            margin: 9px 0 0;
+            font-size: clamp(30px, 5vw, 55px);
+            line-height: .95;
+            letter-spacing: -.07em;
         }
 
         .street-grid {
@@ -417,38 +494,48 @@
         }
 
         .street-card {
-            background: white;
+            position: relative;
+            min-height: 200px;
             padding: 17px;
-            min-height: 210px;
+            background: white;
             border-top: 3px solid var(--green);
-            transition: transform .3s;
+            transition: .3s;
+            cursor: pointer;
         }
 
-        .street-card:hover {
-            transform: translateY(-5px);
+        .street-card:hover,
+        .street-card.selected {
+            transform: translateY(-4px);
+            background: #E8EEE7;
+        }
+
+        .street-card.pending {
+            border-color: #AEB5A9;
+            background: #ECEEE8;
         }
 
         .street-card h3 {
-            font-size: 15px;
-            margin: 0 0 8px;
+            margin: 12px 0;
+            font-size: 17px;
         }
 
-        .street-card .date {
-            font: 10px 'DM Mono';
+        .street-card .city-label {
             color: var(--muted);
+            font: 9px 'DM Mono';
+            text-transform: uppercase;
         }
 
         .people {
             display: flex;
             flex-wrap: wrap;
-            gap: 3px;
-            margin: 22px 0 15px;
-            min-height: 35px;
+            gap: 4px;
+            margin: 18px 0;
+            min-height: 30px;
         }
 
         .person {
-            width: 17px;
-            height: 29px;
+            width: 15px;
+            height: 25px;
             opacity: 0;
             animation: appear .4s forwards;
         }
@@ -467,126 +554,248 @@
         }
 
         @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
-
-            from {
-                opacity: 0;
-                transform: translateY(9px);
-            }
         }
 
-        .card-numbers {
+        .card-data {
             display: flex;
             justify-content: space-between;
-            border-top: 1px solid var(--line);
+            gap: 8px;
             padding-top: 10px;
-            font: 10px 'DM Mono';
+            border-top: 1px solid var(--line);
+            font: 9px 'DM Mono';
         }
 
-        .card-numbers strong {
-            font-size: 16px;
+        .card-data strong {
+            font-size: 15px;
         }
 
-        .pending {
-            background: #E9EBE5;
-            border-top-color: #AEB5A9;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .pending .pending-label {
-            font: 10px 'DM Mono';
+        .pending-text {
             color: var(--muted);
-        }
-
-        .pending .pending-text {
-            font-size: 12px;
+            font: 10px 'DM Mono';
             line-height: 1.7;
-            color: var(--muted);
         }
 
-        .comparison {
-            margin-top: 75px;
+        .summary-section {
+            margin-top: 80px;
+            padding: 35px;
             background: var(--green);
             color: white;
-            padding: 35px;
         }
 
-        .comparison h2 {
-            font-size: clamp(28px, 5vw, 55px);
-            max-width: 650px;
+        .summary-section h2 {
+            max-width: 700px;
+            margin: 15px 0 25px;
+            font-size: clamp(32px, 5.5vw, 65px);
+            line-height: .95;
+            letter-spacing: -.07em;
         }
 
-        .comparison p {
-            font: 12px 'DM Mono';
-            line-height: 1.8;
-            color: #D4E2D7;
-            max-width: 650px;
-        }
-
-        .comparison .big {
-            font-size: clamp(45px, 8vw, 90px);
+        .summary-percentage {
+            font-size: clamp(60px, 11vw, 115px);
             font-weight: 900;
-            letter-spacing: -5px;
+            letter-spacing: -.09em;
+        }
+
+        .summary-section p {
+            max-width: 600px;
+            color: #D4E2D7;
+            font: 11px 'DM Mono';
+            line-height: 1.8;
+        }
+
+        .summary-foot {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 35px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,.25);
+            color: #B8CCB8;
+            font: 9px 'DM Mono';
         }
 
         footer {
-            padding: 25px 5vw;
-            border-top: 1px solid var(--line);
             display: flex;
             justify-content: space-between;
-            gap: 20px;
-            font: 10px 'DM Mono';
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 25px 5vw;
+            border-top: 1px solid var(--line);
             color: var(--muted);
+            font: 9px 'DM Mono';
         }
 
-        @media (max-width: 800px) {
-            .visual-grid {
-                grid-template-columns: 1fr;
+        @media(max-width: 850px) {
+            .hero-copy {
+                padding: 22px;
             }
 
-            .radial-panel {
-                min-height: 370px;
+            .hero-title {
+                font-size: clamp(42px, 8vw, 75px);
+            }
+
+            .data-detail {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .detail-cell:nth-child(2) {
+                border-right: none;
             }
 
             .street-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-
-            h1 {
-                letter-spacing: -3px;
-            }
         }
 
-        @media (max-width: 440px) {
-            .street-grid {
+        @media(max-width: 600px) {
+            #intro {
+                grid-template-columns: 1fr;
+                grid-template-rows: 58svh 42svh;
+                min-height: 100svh;
+            }
+
+            .hero-copy {
+                grid-column: 1;
+                grid-row: 1;
+                padding: 18px;
+                border-bottom: 1px solid var(--line);
+            }
+
+            .hero-header {
+                flex-direction: column;
+                gap: 5px;
+                font-size: 8px;
+            }
+
+            .hero-content {
+                padding: 20px 0;
+            }
+
+            .hero-title {
+                font-size: clamp(43px, 12vw, 68px);
+            }
+
+            .hero-description {
+                font-size: 11px;
+                margin-top: 17px;
+            }
+
+            .hero-note {
+                display: none;
+            }
+
+            .hero-footer {
+                font-size: 8px;
+            }
+
+            #rain {
+                inset: 58svh 0 0 0;
+            }
+
+            .hero-divider {
+                display: none;
+            }
+
+            .hero-controls {
+                margin-top: 10px;
+            }
+
+            .hero-button {
+                padding: 9px 11px;
+                font-size: 9px;
+            }
+
+            .sound-button {
+                top: 10px;
+                right: 10px;
+            }
+
+            header {
+                padding: 22px 20px 30px;
+            }
+
+            .main-title {
+                margin-top: 55px;
+                font-size: 58px;
+                letter-spacing: -.08em;
+            }
+
+            main {
+                padding: 25px 18px 60px;
+            }
+
+            .toolbar {
+                align-items: flex-start;
+            }
+
+            .chart-heading {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .chart-container {
+                padding: 10px 0;
+            }
+
+            #curves {
+                min-height: 230px;
+            }
+
+            .curve-name {
+                font-size: 10px;
+            }
+
+            .curve-city {
+                display: none;
+            }
+
+            .data-detail {
                 grid-template-columns: 1fr 1fr;
-                gap: 7px;
+            }
+
+            .detail-cell {
+                padding: 14px;
+            }
+
+            .street-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
             }
 
             .street-card {
+                min-height: 175px;
                 padding: 12px;
             }
 
-            .radial-panel {
-                padding: 5px;
-                min-height: 300px;
+            .street-card h3 {
+                font-size: 14px;
             }
 
-            .controls {
-                margin-top: 15px;
+            .card-data {
+                flex-wrap: wrap;
             }
 
-            .intro-content {
-                padding: 20px;
+            .summary-section {
+                padding: 25px 20px;
+            }
+
+            .section-heading {
+                align-items: flex-start;
+                flex-direction: column;
             }
         }
 
-        @media (prefers-reduced-motion: reduce) {
+        @media(prefers-reduced-motion: reduce) {
             *,
             *::before,
             *::after {
@@ -600,201 +809,211 @@
 <body>
 
     <section id="intro">
-        <canvas id="introCanvas"></canvas>
 
-        <div class="intro-content">
+        <div class="hero-copy">
 
-            <div class="intro-top">
-                <span class="intro-label">Estudio de percepción urbana / 2026</span>
-                <span class="intro-counter" id="frameCounter">01 / 05</span>
+            <div class="hero-header">
+                <span>Information design / PUCV</span>
+                <span>Valparaíso ↔ Buenos Aires</span>
             </div>
 
-            <div class="intro-middle">
+            <div class="hero-content">
+                <div class="kicker">Percepción / Transitabilidad</div>
 
-                <div class="frame active">
-                    <div class="walker">
-                        <svg viewBox="0 0 100 160" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round">
-                            <circle cx="51" cy="17" r="12" fill="currentColor" stroke="none"/>
-                            <path d="M50 39 L47 88 L25 125 M48 84 L76 120 M49 46 L20 74 M49 47 L78 69"/>
-                        </svg>
-                    </div>
+                <h1 class="hero-title">
+                    CAMINAR<br>
+                    NO ES<br>
+                    <span>NEUTRAL.</span>
+                </h1>
 
-                    <h1>CAMINAR<br>ES <span>MOVERSE.</span></h1>
-                    <p>CADA RECORRIDO CONSTRUYE UNA EXPERIENCIA.</p>
+                <p class="hero-description">
+                    Un registro colectivo de las experiencias que construyen la forma de caminar por la ciudad.
+                </p>
+
+                <p class="hero-note">
+                    Ocho calles · Dos territorios<br>
+                    Observación · Percepción · Recorrido
+                </p>
+
+                <div class="hero-controls">
+                    <button class="hero-button" id="enterButton">
+                        Explorar visualización ↗
+                    </button>
+
+                    <button class="hero-button secondary" id="introSound">
+                        ♫ Activar sonido
+                    </button>
                 </div>
-
-                <div class="frame">
-                    <div class="walker">
-                        <svg viewBox="0 0 100 160" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round">
-                            <circle cx="51" cy="17" r="12" fill="currentColor" stroke="none"/>
-                            <path d="M50 39 L47 88 L25 125 M48 84 L76 120 M49 46 L20 74 M49 47 L78 69"/>
-                        </svg>
-                    </div>
-
-                    <h1>NO TODAS<br>LAS CALLES <span>SE VIVEN</span><br>IGUAL.</h1>
-                    <p>EL ESPACIO URBANO TAMBIÉN SE PERCIBE.</p>
-                </div>
-
-                <div class="frame">
-                    <div class="walker">
-                        <svg viewBox="0 0 100 160" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round">
-                            <circle cx="51" cy="17" r="12" fill="currentColor" stroke="none"/>
-                            <path d="M50 39 L47 88 L25 125 M48 84 L76 120 M49 46 L20 74 M49 47 L78 69"/>
-                        </svg>
-                    </div>
-
-                    <h1>¿CÓMO<br>SE <span>CAMINA</span><br>LA CIUDAD?</h1>
-                    <p>OBSERVAR · RECORRER · PREGUNTAR.</p>
-                </div>
-
-                <div class="frame">
-                    <h1><span>VALPARAÍSO</span><br>↔<br>BUENOS AIRES</h1>
-                    <p>OCHO CALLES. DOS TERRITORIOS. MÚLTIPLES PERCEPCIONES.</p>
-                </div>
-
-                <div class="frame">
-                    <h1>CAMINAR<br>NO ES <span>NEUTRAL.</span></h1>
-                    <p>UNA LECTURA DE LA TRANSITABILIDAD DESDE LA EXPERIENCIA PEATONAL.</p>
-                </div>
-
             </div>
 
-            <div class="intro-bottom">
-                <span class="intro-label">Information design / PUCV</span>
-
-                <div class="intro-actions">
-                    <button class="intro-btn secondary" id="skipIntro">
-                        Saltar introducción ↗
-                    </button>
-
-                    <button class="intro-btn" id="startIntro">
-                        Iniciar experiencia ↗
-                    </button>
-                </div>
+            <div class="hero-footer">
+                Estudio de transitabilidad urbana / 2026
             </div>
 
         </div>
+
+        <div class="hero-divider"></div>
+        <div id="rain"></div>
+
     </section>
 
-    <button class="sound-control" id="soundToggle">
-        ♫ ACTIVAR SONIDO
+    <button class="sound-button hidden" id="soundToggle">
+        ♫ SILENCIAR
     </button>
 
     <header>
         <div class="topline">
             <span>Information design / 2026</span>
-            <span class="tag">Estudio de transitabilidad</span>
+            <span class="tag">Transitabilidad urbana</span>
         </div>
 
-        <h1>CAMINAR<br>NO ES <span>NEUTRAL.</span></h1>
+        <h1 class="main-title">
+            CAMINAR<br>
+            NO ES <span>NEUTRAL.</span>
+        </h1>
 
         <p class="subtitle">
-            Una exploración de la percepción de la transitabilidad urbana a través de las experiencias de quienes recorren las calles de Barrio Puerto y Buenos Aires.
+            Una lectura comparativa de la transitabilidad percibida en las calles de Barrio Puerto, Valparaíso, y Buenos Aires, Argentina.
         </p>
     </header>
 
     <main>
 
-        <div class="controls">
+        <div class="toolbar">
 
             <div>
                 <div class="section-label">01 / Territorio</div>
 
-                <div class="group" style="margin-top:10px">
-                    <button class="control active" data-city="all">Ambas ciudades</button>
-                    <button class="control" data-city="argentina">Buenos Aires</button>
-                    <button class="control" data-city="valparaiso">Barrio Puerto</button>
+                <div class="button-group">
+                    <button class="filter-button active" data-city="all">Ambas ciudades</button>
+                    <button class="filter-button" data-city="valparaiso">Barrio Puerto</button>
+                    <button class="filter-button" data-city="argentina">Buenos Aires</button>
                 </div>
             </div>
 
             <div>
                 <div class="section-label">02 / Jornada</div>
 
-                <div class="group" style="margin-top:10px">
-                    <button class="control active" data-day="all">Total</button>
-                    <button class="control" data-day="0">19 NOV</button>
-                    <button class="control" data-day="1">20 NOV</button>
-                    <button class="control" data-day="2">21 NOV</button>
+                <div class="button-group">
+                    <button class="filter-button active" data-day="all">Acumulado</button>
+                    <button class="filter-button" data-day="0">19 NOV</button>
+                    <button class="filter-button" data-day="1">20 NOV</button>
+                    <button class="filter-button" data-day="2">21 NOV</button>
                 </div>
             </div>
 
         </div>
 
-        <div class="visual-grid">
+        <section>
 
-            <div>
-                <div class="section-label">03 / Distribución de respuestas</div>
-
-                <div class="radial-panel">
-                    <svg id="radial" viewBox="0 0 500 500"></svg>
+            <div class="chart-heading">
+                <div>
+                    <div class="section-label">03 / Trayectorias de percepción</div>
+                    <h2>Ocho calles.<br>Ocho recorridos.</h2>
                 </div>
 
-                <div class="legend">
-                    <span><i class="dot" style="background:var(--green)"></i>POSITIVA</span>
-                    <span><i class="dot" style="background:var(--light)"></i>NEGATIVA</span>
-                    <span><i class="dot" style="background:var(--line)"></i>SIN REGISTRO</span>
+                <p>
+                    Cada curva representa una calle. Su recorrido reúne las valoraciones de transitabilidad de las tres jornadas.
+                    Selecciona un trazo para explorar sus datos.
+                </p>
+            </div>
+
+            <div class="chart-container">
+                <svg id="curves" viewBox="0 0 850 390" role="img" aria-label="Gráfico de curvas comparativas de transitabilidad"></svg>
+
+                <div class="chart-legend">
+                    <div class="legend-items">
+                        <span class="legend-item">
+                            <i class="legend-dot" style="background:var(--green)"></i>
+                            Positiva
+                        </span>
+
+                        <span class="legend-item">
+                            <i class="legend-dot" style="background:var(--light)"></i>
+                            Negativa
+                        </span>
+
+                        <span class="legend-item">
+                            <i class="legend-dot" style="background:#D5DAD2"></i>
+                            Pendiente
+                        </span>
+                    </div>
+
+                    <span class="chart-instruction">Selecciona una curva para consultar</span>
                 </div>
             </div>
 
-            <div class="stats">
-
-                <div class="stat">
-                    <div class="section-label">Respuestas positivas</div>
-                    <div class="stat-number" id="positive">25</div>
-                    <div class="stat-detail">Percepción favorable de la transitabilidad</div>
+            <div class="data-detail">
+                <div class="detail-cell">
+                    <div class="detail-label">Calle seleccionada</div>
+                    <div class="detail-name" id="detailName">Av. Colón</div>
+                    <div class="detail-note" id="detailCity">Buenos Aires</div>
                 </div>
 
-                <div class="stat">
-                    <div class="section-label">Respuestas negativas</div>
-                    <div class="stat-number" id="negative">18</div>
-                    <div class="stat-detail">Percepción desfavorable de la transitabilidad</div>
+                <div class="detail-cell">
+                    <div class="detail-label">Positivas</div>
+                    <div class="detail-number" id="detailPositive">9</div>
+                    <div class="detail-note">Fichas verdes</div>
                 </div>
 
-                <div class="stat">
-                    <div class="section-label">Total de registros</div>
-                    <div class="stat-number" id="total">43</div>
-                    <div class="stat-detail">Fichas de transitabilidad contabilizadas</div>
+                <div class="detail-cell">
+                    <div class="detail-label">Negativas</div>
+                    <div class="detail-number" id="detailNegative">5</div>
+                    <div class="detail-note">Fichas verdes</div>
                 </div>
 
+                <div class="detail-cell">
+                    <div class="detail-label">Total</div>
+                    <div class="detail-number" id="detailTotal">14</div>
+                    <div class="detail-note">Registros</div>
+                </div>
             </div>
-        </div>
+
+        </section>
 
         <section class="street-section">
 
             <div class="section-heading">
                 <div>
-                    <div class="section-label">04 / Lectura territorial</div>
-                    <h2>Ocho calles.<br>Distintas experiencias.</h2>
+                    <div class="section-label">04 / Desglose territorial</div>
+                    <h2>Las calles<br>en detalle.</h2>
                 </div>
 
-                <div class="section-label" id="day-label">
-                    TODAS LAS JORNADAS
-                </div>
+                <span class="section-label" id="dayLabel">TRES JORNADAS</span>
             </div>
 
             <div class="street-grid" id="streets"></div>
 
         </section>
 
-        <section class="comparison">
+        <section class="summary-section">
+
             <div class="section-label" style="color:#B8CCB8">
-                05 / Observación
+                05 / Lectura general
             </div>
 
-            <h2>La calle también se construye desde la percepción.</h2>
+            <h2>
+                La experiencia de caminar también deja huellas.
+            </h2>
 
-            <div class="big" id="percentage">58,1%</div>
+            <div class="summary-percentage" id="percentage">58,1%</div>
 
             <p id="insight">
-                Porcentaje de respuestas positivas de las fichas registradas en Buenos Aires.
+                Porcentaje de respuestas positivas sobre las fichas de transitabilidad registradas en Buenos Aires.
             </p>
+
+            <div class="summary-foot">
+                <span>CAMINAR NO ES NEUTRAL</span>
+                <span>VALPARAÍSO × BUENOS AIRES</span>
+            </div>
+
         </section>
 
     </main>
 
     <footer>
-        <span>CAMINAR NO ES NEUTRAL / VISUALIZACIÓN EXPERIMENTAL</span>
-        <span>PUERTO × BUENOS AIRES</span>
+        <span>INFORMATION DESIGN / PUCV</span>
+        <span>ESTUDIO DE TRANSITABILIDAD / 2026</span>
     </footer>
 
     <script>
@@ -805,25 +1024,6 @@
         ];
 
         const data = {
-            argentina: [
-                {
-                    name: 'Av. Colón',
-                    values: [[4, 2], [4, 1], [1, 2]]
-                },
-                {
-                    name: 'Azopardo',
-                    values: [[0, 2], [2, 1], [3, 1]]
-                },
-                {
-                    name: 'Av. Huergo',
-                    values: [[3, 1], [2, 0], [2, 6]]
-                },
-                {
-                    name: 'Av. Alicia',
-                    values: [[2, 1], [2, 0], [0, 1]]
-                }
-            ],
-
             valparaiso: [
                 {
                     name: 'Serrano',
@@ -841,167 +1041,209 @@
                     name: 'Errázuriz',
                     values: [null, null, null]
                 }
+            ],
+
+            argentina: [
+                {
+                    name: 'Av. Colón',
+                    values: [[4, 2], [4, 1], [1, 2]]
+                },
+                {
+                    name: 'Azopardo',
+                    values: [[0, 2], [2, 1], [3, 1]]
+                },
+                {
+                    name: 'Av. Huergo',
+                    values: [[3, 1], [2, 0], [2, 6]]
+                },
+                {
+                    name: 'Av. Alicia',
+                    values: [[2, 1], [2, 0], [0, 1]]
+                }
             ]
         };
 
-        let city = 'all';
-        let day = 'all';
+        const streetList = [
+            ...data.valparaiso.map(s => ({...s, city: 'valparaiso', cityName: 'Barrio Puerto'})),
+            ...data.argentina.map(s => ({...s, city: 'argentina', cityName: 'Buenos Aires'}))
+        ];
 
-        function getStreets() {
-            let selected = [];
-
-            if (city === 'all' || city === 'valparaiso') {
-                selected.push(
-                    ...data.valparaiso.map(s => ({
-                        ...s,
-                        city: 'Barrio Puerto'
-                    }))
-                );
-            }
-
-            if (city === 'all' || city === 'argentina') {
-                selected.push(
-                    ...data.argentina.map(s => ({
-                        ...s,
-                        city: 'Buenos Aires'
-                    }))
-                );
-            }
-
-            return selected;
-        }
+        let selectedCity = 'all';
+        let selectedDay = 'all';
+        let selectedStreet = 'argentina-0';
 
         function getValues(street) {
-            if (day === 'all') {
+            if (selectedDay === 'all') {
                 if (street.values.some(v => v === null)) {
                     return null;
                 }
 
                 return street.values.reduce(
-                    (a, v) => [
-                        a[0] + v[0],
-                        a[1] + v[1]
+                    (total, value) => [
+                        total[0] + value[0],
+                        total[1] + value[1]
                     ],
                     [0, 0]
                 );
             }
 
-            return street.values[Number(day)];
+            return street.values[Number(selectedDay)];
         }
 
-        function totals() {
-            let p = 0;
-            let n = 0;
+        function getTotalValues() {
+            let positive = 0;
+            let negative = 0;
 
-            getStreets().forEach(s => {
-                const v = getValues(s);
+            visibleStreets().forEach(street => {
+                const values = getValues(street);
 
-                if (v) {
-                    p += v[0];
-                    n += v[1];
+                if (values) {
+                    positive += values[0];
+                    negative += values[1];
                 }
             });
 
-            return { p, n };
+            return {positive, negative};
         }
 
-        function drawRadial() {
-            const svg = document.getElementById('radial');
-            const streets = getStreets().filter(
-                s => getValues(s) !== null
+        function visibleStreets() {
+            return streetList.filter(street =>
+                selectedCity === 'all' || street.city === selectedCity
             );
+        }
 
-            const { p, n } = totals();
+        function pointOnArc(radius, progress) {
+            const angle = Math.PI * (1 - progress);
 
+            return {
+                x: 350 + radius * Math.cos(angle),
+                y: 320 - radius * Math.sin(angle)
+            };
+        }
+
+        function curvePath(radius) {
+            return `M ${350 - radius} 320 A ${radius} ${radius} 0 0 1 ${350 + radius} 320`;
+        }
+
+        function drawCurves() {
+            const svg = document.getElementById('curves');
             let html = '';
 
-            const cx = 250;
-            const cy = 250;
+            const cx = 350;
+            const cy = 320;
 
-            streets.forEach((s, i) => {
-                const v = getValues(s);
-                const r = 85 + i * 43;
-                const c = 2 * Math.PI * r;
+            html += `
+                <line class="axis-line" x1="55" y1="${cy}" x2="665" y2="${cy}"/>
+                <text class="axis-label" x="55" y="350">INICIO</text>
+                <text class="axis-label" x="630" y="350">RECORRIDO</text>
+            `;
 
-                const positive = (v[0] / 10) * c;
-                const negative = (v[1] / 10) * c;
+            const visible = visibleStreets();
+
+            visible.forEach(street => {
+                const globalIndex = streetList.indexOf(street);
+                const radius = 85 + globalIndex * 26;
+                const path = curvePath(radius);
+                const values = getValues(street);
+                const id = street.city + '-' + globalIndex;
+                const selected = selectedStreet === id;
+
+                const isPending = values === null;
+                const positive = values ? values[0] : 0;
+                const negative = values ? values[1] : 0;
+                const total = positive + negative;
+
+                const positivePercent = total ? positive / total * 100 : 0;
+                const negativePercent = total ? negative / total * 100 : 0;
+
+                const end = pointOnArc(radius, 1);
+                const labelX = 365 + radius;
+                const labelY = 321;
 
                 html += `
-                    <circle
-                        class="ring"
-                        cx="${cx}"
-                        cy="${cy}"
-                        r="${r}"
-                    />
+                    <g class="curve-group ${selected ? 'selected' : ''} ${selectedStreet && !selected ? 'dimmed' : ''}" data-street="${id}">
+                        <path class="curve-base" d="${path}" pathLength="100"/>
                 `;
 
-                html += `
-                    <circle
-                        class="ring-positive"
-                        cx="${cx}"
-                        cy="${cy}"
-                        r="${r}"
-                        stroke-dasharray="${positive} ${c - positive}"
-                        transform="rotate(-90 ${cx} ${cy})"
-                    />
-                `;
+                if (isPending) {
+                    html += `
+                        <path class="curve-pending" d="${path}"/>
+                    `;
+                } else {
+                    html += `
+                        <path
+                            class="curve-positive"
+                            d="${path}"
+                            pathLength="100"
+                            stroke-dasharray="${positivePercent} ${100 - positivePercent}"
+                        />
+
+                        <path
+                            class="curve-negative"
+                            d="${path}"
+                            pathLength="100"
+                            stroke-dasharray="${negativePercent} ${100 - negativePercent}"
+                            stroke-dashoffset="${-positivePercent}"
+                        />
+                    `;
+                }
+
+                for (let d = 0; d < 3; d++) {
+                    const point = pointOnArc(radius, .2 + d * .3);
+                    const dayValues = street.values[d];
+                    const dayPositive = dayValues ? dayValues[0] : 0;
+                    const dayNegative = dayValues ? dayValues[1] : 0;
+
+                    const markerColor = !dayValues
+                        ? '#D5DAD2'
+                        : dayPositive >= dayNegative
+                            ? '#174B36'
+                            : '#B8CCB8';
+
+                    html += `
+                        <circle
+                            class="day-point ${selectedDay === String(d) ? 'selected' : ''}"
+                            cx="${point.x}"
+                            cy="${point.y}"
+                            r="${selected ? 6 : 4}"
+                            fill="${markerColor}"
+                        >
+                            <title>${days[d]}: ${dayValues ? '+' + dayPositive + ' / -' + dayNegative : 'Sin registros'}</title>
+                        </circle>
+                    `;
+                }
 
                 html += `
-                    <circle
-                        class="ring-negative"
-                        cx="${cx}"
-                        cy="${cy}"
-                        r="${r}"
-                        stroke-dasharray="${negative} ${c - negative}"
-                        stroke-dashoffset="${-positive}"
-                        transform="rotate(-90 ${cx} ${cy})"
-                    />
-                `;
+                        <text
+                            class="curve-name"
+                            x="${labelX}"
+                            y="${labelY}"
+                            text-anchor="start"
+                        >${street.name}</text>
 
-                const angle = (-90 + i * 90) * Math.PI / 180;
-
-                html += `
-                    <text
-                        class="ring-label"
-                        x="${cx + (r + 14) * Math.cos(angle)}"
-                        y="${cy + (r + 14) * Math.sin(angle)}"
-                        text-anchor="middle"
-                    >${s.name}</text>
+                        <text
+                            class="curve-city"
+                            x="${labelX}"
+                            y="${labelY + 13}"
+                            text-anchor="start"
+                        >${street.cityName}</text>
+                    </g>
                 `;
             });
 
-            html += `
-                <circle
-                    cx="250"
-                    cy="250"
-                    r="55"
-                    fill="#F5F5F0"
-                />
-
-                <text
-                    class="center-title"
-                    x="250"
-                    y="244"
-                    text-anchor="middle"
-                >${p + n}</text>
-
-                <text
-                    class="center-small"
-                    x="250"
-                    y="263"
-                    text-anchor="middle"
-                >RESPUESTAS</text>
-            `;
-
             svg.innerHTML = html;
+
+            svg.querySelectorAll('.curve-group').forEach(group => {
+                group.addEventListener('click', () => {
+                    selectedStreet = group.dataset.street;
+                    update();
+                });
+            });
         }
 
         function personIcon(type, index) {
             return `
-                <span
-                    class="person ${type}"
-                    style="animation-delay:${index * .035}s"
-                >
+                <span class="person ${type}" style="animation-delay:${index * .04}s">
                     <svg viewBox="0 0 24 36" fill="currentColor">
                         <circle cx="12" cy="5" r="4"/>
                         <path d="M9 10 Q5 11 6 17 L4 25 Q3 29 7 30 L10 21 L9 32 L5 35 L11 35 L13 27 L16 35 L22 35 L17 30 L16 20 L20 25 Q23 28 24 24 L19 16 Q17 11 13 10Z"/>
@@ -1015,107 +1257,149 @@
 
             container.innerHTML = '';
 
-            getStreets().forEach(street => {
-                const v = getValues(street);
+            visibleStreets().forEach(street => {
+                const globalIndex = streetList.indexOf(street);
+                const id = street.city + '-' + globalIndex;
+                const values = getValues(street);
+                const selected = selectedStreet === id;
+
                 const card = document.createElement('article');
 
-                card.className = 'street-card' + (!v ? ' pending' : '');
+                card.className =
+                    'street-card' +
+                    (values ? '' : ' pending') +
+                    (selected ? ' selected' : '');
 
-                if (!v) {
-                    card.innerHTML = `
-                        <div>
-                            <div class="pending-label">${street.city}</div>
-                            <h3 style="margin-top:15px">${street.name}</h3>
-                        </div>
-
-                        <div class="pending-text">
-                            Datos pendientes de incorporar.<br>
-                            Sin registros disponibles.
-                        </div>
-                    `;
-                } else {
+                if (values) {
                     let people = '';
 
-                    for (let i = 0; i < v[0]; i++) {
+                    for (let i = 0; i < values[0]; i++) {
                         people += personIcon('positive', i);
                     }
 
-                    for (let i = 0; i < v[1]; i++) {
-                        people += personIcon('negative', i + v[0]);
+                    for (let i = 0; i < values[1]; i++) {
+                        people += personIcon('negative', i + values[0]);
                     }
 
                     card.innerHTML = `
-                        <div class="date">${street.city}</div>
-
+                        <div class="city-label">${street.cityName}</div>
                         <h3>${street.name}</h3>
+                        <div class="people">${people}</div>
 
-                        <div class="people">
-                            ${people || '<span class="date">Sin respuestas</span>'}
-                        </div>
-
-                        <div class="card-numbers">
-                            <span>
-                                + <strong style="color:var(--green)">${v[0]}</strong>
-                            </span>
-
-                            <span>
-                                − <strong style="color:var(--green2)">${v[1]}</strong>
-                            </span>
-
-                            <span>
-                                TOTAL <strong>${v[0] + v[1]}</strong>
-                            </span>
+                        <div class="card-data">
+                            <span>+ <strong>${values[0]}</strong></span>
+                            <span>− <strong>${values[1]}</strong></span>
+                            <span>TOTAL <strong>${values[0] + values[1]}</strong></span>
                         </div>
                     `;
+                } else {
+                    card.innerHTML = `
+                        <div class="city-label">${street.cityName}</div>
+                        <h3>${street.name}</h3>
+                        <p class="pending-text">
+                            Datos pendientes de incorporar.
+                            Sin registros disponibles.
+                        </p>
+                    `;
                 }
+
+                card.addEventListener('click', () => {
+                    selectedStreet = id;
+                    update();
+                });
 
                 container.appendChild(card);
             });
         }
 
-        function update() {
-            const { p, n } = totals();
+        function updateDetail() {
+            const street = streetList.find(
+                s => s.city + '-' + streetList.indexOf(s) === selectedStreet
+            );
 
-            document.getElementById('positive').textContent = p;
-            document.getElementById('negative').textContent = n;
-            document.getElementById('total').textContent = p + n;
+            const name = document.getElementById('detailName');
+            const city = document.getElementById('detailCity');
 
-            const pct = p + n ? (p / (p + n)) * 100 : 0;
+            if (!street || (selectedCity !== 'all' && street.city !== selectedCity)) {
+                name.textContent = 'Selecciona una calle';
+                city.textContent = 'Sin selección';
+                document.getElementById('detailPositive').textContent = '—';
+                document.getElementById('detailNegative').textContent = '—';
+                document.getElementById('detailTotal').textContent = '—';
+                return;
+            }
 
-            document.getElementById('percentage').textContent =
-                pct.toFixed(1).replace('.', ',') + '%';
+            const values = getValues(street);
 
-            document.getElementById('insight').textContent = p + n
-                ? `${pct.toFixed(1).replace('.', ',')}% de las respuestas registradas corresponde a valoraciones positivas de transitabilidad. El porcentaje se calcula sobre las fichas disponibles para la selección actual, no sobre el total de habitantes.`
-                : 'No existen registros disponibles para esta selección.';
+            name.textContent = street.name;
+            city.textContent = street.cityName;
 
-            document.getElementById('day-label').textContent =
-                day === 'all'
-                    ? 'TODAS LAS JORNADAS'
-                    : days[Number(day)].toUpperCase();
+            document.getElementById('detailPositive').textContent =
+                values ? values[0] : '—';
 
-            drawRadial();
-            drawStreets();
+            document.getElementById('detailNegative').textContent =
+                values ? values[1] : '—';
+
+            document.getElementById('detailTotal').textContent =
+                values ? values[0] + values[1] : '—';
         }
 
-        document.querySelectorAll('[data-city]').forEach(btn => {
-            btn.addEventListener('click', () => {
-                city = btn.dataset.city;
+        function updateSummary() {
+            const {positive, negative} = getTotalValues();
+            const total = positive + negative;
+            const percentage = total ? positive / total * 100 : 0;
+
+            document.getElementById('percentage').textContent =
+                percentage.toFixed(1).replace('.', ',') + '%';
+
+            document.getElementById('insight').textContent = total
+                ? `${positive} valoraciones positivas y ${negative} negativas entre ${total} fichas de transitabilidad disponibles. El porcentaje corresponde a los registros incorporados, no a una estimación de toda la población.`
+                : 'No hay registros disponibles para esta selección.';
+        }
+
+        function update() {
+            if (selectedCity !== 'all') {
+                const current = streetList.find(
+                    s => s.city + '-' + streetList.indexOf(s) === selectedStreet
+                );
+
+                if (current && current.city !== selectedCity) {
+                    const first = visibleStreets()[0];
+                    selectedStreet = first
+                        ? first.city + '-' + streetList.indexOf(first)
+                        : null;
+                }
+            }
+
+            drawCurves();
+            drawStreets();
+            updateDetail();
+            updateSummary();
+
+            document.getElementById('dayLabel').textContent =
+                selectedDay === 'all'
+                    ? 'TRES JORNADAS'
+                    : days[Number(selectedDay)].toUpperCase();
+        }
+
+        document.querySelectorAll('[data-city]').forEach(button => {
+            button.addEventListener('click', () => {
+                selectedCity = button.dataset.city;
 
                 document.querySelectorAll('[data-city]').forEach(b => {
-                    b.classList.toggle('active', b === btn);
+                    b.classList.toggle('active', b === button);
                 });
 
                 update();
             });
         });
 
-        document.querySelectorAll('[data-day]').forEach(btn => {
-            btn.addEventListener('click', () => {
-                day = btn.dataset.day;
+        document.querySelectorAll('[data-day]').forEach(button => {
+            button.addEventListener('click', () => {
+                selectedDay = button.dataset.day;
 
                 document.querySelectorAll('[data-day]').forEach(b => {
-                    b.classList.toggle('active', b === btn);
+                    b.classList.toggle('active', b === button);
                 });
 
                 update();
@@ -1124,68 +1408,14 @@
 
         update();
 
-        const intro = document.getElementById('intro');
-        const frames = [...document.querySelectorAll('.frame')];
-        const counter = document.getElementById('frameCounter');
-
-        let currentFrame = 0;
-        let introTimer = null;
-        let introStarted = false;
-        let engine = null;
-        let runner = null;
-        let render = null;
-        let rainTimer = null;
-
-        function showFrame(i) {
-            frames.forEach((f, j) => {
-                f.classList.toggle('active', i === j);
-            });
-
-            counter.textContent =
-                String(i + 1).padStart(2, '0') + ' / 05';
-        }
-
-        function startSequence() {
-            if (introStarted) return;
-
-            introStarted = true;
-
-            document.getElementById('startIntro').style.display = 'none';
-            document.getElementById('skipIntro').textContent = 'Saltar ↗';
-
-            startRain();
-            showFrame(0);
-
-            introTimer = setInterval(() => {
-                currentFrame++;
-
-                if (currentFrame >= frames.length) {
-                    clearInterval(introTimer);
-                    setTimeout(closeIntro, 1800);
-                    return;
-                }
-
-                showFrame(currentFrame);
-            }, 2600);
-        }
-
-        function closeIntro() {
-            clearInterval(introTimer);
-            intro.classList.add('hide');
-            stopRain();
-        }
-
-        document.getElementById('startIntro').addEventListener('click', () => {
-            startSequence();
-            startMusic();
-        });
-
-        document.getElementById('skipIntro').addEventListener('click', closeIntro);
+        const rainContainer = document.getElementById('rain');
+        let rainEngine = null;
+        let rainRunner = null;
+        let rainRender = null;
+        let rainResizeObserver = null;
 
         function startRain() {
-            if (!window.Matter) return;
-
-            const canvas = document.getElementById('introCanvas');
+            if (!window.Matter || rainEngine) return;
 
             const {
                 Engine,
@@ -1193,223 +1423,378 @@
                 Runner,
                 Bodies,
                 Body,
-                Composite
+                Composite,
+                Events
             } = Matter;
 
-            engine = Engine.create();
-            engine.gravity.y = .95;
+            let width = Math.max(1, rainContainer.clientWidth);
+            let height = Math.max(1, rainContainer.clientHeight);
+            let pieces = [];
+            let walls = [];
+            let lastSpawn = performance.now();
+            let startedAt = performance.now();
 
-            const width = window.innerWidth;
-            const height = window.innerHeight;
+            const maxPieces = 180;
+            const greenIcon = new Image();
 
-            render = Render.create({
-                canvas,
-                engine,
+            greenIcon.src =
+                'https://flopimentelf.github.io/Tramas-de-elecci-n/assets/picto.ficha.Verde.svg';
+
+            rainEngine = Engine.create({
+                enableSleeping: true
+            });
+
+            rainEngine.gravity.y = .9;
+            rainEngine.gravity.scale = .00105;
+            rainEngine.positionIterations = 12;
+            rainEngine.velocityIterations = 10;
+            rainEngine.constraintIterations = 4;
+
+            rainRender = Render.create({
+                element: rainContainer,
+                engine: rainEngine,
                 options: {
                     width,
                     height,
                     wireframes: false,
                     background: 'transparent',
-                    pixelRatio: Math.min(devicePixelRatio || 1, 2)
+                    pixelRatio: Math.min(window.devicePixelRatio || 1, 2)
                 }
             });
 
-            const ground = Bodies.rectangle(
-                width / 2,
-                height + 35,
-                width + 100,
-                70,
-                {
-                    isStatic: true,
-                    render: { visible: false }
-                }
-            );
+            rainRunner = Runner.create({
+                delta: 1000 / 60,
+                isFixed: true
+            });
 
-            const left = Bodies.rectangle(
-                -30,
-                height / 2,
-                60,
-                height * 2,
-                {
-                    isStatic: true,
-                    render: { visible: false }
-                }
-            );
+            function random(min, max) {
+                return Math.random() * (max - min) + min;
+            }
 
-            const right = Bodies.rectangle(
-                width + 30,
-                height / 2,
-                60,
-                height * 2,
-                {
-                    isStatic: true,
-                    render: { visible: false }
-                }
-            );
+            function makeWalls() {
+                walls.forEach(wall => Composite.remove(rainEngine.world, wall));
 
-            Composite.add(engine.world, [ground, left, right]);
+                const thickness = 160;
 
-            const colors = [
-                '#174B36',
-                '#477B5D',
-                '#B8CCB8'
-            ];
+                walls = [
+                    Bodies.rectangle(
+                        width / 2,
+                        height + thickness / 2,
+                        width + thickness * 2,
+                        thickness,
+                        {
+                            isStatic: true,
+                            render: {visible: false}
+                        }
+                    ),
 
-            let count = 0;
+                    Bodies.rectangle(
+                        -thickness / 2,
+                        height / 2,
+                        thickness,
+                        height * 3,
+                        {
+                            isStatic: true,
+                            render: {visible: false}
+                        }
+                    ),
 
-            rainTimer = setInterval(() => {
-                if (!engine || count > 100) {
-                    clearInterval(rainTimer);
-                    return;
-                }
+                    Bodies.rectangle(
+                        width + thickness / 2,
+                        height / 2,
+                        thickness,
+                        height * 3,
+                        {
+                            isStatic: true,
+                            render: {visible: false}
+                        }
+                    )
+                ];
 
-                const radius = 18 + Math.random() * 18;
+                Composite.add(rainEngine.world, walls);
+            }
+
+            function makePiece() {
+                if (pieces.length >= maxPieces) return;
+
+                const radius = width < 500
+                    ? Math.max(22, Math.min(34, width * .075))
+                    : 40;
 
                 const piece = Bodies.polygon(
-                    Math.random() * width,
-                    -50,
+                    random(radius, width - radius),
+                    -80 - random(0, height * .18),
                     5,
                     radius,
                     {
-                        restitution: .22,
-                        friction: .8,
-                        frictionAir: .02,
-                        render: {
-                            fillStyle: colors[count % 3],
-                            strokeStyle: 'transparent'
-                        }
+                        restitution: 0,
+                        friction: 1,
+                        frictionStatic: 1,
+                        frictionAir: .025,
+                        density: .002,
+                        slop: .04,
+                        sleepThreshold: 18,
+                        angle: random(-.5, .5),
+                        render: {visible: false}
                     }
                 );
 
+                piece.displayRadius = radius;
+
                 Body.setVelocity(piece, {
-                    x: (Math.random() - .5) * 2,
+                    x: random(-.12, .12),
                     y: 0
                 });
 
                 Body.setAngularVelocity(
                     piece,
-                    (Math.random() - .5) * .04
+                    random(-.004, .004)
                 );
 
-                Composite.add(engine.world, piece);
+                pieces.push(piece);
+                Composite.add(rainEngine.world, piece);
+            }
 
-                count++;
-            }, 130);
+            function drawPiece(ctx, piece) {
+                const radius = piece.displayRadius;
 
-            runner = Runner.create();
+                ctx.save();
 
-            Render.run(render);
-            Runner.run(runner, engine);
+                ctx.translate(
+                    piece.position.x,
+                    piece.position.y
+                );
+
+                ctx.rotate(piece.angle);
+
+                ctx.beginPath();
+
+                for (let i = 0; i < 5; i++) {
+                    const angle = -Math.PI / 2 + i * Math.PI * 2 / 5;
+                    const x = Math.cos(angle) * radius;
+                    const y = Math.sin(angle) * radius;
+
+                    if (i === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                }
+
+                ctx.closePath();
+                ctx.fillStyle = 'rgba(0, 100, 65, .72)';
+                ctx.fill();
+
+                if (greenIcon.complete && greenIcon.naturalWidth > 0) {
+                    const iconSize = radius * .95;
+
+                    ctx.drawImage(
+                        greenIcon,
+                        -iconSize / 2,
+                        -iconSize / 2,
+                        iconSize,
+                        iconSize
+                    );
+                }
+
+                ctx.restore();
+            }
+
+            Events.on(rainRender, 'afterRender', () => {
+                const ctx = rainRender.context;
+
+                ctx.save();
+                ctx.globalCompositeOperation = 'multiply';
+
+                pieces.forEach(piece => drawPiece(ctx, piece));
+
+                ctx.restore();
+            });
+
+            Events.on(rainEngine, 'beforeUpdate', () => {
+                const now = performance.now();
+                const elapsed = (now - startedAt) / 1000;
+
+                const spawnInterval = Math.max(
+                    95,
+                    620 - elapsed * 65
+                );
+
+                if (
+                    now - lastSpawn > spawnInterval &&
+                    pieces.length < maxPieces
+                ) {
+                    makePiece();
+                    lastSpawn = now;
+                }
+
+                pieces.forEach(piece => {
+                    if (piece.plugin?.settled) return;
+
+                    const speed = Math.hypot(
+                        piece.velocity.x,
+                        piece.velocity.y
+                    );
+
+                    if (
+                        speed < .18 &&
+                        Math.abs(piece.angularVelocity) < .025 &&
+                        piece.position.y > 0
+                    ) {
+                        piece.plugin = piece.plugin || {
+                            settleFrames: 0,
+                            settled: false
+                        };
+
+                        piece.plugin.settleFrames++;
+
+                        if (piece.plugin.settleFrames > 28) {
+                            Body.setVelocity(piece, {x: 0, y: 0});
+                            Body.setAngularVelocity(piece, 0);
+                            Body.setStatic(piece, true);
+                            piece.plugin.settled = true;
+                        }
+                    }
+                });
+            });
+
+            Events.on(rainEngine, 'afterUpdate', () => {
+                pieces = pieces.filter(piece => {
+                    if (piece.position.y > height + 160) {
+                        Composite.remove(rainEngine.world, piece);
+                        return false;
+                    }
+
+                    return true;
+                });
+            });
+
+            function resizeRain() {
+                width = Math.max(1, rainContainer.clientWidth);
+                height = Math.max(1, rainContainer.clientHeight);
+
+                rainRender.canvas.width = width * rainRender.options.pixelRatio;
+                rainRender.canvas.height = height * rainRender.options.pixelRatio;
+                rainRender.canvas.style.width = width + 'px';
+                rainRender.canvas.style.height = height + 'px';
+
+                rainRender.options.width = width;
+                rainRender.options.height = height;
+
+                makeWalls();
+            }
+
+            makeWalls();
+            makePiece();
+
+            window.addEventListener('resize', resizeRain);
+
+            if ('ResizeObserver' in window) {
+                rainResizeObserver = new ResizeObserver(resizeRain);
+                rainResizeObserver.observe(rainContainer);
+            }
+
+            Runner.run(rainRunner, rainEngine);
+            Render.run(rainRender);
         }
 
         function stopRain() {
-            if (!engine) return;
+            if (!rainEngine) return;
 
-            clearInterval(rainTimer);
+            Matter.Runner.stop(rainRunner);
+            Matter.Render.stop(rainRender);
 
-            Matter.Runner.stop(runner);
-            Matter.Render.stop(render);
-
-            if (render.canvas) {
-                render.canvas.remove();
+            if (rainResizeObserver) {
+                rainResizeObserver.disconnect();
+                rainResizeObserver = null;
             }
 
-            Matter.Engine.clear(engine);
+            if (rainRender.canvas) {
+                rainRender.canvas.remove();
+            }
 
-            engine = null;
-            runner = null;
-            render = null;
+            Matter.Engine.clear(rainEngine);
+
+            rainEngine = null;
+            rainRunner = null;
+            rainRender = null;
         }
+
+        startRain();
 
         let audio = null;
         let musicOn = false;
         let musicTimer = null;
-        let noteIndex = 0;
+        let musicIndex = 0;
 
         const melody = [
-            [659, .13],
-            [784, .13],
+            [659, .14],
+            [784, .14],
             [988, .2],
-            [784, .13],
-            [659, .13],
+            [784, .14],
+            [659, .14],
             [523, .2],
-            [587, .13],
+            [587, .14],
             [659, .2],
-            [784, .13],
-            [880, .13],
-            [784, .13],
+            [784, .14],
+            [880, .14],
+            [784, .14],
             [659, .2],
-            [587, .13],
-            [659, .13],
-            [784, .25],
+            [587, .14],
+            [659, .14],
+            [784, .24],
             [659, .2],
-            [523, .13],
-            [587, .13],
+            [523, .14],
+            [587, .14],
             [659, .2],
-            [784, .13],
-            [659, .13],
-            [523, .25],
+            [784, .14],
+            [659, .14],
+            [523, .24],
             [440, .2],
             [523, .2]
         ];
 
-        function playNote(freq, duration) {
+        function playNote(frequency, duration, volume = .1, type = 'triangle') {
             if (!audio || !musicOn) return;
 
             const now = audio.currentTime;
-
-            const osc = audio.createOscillator();
+            const oscillator = audio.createOscillator();
             const gain = audio.createGain();
 
-            const low = audio.createOscillator();
-            const lowGain = audio.createGain();
-
-            osc.type = 'triangle';
-            osc.frequency.setValueAtTime(freq, now);
+            oscillator.type = type;
+            oscillator.frequency.setValueAtTime(frequency, now);
 
             gain.gain.setValueAtTime(.0001, now);
-            gain.gain.exponentialRampToValueAtTime(.12, now + .015);
+            gain.gain.exponentialRampToValueAtTime(volume, now + .02);
             gain.gain.exponentialRampToValueAtTime(.0001, now + duration);
 
-            low.type = 'sine';
-            low.frequency.setValueAtTime(freq / 2, now);
-
-            lowGain.gain.setValueAtTime(.0001, now);
-            lowGain.gain.exponentialRampToValueAtTime(.035, now + .02);
-            lowGain.gain.exponentialRampToValueAtTime(.0001, now + duration * .9);
-
-            osc.connect(gain);
+            oscillator.connect(gain);
             gain.connect(audio.destination);
 
-            low.connect(lowGain);
-            lowGain.connect(audio.destination);
-
-            osc.start(now);
-            osc.stop(now + duration + .03);
-
-            low.start(now);
-            low.stop(now + duration + .03);
+            oscillator.start(now);
+            oscillator.stop(now + duration + .03);
         }
 
         function musicStep() {
             if (!musicOn) return;
 
-            const [freq, duration] = melody[noteIndex % melody.length];
+            const [frequency, duration] = melody[musicIndex % melody.length];
 
-            playNote(freq, duration);
+            playNote(frequency, duration, .085, 'triangle');
 
-            if (noteIndex % 4 === 0) {
-                const bass = [
-                    130.81,
-                    164.81,
-                    196,
-                    164.81
-                ][Math.floor(noteIndex / 4) % 4];
+            if (musicIndex % 4 === 0) {
+                const bass = [131, 165, 196, 165][
+                    Math.floor(musicIndex / 4) % 4
+                ];
 
-                playNote(bass, .18);
+                playNote(bass, .22, .055, 'sine');
             }
 
-            noteIndex++;
+            if (musicIndex % 2 === 0) {
+                playNote(1200, .035, .012, 'square');
+            }
+
+            musicIndex++;
 
             musicTimer = setTimeout(musicStep, 190);
         }
@@ -1417,7 +1802,8 @@
         async function startMusic() {
             if (!audio) {
                 audio = new (
-                    window.AudioContext || window.webkitAudioContext
+                    window.AudioContext ||
+                    window.webkitAudioContext
                 )();
             }
 
@@ -1426,26 +1812,35 @@
             }
 
             musicOn = true;
-            noteIndex = 0;
+            musicIndex = 0;
 
             clearTimeout(musicTimer);
-
             musicStep();
-            updateSoundButton();
+            updateSoundControls();
         }
 
         function stopMusic() {
             musicOn = false;
 
             clearTimeout(musicTimer);
-
-            updateSoundButton();
+            updateSoundControls();
         }
 
-        function updateSoundButton() {
+        function updateSoundControls() {
             document.getElementById('soundToggle').textContent =
                 musicOn ? '♫ SILENCIAR' : '♫ ACTIVAR SONIDO';
+
+            document.getElementById('introSound').textContent =
+                musicOn ? '♫ Silenciar' : '♫ Activar sonido';
         }
+
+        document.getElementById('introSound').addEventListener('click', () => {
+            if (musicOn) {
+                stopMusic();
+            } else {
+                startMusic();
+            }
+        });
 
         document.getElementById('soundToggle').addEventListener('click', () => {
             if (musicOn) {
@@ -1453,6 +1848,17 @@
             } else {
                 startMusic();
             }
+        });
+
+        document.getElementById('enterButton').addEventListener('click', () => {
+            document.getElementById('intro').style.transition = 'opacity 1s';
+            document.getElementById('intro').style.opacity = '0';
+
+            setTimeout(() => {
+                document.getElementById('intro').style.display = 'none';
+                stopRain();
+                document.getElementById('soundToggle').classList.remove('hidden');
+            }, 1000);
         });
     </script>
 
