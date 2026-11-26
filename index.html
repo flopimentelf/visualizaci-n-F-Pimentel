@@ -3,23 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Transitabilidad — Atlas Polar · Valparaíso y Buenos Aires</title>
+  <title>Transitabilidad — Atlas Abstracto · Valparaíso y Buenos Aires</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg: #FFFFFF;
-      --paper: #F7F8F7;
-      --ink: #0D0F0E;
-      --ink-muted: #49524D;
-      --ink-faint: #7B8580;
-      --line: rgba(13, 15, 14, 0.16);
-      --line-strong: rgba(13, 15, 14, 0.36);
+      --paper: #F5F7F6;
+      --ink: #0A0C0B;
+      --ink-soft: #282E2B;
+      --ink-muted: #4E5752;
+      --ink-faint: #7C8781;
+      --line: rgba(10, 12, 11, 0.15);
+      --line-strong: rgba(10, 12, 11, 0.35);
 
-      --forest: #0E4D2C;
-      --forest-mid: #16653B;
-      --forest-wash: rgba(14, 77, 44, 0.08);
+      --g-deep: #072917;
+      --g-dark: #0E4D2C;
+      --g-mid: #186B3E;
+      --g-bright: #278A52;
+      --g-pale: #56A876;
 
       --font-sans: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
       --ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -45,16 +48,16 @@
         repeating-linear-gradient(
           0deg,
           transparent,
-          transparent 39px,
-          rgba(13, 15, 14, 0.025) 39px,
-          rgba(13, 15, 14, 0.025) 40px
+          transparent 31px,
+          rgba(10, 12, 11, 0.022) 31px,
+          rgba(10, 12, 11, 0.022) 32px
         ),
         repeating-linear-gradient(
           90deg,
           transparent,
-          transparent 39px,
-          rgba(13, 15, 14, 0.025) 39px,
-          rgba(13, 15, 14, 0.025) 40px
+          transparent 31px,
+          rgba(10, 12, 11, 0.022) 31px,
+          rgba(10, 12, 11, 0.022) 32px
         ),
         var(--bg);
       color: var(--ink);
@@ -73,7 +76,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 12px;
+      gap: 10px;
       transition: opacity 0.65s var(--ease), visibility 0.65s var(--ease);
     }
 
@@ -84,14 +87,14 @@
     }
 
     .boot-title {
-      font-size: clamp(1.5rem, 3.2vw, 2.4rem);
+      font-size: clamp(1.5rem, 3.2vw, 2.35rem);
       font-weight: 800;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--ink);
-      border-top: 3px solid var(--forest);
-      border-bottom: 3px solid var(--ink);
-      padding: 8px 18px;
+      border-top: 3.5px solid var(--g-dark);
+      border-bottom: 3.5px solid var(--ink);
+      padding: 8px 20px;
     }
 
     .boot-skip {
@@ -100,11 +103,11 @@
       right: 22px;
       z-index: 960;
       appearance: none;
-      border: 2.5px solid var(--forest);
+      border: 2.5px solid var(--g-dark);
       background: var(--bg);
-      color: var(--forest);
+      color: var(--g-dark);
       font-family: var(--font-sans);
-      font-size: 10.5px;
+      font-size: 10px;
       font-weight: 800;
       letter-spacing: 0.14em;
       text-transform: uppercase;
@@ -116,24 +119,24 @@
       display: none;
     }
 
-    /* ==================== CABECERA EDITORIAL ==================== */
+    /* ==================== CABECERA ==================== */
     .top-header {
       position: sticky;
       top: 0;
       z-index: 90;
-      background: rgba(255, 255, 255, 0.94);
+      background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(8px);
       border-bottom: 2px solid var(--ink);
     }
 
     .header-inner {
-      max-width: 1560px;
+      max-width: 1580px;
       margin: 0 auto;
-      padding: 12px 28px;
+      padding: 11px 28px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 14px;
+      gap: 12px;
       flex-wrap: wrap;
     }
 
@@ -153,30 +156,30 @@
     }
 
     .brand-cities {
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 700;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--forest);
+      color: var(--g-dark);
     }
 
     .header-controls-right {
       display: flex;
       align-items: center;
-      gap: 9px;
+      gap: 8px;
       flex-wrap: wrap;
     }
 
-    /* Botones diferenciados en color (blanco/negro/verde oscuro) y grosor */
+    /* Botones con colores (blanco, negro, distintos verdes) y grosores distintos */
     .terr-btn {
       appearance: none;
-      border: 1.5px solid var(--forest);
+      border: 1.5px solid var(--g-dark);
       background: var(--bg);
-      color: var(--forest);
+      color: var(--g-dark);
       font-family: var(--font-sans);
       font-size: 10px;
       font-weight: 700;
-      letter-spacing: 0.11em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       padding: 6px 12px;
       cursor: pointer;
@@ -184,8 +187,8 @@
     }
 
     .terr-btn.is-active {
-      background: var(--forest);
-      border-width: 3px;
+      background: var(--g-dark);
+      border: 3px solid var(--g-deep);
       color: var(--bg);
       font-weight: 800;
     }
@@ -198,9 +201,9 @@
       font-family: var(--font-sans);
       font-size: 10px;
       font-weight: 700;
-      letter-spacing: 0.11em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      padding: 6px 13px;
+      padding: 6px 12px;
       cursor: pointer;
       transition: all 0.2s var(--ease);
     }
@@ -214,91 +217,91 @@
 
     .sound-btn {
       appearance: none;
-      border: 2px solid var(--forest-mid);
+      border: 2.5px solid var(--g-mid);
       background: var(--paper);
-      color: var(--forest);
+      color: var(--g-deep);
       font-family: var(--font-sans);
       font-size: 10px;
       font-weight: 800;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      padding: 6px 13px;
+      padding: 6px 12px;
       cursor: pointer;
       transition: all 0.2s var(--ease);
     }
 
     .sound-btn.is-on {
-      background: var(--forest);
+      background: var(--g-deep);
       border: 3px solid var(--ink);
       color: var(--bg);
     }
 
-    /* ==================== ENCABEZADO TIPO LÁMINA TÉCNICA ==================== */
+    /* ==================== ENCABEZADO DE LÁMINA ==================== */
     .intro-band {
-      max-width: 1560px;
+      max-width: 1580px;
       margin: 0 auto;
-      padding: 32px 28px 24px;
+      padding: 28px 28px 22px;
       border-bottom: 1.5px solid var(--ink);
     }
 
     .intro-kicker {
-      font-size: 10.5px;
+      font-size: 10px;
       font-weight: 800;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--forest);
-      margin-bottom: 8px;
+      color: var(--g-dark);
+      margin-bottom: 6px;
     }
 
     .intro-display {
-      font-size: clamp(2.1rem, 4.9vw, 3.9rem);
+      font-size: clamp(2rem, 4.7vw, 3.7rem);
       font-weight: 800;
       letter-spacing: -0.03em;
       line-height: 0.98;
       text-transform: uppercase;
       color: var(--ink);
-      max-width: 20ch;
+      max-width: 21ch;
     }
 
     .intro-display em {
       font-style: normal;
-      color: var(--forest);
+      color: var(--g-dark);
     }
 
     .intro-columns {
-      margin-top: 20px;
+      margin-top: 18px;
       display: grid;
       grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
-      gap: 32px;
+      gap: 30px;
       align-items: start;
     }
 
     .intro-p {
-      font-size: 14px;
-      line-height: 1.66;
+      font-size: 13.5px;
+      line-height: 1.62;
       color: var(--ink);
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .intro-p-muted {
       font-size: 12.5px;
-      line-height: 1.62;
+      line-height: 1.58;
       color: var(--ink-muted);
     }
 
     .axes-list {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 5px;
       padding-left: 16px;
-      border-left: 3.5px solid var(--forest);
+      border-left: 3.5px solid var(--g-dark);
     }
 
     .axis-line {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 5px 0;
+      padding: 4px 0;
       border-bottom: 1px solid var(--line);
       font-size: 12px;
     }
@@ -308,7 +311,7 @@
       font-weight: 800;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--forest);
+      color: var(--g-dark);
     }
 
     .axis-tag.is-secondary {
@@ -317,9 +320,9 @@
 
     /* ==================== CONTENEDOR PRINCIPAL ==================== */
     .main-stage {
-      max-width: 1560px;
+      max-width: 1580px;
       margin: 0 auto;
-      padding: 24px 28px 68px;
+      padding: 22px 28px 68px;
     }
 
     .tab-pane {
@@ -332,8 +335,8 @@
 
     .centered-viz-layout {
       display: grid;
-      grid-template-columns: minmax(245px, 0.72fr) minmax(0, 1.68fr) minmax(270px, 0.78fr);
-      gap: 24px;
+      grid-template-columns: minmax(255px, 0.74fr) minmax(0, 1.68fr) minmax(280px, 0.8fr);
+      gap: 22px;
       align-items: start;
     }
 
@@ -341,25 +344,105 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 10px;
+      gap: 8px;
+      margin-bottom: 8px;
       flex-wrap: wrap;
     }
 
     .kicker {
       font-size: 10px;
       font-weight: 800;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--forest);
+      color: var(--g-dark);
     }
 
     .note {
-      font-size: 11px;
+      font-size: 10.5px;
       color: var(--ink-muted);
     }
 
-    /* Botones de modo con colores (blanco/negro/verde oscuro) y grosores distintos */
+    /* Botones de vista global / desglose en la sección de variables */
+    .scope-bar {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .scope-btn {
+      appearance: none;
+      font-family: var(--font-sans);
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 5px 9px;
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+
+    .scope-btn[data-scope="todo"] {
+      border: 1.5px solid var(--g-deep);
+      background: var(--bg);
+      color: var(--g-deep);
+    }
+    .scope-btn[data-scope="todo"].is-active {
+      background: var(--g-deep);
+      border-width: 3px;
+      color: var(--bg);
+      font-weight: 800;
+    }
+
+    .scope-btn[data-scope="argentina"] {
+      border: 1.5px solid var(--ink);
+      background: var(--paper);
+      color: var(--ink);
+    }
+    .scope-btn[data-scope="argentina"].is-active {
+      background: var(--ink);
+      border-width: 3px;
+      color: var(--bg);
+      font-weight: 800;
+    }
+
+    .scope-btn[data-scope="chile"] {
+      border: 2px solid var(--g-bright);
+      background: var(--bg);
+      color: var(--g-dark);
+    }
+    .scope-btn[data-scope="chile"].is-active {
+      background: var(--g-bright);
+      border: 3px solid var(--g-deep);
+      color: var(--bg);
+      font-weight: 800;
+    }
+
+    .scope-btn[data-scope="preferencia"] {
+      border: 2.5px solid var(--g-mid);
+      background: var(--paper);
+      color: var(--g-mid);
+    }
+    .scope-btn[data-scope="preferencia"].is-active {
+      background: var(--g-mid);
+      border: 3px solid var(--ink);
+      color: var(--bg);
+      font-weight: 800;
+    }
+
+    .scope-btn[data-scope="transitabilidad"] {
+      border: 2.5px solid var(--ink-soft);
+      background: var(--bg);
+      color: var(--ink-soft);
+    }
+    .scope-btn[data-scope="transitabilidad"].is-active {
+      background: var(--bg);
+      border: 3.5px solid var(--g-dark);
+      color: var(--g-dark);
+      font-weight: 800;
+    }
+
+    /* Botones de modo en el centro */
     .morph-mode-bar {
       display: flex;
       gap: 7px;
@@ -380,50 +463,50 @@
     }
 
     .morph-btn[data-morph="total"] {
-      border: 1.5px solid var(--forest);
+      border: 1.5px solid var(--g-dark);
       background: var(--bg);
-      color: var(--forest);
+      color: var(--g-dark);
     }
     .morph-btn[data-morph="total"].is-active {
-      background: var(--forest);
+      background: var(--g-dark);
       border-width: 3px;
       color: var(--bg);
       font-weight: 800;
     }
 
     .morph-btn[data-morph="chile"] {
-      border: 1.5px solid var(--ink);
+      border: 2px solid var(--g-bright);
       background: var(--bg);
-      color: var(--ink);
+      color: var(--g-dark);
     }
     .morph-btn[data-morph="chile"].is-active {
+      background: var(--g-bright);
+      border: 3px solid var(--g-deep);
+      color: var(--bg);
+      font-weight: 800;
+    }
+
+    .morph-btn[data-morph="argentina"] {
+      border: 1.5px solid var(--ink);
+      background: var(--paper);
+      color: var(--ink);
+    }
+    .morph-btn[data-morph="argentina"].is-active {
       background: var(--ink);
       border-width: 3px;
       color: var(--bg);
       font-weight: 800;
     }
 
-    .morph-btn[data-morph="argentina"] {
-      border: 2px solid var(--forest-mid);
-      background: var(--paper);
-      color: var(--forest);
-    }
-    .morph-btn[data-morph="argentina"].is-active {
-      background: var(--forest-mid);
-      border: 3px solid var(--ink);
-      color: var(--bg);
-      font-weight: 800;
-    }
-
     .morph-btn[data-morph="calle"] {
-      border: 2.5px solid var(--ink);
+      border: 2.5px solid var(--g-deep);
       background: var(--paper);
-      color: var(--ink);
+      color: var(--g-deep);
     }
     .morph-btn[data-morph="calle"].is-active {
       background: var(--bg);
-      border: 3.5px solid var(--forest);
-      color: var(--forest);
+      border: 3.5px solid var(--g-dark);
+      color: var(--g-dark);
       font-weight: 800;
     }
 
@@ -456,8 +539,8 @@
     }
 
     .arrow-btn:hover {
-      background: var(--forest);
-      border-color: var(--forest);
+      background: var(--g-dark);
+      border-color: var(--g-dark);
       color: var(--bg);
     }
 
@@ -483,8 +566,8 @@
     .model-frame {
       position: relative;
       width: 100%;
-      aspect-ratio: 16 / 12.5;
-      min-height: 550px;
+      aspect-ratio: 16 / 12.6;
+      min-height: 560px;
       background: var(--bg);
       border: 1.5px solid var(--ink);
       overflow: hidden;
@@ -514,13 +597,13 @@
     }
 
     .part-interactive.is-muted {
-      opacity: 0.15;
+      opacity: 0.14;
     }
 
     .justification-line {
-      margin-top: 12px;
+      margin-top: 10px;
       padding: 4px 0 4px 14px;
-      border-left: 4px solid var(--forest);
+      border-left: 4px solid var(--g-dark);
       display: flex;
       flex-direction: column;
       gap: 3px;
@@ -531,16 +614,15 @@
       font-weight: 800;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--forest);
+      color: var(--g-dark);
     }
 
     .just-desc {
-      font-size: 12.5px;
+      font-size: 12px;
       line-height: 1.5;
       color: var(--ink);
     }
 
-    /* Botones de calles con color (blanco/negro/verde oscuro) y grosor distinto */
     .streets-bar {
       margin-top: 14px;
       display: flex;
@@ -552,16 +634,16 @@
       appearance: none;
       background: var(--bg);
       font-family: var(--font-sans);
-      font-size: 10.5px;
+      font-size: 10px;
       font-weight: 600;
-      padding: 6px 12px;
+      padding: 6px 11px;
       cursor: pointer;
       transition: all 0.2s var(--ease);
     }
 
     .street-btn[data-city="Valparaíso"] {
-      border: 1.5px solid var(--forest);
-      color: var(--forest);
+      border: 1.5px solid var(--g-dark);
+      color: var(--g-dark);
     }
 
     .street-btn[data-city="Buenos Aires"] {
@@ -570,7 +652,7 @@
     }
 
     .street-btn.is-active {
-      background: var(--forest);
+      background: var(--g-deep);
       border: 3px solid var(--ink);
       color: var(--bg);
       font-weight: 800;
@@ -579,38 +661,38 @@
     .side-col {
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 12px;
     }
 
     .insp-h2 {
-      font-size: 1.35rem;
+      font-size: 1.3rem;
       font-weight: 800;
       letter-spacing: -0.01em;
       color: var(--ink);
     }
 
     .insp-city-label {
-      font-size: 10.5px;
+      font-size: 10px;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.14em;
-      color: var(--forest);
+      color: var(--g-dark);
     }
 
     .equiv-pair {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
+      gap: 12px;
       padding: 8px 0;
       border-top: 1.5px solid var(--ink);
       border-bottom: 1px solid var(--line-strong);
     }
 
     .equiv-big {
-      font-size: 1.95rem;
+      font-size: 1.85rem;
       font-weight: 800;
       line-height: 1;
-      color: var(--forest);
+      color: var(--g-dark);
     }
 
     .equiv-big.is-neg {
@@ -618,7 +700,7 @@
     }
 
     .equiv-caption {
-      font-size: 11px;
+      font-size: 10.5px;
       color: var(--ink-muted);
       margin-top: 4px;
     }
@@ -626,20 +708,20 @@
     .var-rows {
       display: flex;
       flex-direction: column;
-      gap: 7px;
+      gap: 6px;
     }
 
     .var-row-item {
-      padding: 6px 8px;
+      padding: 5px 8px;
       border-bottom: 1px solid var(--line);
       cursor: pointer;
       transition: all 0.2s var(--ease);
     }
 
     .var-row-item.is-focused {
-      border-left: 3.5px solid var(--forest);
+      border-left: 3.5px solid var(--g-dark);
       padding-left: 10px;
-      background: var(--forest-wash);
+      background: rgba(14, 77, 44, 0.08);
     }
 
     .var-row-item.is-off {
@@ -650,8 +732,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 12px;
-      margin-bottom: 4px;
+      font-size: 11.5px;
+      margin-bottom: 3px;
     }
 
     .var-row-name {
@@ -660,31 +742,31 @@
     }
 
     .var-row-val {
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 800;
-      color: var(--forest);
+      color: var(--g-dark);
     }
 
     .var-track {
       height: 4px;
-      background: rgba(13, 15, 14, 0.12);
+      background: rgba(10, 12, 11, 0.12);
       overflow: hidden;
     }
 
     .var-fill {
       height: 100%;
-      background: var(--forest);
+      background: var(--g-mid);
       transition: width 0.35s var(--ease);
     }
 
-    /* ==================== MAPA-GRÁFICO INFERIOR ==================== */
-    .map-section {
+    /* ==================== SECCIÓN INFERIOR: DÍAS × LUGARES BAJO TENDENCIAS ==================== */
+    .matrix-section {
       margin-top: 34px;
       padding-top: 22px;
       border-top: 2px solid var(--ink);
     }
 
-    .map-filters-row {
+    .matrix-header-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -693,10 +775,32 @@
       margin-bottom: 12px;
     }
 
-    .filter-pills {
+    .matrix-controls {
       display: flex;
-      gap: 7px;
+      gap: 8px;
       flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .invert-btn {
+      appearance: none;
+      border: 2.5px solid var(--g-deep);
+      background: var(--paper);
+      color: var(--g-deep);
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 12px;
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+
+    .invert-btn.is-inverted {
+      background: var(--g-deep);
+      border-color: var(--ink);
+      color: var(--bg);
     }
 
     .filter-pill {
@@ -709,36 +813,36 @@
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      padding: 6px 12px;
+      padding: 6px 11px;
       cursor: pointer;
       transition: all 0.2s var(--ease);
     }
 
     .filter-pill.is-active {
-      background: var(--forest);
-      border: 3px solid var(--forest);
+      background: var(--g-dark);
+      border: 3px solid var(--g-dark);
       color: var(--bg);
       font-weight: 800;
     }
 
-    .roaming-map-frame {
+    .matrix-frame {
       position: relative;
       width: 100%;
-      aspect-ratio: 16 / 8.5;
-      min-height: 430px;
+      aspect-ratio: 16 / 8.8;
+      min-height: 450px;
       background: var(--bg);
       border: 1.5px solid var(--ink);
       overflow: hidden;
     }
 
-    #roamingMapSvg {
+    #daysPlacesSvg {
       width: 100%;
       height: 100%;
       display: block;
       user-select: none;
     }
 
-    .roaming-glyph {
+    .matrix-cell-node {
       cursor: pointer;
     }
 
@@ -765,8 +869,8 @@
     }
 
     .variant-toggle-btn.is-visible {
-      border: 3px solid var(--forest);
-      background: var(--forest-wash);
+      border: 3px solid var(--g-dark);
+      background: rgba(14, 77, 44, 0.08);
     }
 
     .variant-card-status {
@@ -774,7 +878,7 @@
       font-weight: 800;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: var(--forest);
+      color: var(--g-dark);
     }
 
     .variant-toggle-btn:not(.is-visible) .variant-card-status {
@@ -811,7 +915,7 @@
     .cmp-line select {
       background: var(--bg);
       color: var(--ink);
-      border: 2px solid var(--forest);
+      border: 2px solid var(--g-dark);
       padding: 7px 10px;
       font-family: var(--font-sans);
       font-size: 12.5px;
@@ -820,13 +924,13 @@
 
     .scale-bar {
       height: 10px;
-      background: rgba(13, 15, 14, 0.12);
+      background: rgba(10, 12, 11, 0.12);
       overflow: hidden;
       display: flex;
     }
 
     .scale-pos {
-      background: var(--forest);
+      background: var(--g-dark);
       height: 100%;
       transition: width 0.35s var(--ease);
     }
@@ -837,7 +941,7 @@
       transition: width 0.35s var(--ease);
     }
 
-    @media (max-width: 1220px) {
+    @media (max-width: 1240px) {
       .centered-viz-layout {
         grid-template-columns: 1fr;
       }
@@ -851,7 +955,7 @@
       }
 
       .model-frame {
-        min-height: 440px;
+        min-height: 450px;
       }
     }
   </style>
@@ -872,7 +976,7 @@
       </div>
 
       <div class="header-controls-right">
-        <button class="terr-btn is-active" data-terr="Ambos" type="button">Argentina y Chile</button>
+        <button class="terr-btn is-active" data-terr="Ambos" type="button">Todo (Arg + Chi)</button>
         <button class="terr-btn" data-terr="Chile" type="button">Solo Chile</button>
         <button class="terr-btn" data-terr="Argentina" type="button">Solo Argentina</button>
 
@@ -887,9 +991,9 @@
     </div>
   </header>
 
-  <!-- ENCABEZADO TIPO LÁMINA TÉCNICA -->
+  <!-- ENCABEZADO DE LÁMINA -->
   <section class="intro-band" aria-label="Marco de la investigación">
-    <div class="intro-kicker">Atlas de Diseño Urbano · Tramas de Elección</div>
+    <div class="intro-kicker">Atlas Abstracto · Tramas de Elección</div>
     <h1 class="intro-display">
       Transitabilidad en <em>Valparaíso</em> y <em>Buenos Aires</em>
     </h1>
@@ -900,7 +1004,7 @@
           ¿Por qué comparar Valparaíso y Buenos Aires? Ambas son ciudades portuarias con fuerte relación histórica con el borde marítimo y fluvial, pero resuelven su trama peatonal desde topografías y escalas urbanas distintas: las pendientes y calles del plan valparaiseño frente a los amplios corredores y paseos de Buenos Aires.
         </p>
         <p class="intro-p-muted">
-          Aunque el estudio abarca múltiples dimensiones —como luminosidad, transitabilidad, seguridad y actividad urbana—, esta lámina se centra en la <strong>transitabilidad</strong> con registros de Valparaíso[span_8](start_span)[span_8](end_span) y Buenos Aires (19, 20 y 21 de noviembre)[span_9](start_span)[span_9](end_span)[span_10](start_span)[span_10](end_span)[span_11](start_span)[span_11](end_span)[span_12](start_span)[span_12](end_span)[span_13](start_span)[span_13](end_span), en formato de diagrama polar escalonado con movimiento ondulatorio.
+          Aunque el estudio abarca múltiples dimensiones —como luminosidad, transitabilidad, seguridad y actividad urbana—, esta lámina se centra en la <strong>transitabilidad</strong> con registros de Valparaíso[span_1](start_span)[span_1](end_span) y Buenos Aires (19, 20 y 21 de noviembre)[span_2](start_span)[span_2](end_span)[span_3](start_span)[span_3](end_span)[span_4](start_span)[span_4](end_span)[span_5](start_span)[span_5](end_span)[span_6](start_span)[span_6](end_span), estructurada como figura polar compleja y matriz de días por lugares bajo tendencias.
         </p>
       </div>
 
@@ -931,31 +1035,31 @@
     <div id="tab-modelo" class="tab-pane is-active">
       <section class="centered-viz-layout">
         <!-- IZQUIERDA -->
-        <aside class="side-col" aria-label="Lectura polar">
+        <aside class="side-col" aria-label="Lectura de la figura abstracta">
           <div class="panel-top">
-            <span class="kicker">Escala Polar y Onda</span>
-            <span id="morphModeLabel" class="note">Total + Tendencias</span>
+            <span class="kicker">Figura Abstracta · Desglose</span>
+            <span id="morphModeLabel" class="note">Todo + Tendencias</span>
           </div>
 
           <div id="justificationLine" class="justification-line" aria-live="polite">
-            <span id="justTitle" class="just-title">Diagrama polar escalonado</span>
+            <span id="justTitle" class="just-title">Armonía polar multicapa</span>
             <p id="justDesc" class="just-desc">
-              Cada sector y radio se alarga y engrosa cuando el valor es mayor, y se acorta y adelgaza cuando es menor, propagándose en onda sobre el plano técnico.
+              Cada sector y radio se alarga y engrosa cuando el valor es mayor, y se acorta y adelgaza cuando es menor, conectando preferencia, transitabilidad y onda.
             </p>
           </div>
         </aside>
 
-        <!-- CENTRO: DIAGRAMA POLAR ESCALONADO EN ONDA -->
+        <!-- CENTRO: FIGURA ABSTRACTA COMPLEJA EN ONDA -->
         <div>
           <div class="panel-top">
-            <span class="kicker">Diagrama Polar · Onda Continua</span>
-            <span id="activeVarStatus" class="note">Categoría: Materialidad (3/5)</span>
+            <span class="kicker">Figura Polar Abstracta · Onda Continua</span>
+            <span id="activeVarStatus" class="note">Enfoque: Todo · Materialidad (3/5)</span>
           </div>
 
           <div class="morph-mode-bar" role="group" aria-label="Modo de transformación">
-            <button class="morph-btn is-active" data-morph="total" type="button">Total y Tendencias</button>
-            <button class="morph-btn" data-morph="chile" type="button">Solo Chile</button>
-            <button class="morph-btn" data-morph="argentina" type="button">Solo Buenos Aires</button>
+            <button class="morph-btn is-active" data-morph="total" type="button">Todo y Tendencias</button>
+            <button class="morph-btn" data-morph="chile" type="button">Todo Chile</button>
+            <button class="morph-btn" data-morph="argentina" type="button">Todo Argentina</button>
             <button class="morph-btn" data-morph="calle" type="button">Calle Individual</button>
           </div>
 
@@ -970,14 +1074,29 @@
 
           <div class="model-frame">
             <canvas id="motionCanvas"></canvas>
-            <svg id="atlasSvg" viewBox="0 0 860 660" role="img" aria-label="Diagrama polar escalonado de transitabilidad"></svg>
+            <svg id="atlasSvg" viewBox="0 0 880 680" role="img" aria-label="Figura polar abstracta de transitabilidad"></svg>
           </div>
 
           <div id="streetsBar" class="streets-bar" aria-label="Calles"></div>
         </div>
 
-        <!-- DERECHA -->
-        <aside class="side-col" aria-label="Valores de la calle seleccionada">
+        <!-- DERECHA: SECCIÓN DE VARIABLES CON DESGLOSE FILTRABLE DESDE EL TODO -->
+        <aside class="side-col" aria-label="Sección de variables y desglose">
+          <div>
+            <div class="panel-top" style="margin-bottom:4px;">
+              <span class="kicker">Sección de Variables · Todo y Filtros</span>
+              <span id="scopeActiveLabel" class="note">Vista: Todo</span>
+            </div>
+
+            <div class="scope-bar" role="group" aria-label="Desglose de variables">
+              <button class="scope-btn is-active" data-scope="todo" type="button">Todo</button>
+              <button class="scope-btn" data-scope="argentina" type="button">Todo Argentina</button>
+              <button class="scope-btn" data-scope="chile" type="button">Todo Chile</button>
+              <button class="scope-btn" data-scope="preferencia" type="button">Preferencia Calle</button>
+              <button class="scope-btn" data-scope="transitabilidad" type="button">Transitabilidad</button>
+            </div>
+          </div>
+
           <div>
             <h2 id="inspName" class="insp-h2">Serrano</h2>
             <span id="inspCity" class="insp-city-label">Valparaíso · Chile</span>
@@ -996,34 +1115,35 @@
 
           <div>
             <div class="panel-top" style="margin-bottom:6px;">
-              <span class="kicker">Variables (1/5)</span>
-              <span class="note">Clic para enfocar</span>
+              <span class="kicker">Variables (1/5) · Filtro Rápido</span>
+              <span class="note">Clic enfoca · Doble clic filtra</span>
             </div>
             <div id="varRows" class="var-rows"></div>
           </div>
         </aside>
       </section>
 
-      <!-- ABAJO: MAPA-GRÁFICO CON GLIFOS RONDANDO POR DÍA Y LUGAR -->
-      <section class="map-section" aria-label="Mapa-gráfico con glifos rondando por día y lugar">
-        <div class="map-filters-row">
+      <!-- ABAJO: GRÁFICO DE DÍAS Y LUGARES BAJO LAS TENDENCIAS (CON OPCIÓN DE INVERTIR) -->
+      <section class="matrix-section" aria-label="Gráfico de días y lugares bajo tendencias">
+        <div class="matrix-header-row">
           <div>
-            <span class="kicker">Mapa-Gráfico · Glifos Rondando por Día y Lugar</span>
-            <p class="note" style="margin-top:3px;">
-              Réplicas polares en onda rondando según jornada (19 nov, 20 nov, 21 nov y registro general) y lugar.
+            <span class="kicker">Gráfico Inferior · Días × Lugares bajo Tendencias</span>
+            <p id="matrixOrientationDesc" class="note" style="margin-top:3px;">
+              Eje principal: Días (19 nov, 20 nov, 21 nov, Gral.) cruzados con Lugares (Valparaíso y Buenos Aires) y tendencias/variables en onda.
             </p>
           </div>
 
-          <div class="filter-pills" role="group" aria-label="Filtrar por jornada">
-            <button class="filter-pill is-active" data-day="Todos" type="button">Todas las jornadas</button>
+          <div class="matrix-controls">
+            <button id="invertMatrixBtn" class="invert-btn" type="button">Invertir: Días × Lugares</button>
+            <button class="filter-pill is-active" data-day="Todos" type="button">Todos los días</button>
             <button class="filter-pill" data-day="19 nov" type="button">19 nov</button>
             <button class="filter-pill" data-day="20 nov" type="button">20 nov</button>
             <button class="filter-pill" data-day="21 nov" type="button">21 nov</button>
           </div>
         </div>
 
-        <div class="roaming-map-frame">
-          <svg id="roamingMapSvg" viewBox="0 0 1120 560" role="img" aria-label="Mapa-gráfico con glifos rondando por día y lugar"></svg>
+        <div class="matrix-frame">
+          <svg id="daysPlacesSvg" viewBox="0 0 1160 580" role="img" aria-label="Gráfico de días y lugares bajo tendencias"></svg>
         </div>
       </section>
     </div>
@@ -1058,7 +1178,7 @@
         dayGroup: "Registro Gral.",
         posFichas: 185,
         negFichas: 44,
-        mapHome: [260, 220],
+        prefScore: 4.6,
         vars: {
           materialidad: { label: "Materialidad", val: "3/5", score: 3, max: 5, just: "Serrano (Valparaíso): 185 positivas / 44 negativas, materialidad 3/5." },
           desniveles: { label: "Desniveles", val: "3/5", score: 3, max: 5, just: "Serrano (Valparaíso): desniveles 3/5." },
@@ -1079,7 +1199,7 @@
         dayGroup: "Registro Gral.",
         posFichas: 29,
         negFichas: 99,
-        mapHome: [340, 345],
+        prefScore: 2.1,
         vars: {
           materialidad: { label: "Materialidad", val: "2/5", score: 2, max: 5, just: "Cochrane (Valparaíso): 29 positivas / 99 negativas, materialidad 2/5." },
           desniveles: { label: "Desniveles", val: "2/5", score: 2, max: 5, just: "Cochrane (Valparaíso): desniveles 2/5." },
@@ -1100,7 +1220,7 @@
         dayGroup: "Registro Gral.",
         posFichas: 19,
         negFichas: 94,
-        mapHome: [195, 325],
+        prefScore: 1.8,
         vars: {
           materialidad: { label: "Materialidad", val: "2/5", score: 2, max: 5, just: "Blanco (Valparaíso): 19 positivas / 94 negativas, materialidad 2/5." },
           desniveles: { label: "Desniveles", val: "1/5", score: 1, max: 5, just: "Blanco (Valparaíso): desniveles 1/5." },
@@ -1121,7 +1241,7 @@
         dayGroup: "Registro Gral.",
         posFichas: 75,
         negFichas: 72,
-        mapHome: [275, 430],
+        prefScore: 3.4,
         vars: {
           materialidad: { label: "Materialidad", val: "3/5", score: 3, max: 5, just: "Errázuriz (Valparaíso): 75 positivas / 72 negativas, materialidad 3/5." },
           desniveles: { label: "Desniveles", val: "1/5", score: 1, max: 5, just: "Errázuriz (Valparaíso): desniveles 1/5." },
@@ -1142,12 +1262,12 @@
         dayGroup: "19 nov",
         posFichas: 9,
         negFichas: 5,
+        prefScore: 3.8,
         byDay: {
           "19 nov": { pos: 4, neg: 2 },
           "20 nov": { pos: 4, neg: 1 },
           "21 nov": { pos: 1, neg: 2 }
         },
-        mapHome: [780, 210],
         vars: {
           materialidad: { label: "Materialidad", val: "3/5", score: 3, max: 5, just: "Av. Paseo Colón (Buenos Aires): 9 positivas / 5 negativas." },
           desniveles: { label: "Desniveles", val: "1/5", score: 1, max: 5, just: "Av. Paseo Colón (Buenos Aires): desniveles 1/5." },
@@ -1168,12 +1288,12 @@
         dayGroup: "20 nov",
         posFichas: 5,
         negFichas: 4,
+        prefScore: 3.1,
         byDay: {
           "19 nov": { pos: 0, neg: 2 },
           "20 nov": { pos: 2, neg: 1 },
           "21 nov": { pos: 3, neg: 1 }
         },
-        mapHome: [875, 295],
         vars: {
           materialidad: { label: "Materialidad", val: "3/5", score: 3, max: 5, just: "Azopardo (Buenos Aires): 5 positivas / 4 negativas." },
           desniveles: { label: "Desniveles", val: "1/5", score: 1, max: 5, just: "Azopardo (Buenos Aires): desniveles 1/5." },
@@ -1194,12 +1314,12 @@
         dayGroup: "21 nov",
         posFichas: 7,
         negFichas: 7,
+        prefScore: 2.8,
         byDay: {
           "19 nov": { pos: 3, neg: 1 },
           "20 nov": { pos: 2, neg: 0 },
           "21 nov": { pos: 2, neg: 6 }
         },
-        mapHome: [760, 370],
         vars: {
           materialidad: { label: "Materialidad", val: "3/5", score: 3, max: 5, just: "Av. Ing. Huergo (Buenos Aires): 7 positivas / 7 negativas." },
           desniveles: { label: "Desniveles", val: "2/5", score: 2, max: 5, just: "Av. Ing. Huergo (Buenos Aires): desniveles 2/5." },
@@ -1220,12 +1340,12 @@
         dayGroup: "19 nov",
         posFichas: 4,
         negFichas: 2,
+        prefScore: 4.2,
         byDay: {
           "19 nov": { pos: 2, neg: 1 },
           "20 nov": { pos: 2, neg: 0 },
           "21 nov": { pos: 0, neg: 1 }
         },
-        mapHome: [865, 430],
         vars: {
           materialidad: { label: "Materialidad", val: "4/5", score: 4, max: 5, just: "Av. Alicia Moreau de Justo (Buenos Aires): 4 positivas / 2 negativas." },
           desniveles: { label: "Desniveles", val: "1/5", score: 1, max: 5, just: "Av. Alicia Moreau de Justo (Buenos Aires): desniveles 1/5." },
@@ -1234,7 +1354,7 @@
           dificultad: { label: "Dificultad", val: "1/5", score: 1, max: 5, just: "Av. Alicia Moreau de Justo (Buenos Aires): dificultad 1/5." },
           continuidad: { label: "Continuidad", val: "4/5", score: 4, max: 5, just: "Av. Alicia Moreau de Justo (Buenos Aires): continuidad 4/5." },
           esfuerzo: { label: "Esfuerzo físico", val: "1/5", score: 1, max: 5, just: "Av. Alicia Moreau de Justo (Buenos Aires): esfuerzo físico 1/5." },
-          estabilidad: { label: "Estabilidad", val: 4, max: 5, val: "4/5", just: "Av. Alicia Moreau de Justo (Buenos Aires): estabilidad 4/5." }
+          estabilidad: { label: "Estabilidad", val: "4/5", score: 4, max: 5, just: "Av. Alicia Moreau de Justo (Buenos Aires): estabilidad 4/5." }
         }
       }
     ];
@@ -1250,10 +1370,14 @@
       "estabilidad"
     ];
 
+    const GREEN_PALETTE = ["#072917", "#0E4D2C", "#186B3E", "#278A52", "#56A876"];
+
     const state = {
       territory: "Ambos",
       morphMode: "total",
+      scopeFilter: "todo", // todo | argentina | chile | preferencia | transitabilidad
       dayFilter: "Todos",
+      invertMatrix: false, // false = Días × Lugares | true = Lugares × Días
       activeTab: "modelo",
       selectedStreetId: "serrano",
       focusedVarIdx: 0,
@@ -1353,26 +1477,32 @@
       return { pos: st.posFichas, neg: st.negFichas };
     }
 
+    function getTransitabilidadIndex(st) {
+      const f = getStreetFichasForDay(st);
+      const net = (f.pos - f.neg) / 5;
+      const avgVar = VAR_KEYS.reduce((acc, k) => acc + st.vars[k].score, 0) / VAR_KEYS.length;
+      return Number((avgVar + net * 0.15).toFixed(2));
+    }
+
     function setJustification(title, desc) {
       document.getElementById("justTitle").textContent = title;
       document.getElementById("justDesc").textContent = desc;
     }
 
     /* =========================================================================
-       ESTILO ATLAS POLAR ESCALONADO EN ONDA (PALETA: BLANCO, NEGRO, VERDE OSCURO)
-       - Anillos concéntricos de referencia con cotas angulares.
-       - Sectores escalonados en abanico (mayor valor = mayor alcance y grosor;
-         menor valor = menor alcance y delgadez) con ondulación armónica continua.
+       FIGURA ABSTRACTA COMPLEJA EN ONDA (BLANCO, NEGRO Y DISTINTOS VERDES)
+       - Anillos concéntricos ondulados, sectores escalonados (más = más largo y
+         grueso; menos = más pequeño y delgado), cuerdas de conexión abstractas
+         y trazos de preferencia + transitabilidad.
        ========================================================================= */
-    function buildSectorPath(cx, cy, rInner, rOuter, aStart, aEnd) {
-      const steps = 16;
+    function buildSectorPath(cx, cy, rInner, rOuter, aStart, aEnd, waveSeed = 0) {
+      const steps = 18;
       let ptsOuter = [];
       let ptsInner = [];
       for (let i = 0; i <= steps; i++) {
         const t = i / steps;
         const ang = aStart + (aEnd - aStart) * t;
-        // Pequeña onda radial a lo largo del arco
-        const waveR = Math.sin(t * Math.PI * 2 + state.motionPhase * 0.06) * 2.4;
+        const waveR = Math.sin(t * Math.PI * 2 + state.motionPhase * 0.065 + waveSeed) * 2.8;
         const ro = Math.max(rInner + 6, rOuter + waveR);
         const ri = rInner;
         ptsOuter.push(`${(cx + Math.cos(ang) * ro).toFixed(1)},${(cy + Math.sin(ang) * ro).toFixed(1)}`);
@@ -1391,43 +1521,58 @@
       document.getElementById("categorySub").textContent =
         `Usa las flechas ‹ › para cambiar categoría (${state.focusedVarIdx + 1}/${VAR_KEYS.length})`;
       document.getElementById("activeVarStatus").textContent =
-        `Categoría: ${fVar.label} (${fVar.val})`;
+        `Vista: ${state.scopeFilter.toUpperCase()} · ${fVar.label} (${fVar.val})`;
 
       const modeLabels = {
-        total: "Total + Tendencias",
-        chile: "Solo Chile",
-        argentina: "Solo Buenos Aires",
+        total: "Todo + Tendencias",
+        chile: "Todo Chile",
+        argentina: "Todo Argentina",
         calle: `Calle: ${street.short}`
       };
       document.getElementById("morphModeLabel").textContent = modeLabels[state.morphMode];
 
-      const cx = 430;
-      const cy = 330;
+      const cx = 440;
+      const cy = 340;
       const rCore = 54;
 
-      // Anillos graduados de atlas técnico con onda sutil
-      const ringRadii = [95, 140, 185, 230, 272];
+      // Anillos técnicos concéntricos en onda con distintos verdes y negros
+      const ringRadii = [92, 134, 178, 222, 266, 304];
       const polarGrid = ringRadii
         .map((rr, idx) => {
-          const rWave = rr + Math.sin(state.motionPhase * 0.045 + idx * 0.9) * 2.2;
+          const rWave = rr + Math.sin(state.motionPhase * 0.05 + idx * 0.85) * 2.5;
+          const strokeHex = idx % 3 === 0 ? "#072917" : idx % 3 === 1 ? "#0A0C0B" : "#278A52";
           return `
             <circle cx="${cx}" cy="${cy}" r="${rWave.toFixed(1)}"
-                    fill="none" stroke="${idx % 2 === 0 ? "rgba(13,15,14,0.16)" : "rgba(14,77,44,0.16)"}"
-                    stroke-width="${idx === 4 ? "1.3" : "0.8"}"
+                    fill="none" stroke="${strokeHex}" stroke-opacity="${idx === 5 ? "0.34" : "0.15"}"
+                    stroke-width="${idx === 5 ? "1.3" : "0.85"}"
                     stroke-dasharray="${idx % 2 === 1 ? "3 4" : "none"}" />
             <text x="${(cx + rWave + 3).toFixed(1)}" y="${(cy - 3).toFixed(1)}"
-                  font-family="Montserrat, sans-serif" font-size="8" font-weight="600" fill="#7B8580">
-              R${idx + 1}
+                  font-family="Montserrat, sans-serif" font-size="8" font-weight="700" fill="#4E5752">
+              A${idx + 1}
             </text>
           `;
         })
         .join("");
 
-      if (state.morphMode === "calle") {
-        const fData = getStreetFichasForDay(street);
-        const posVal = fData.pos / 5;
-        const negVal = fData.neg / 5;
+      let list = STREETS;
+      if (state.morphMode === "chile" || state.scopeFilter === "chile") {
+        list = STREETS.filter((s) => s.territory === "Chile");
+      } else if (state.morphMode === "argentina" || state.scopeFilter === "argentina") {
+        list = STREETS.filter((s) => s.territory === "Argentina");
+      }
 
+      const totPos = list.reduce((acc, s) => acc + getStreetFichasForDay(s).pos, 0);
+      const totNeg = list.reduce((acc, s) => acc + getStreetFichasForDay(s).neg, 0);
+      const maxFichas = Math.max(1, ...list.map((s) => {
+        const fd = getStreetFichasForDay(s);
+        return fd.pos + fd.neg;
+      }));
+
+      // Cuerdas abstractas cruzadas entre nodos en onda (estética de atlas complejo)
+      let abstractChords = "";
+      const chordNodes = [];
+
+      if (state.morphMode === "calle") {
         let sectorsHtml = "";
         const stepAng = (Math.PI * 2) / VAR_KEYS.length;
 
@@ -1436,88 +1581,84 @@
           const isOn = state.visibleVars[k];
           const isFocused = idx === state.focusedVarIdx;
 
-          const waveAng = Math.sin(state.motionPhase * 0.05 + idx * 0.85) * 0.025;
+          const waveAng = Math.sin(state.motionPhase * 0.055 + idx * 0.9) * 0.028;
           const centerAng = -Math.PI / 2 + idx * stepAng + waveAng;
 
-          const ratio = vObj.score / vObj.max; // 0.2 a 1.0
-          // Mayor valor = radio exterior mayor y apertura angular mayor; menor = menor alcance y angosto
-          const rOuter = isOn ? rCore + 24 + Math.pow(ratio, 1.25) * 195 : rCore + 16;
-          const halfSpan = isOn ? (0.11 + Math.pow(ratio, 1.2) * 0.24) : 0.09;
-          const strokeW = isOn ? 1 + ratio * 2.6 : 0.8;
+          const ratio = vObj.score / vObj.max;
+          const rOuter = isOn ? rCore + 24 + Math.pow(ratio, 1.25) * 205 : rCore + 16;
+          const halfSpan = isOn ? 0.1 + Math.pow(ratio, 1.2) * 0.25 : 0.08;
+          const strokeW = isOn ? 1 + ratio * 2.8 : 0.8;
 
-          const aStart = centerAng - halfSpan;
-          const aEnd = centerAng + halfSpan;
-          const pathD = buildSectorPath(cx, cy, rCore, rOuter, aStart, aEnd);
-
-          const isGreen = idx % 2 === 0;
-          const fillCol = isFocused
-            ? "rgba(14, 77, 44, 0.24)"
-            : isGreen
-            ? "rgba(14, 77, 44, 0.10)"
-            : "rgba(13, 15, 14, 0.06)";
-          const strokeCol = isFocused ? "#0D0F0E" : isGreen ? "#0E4D2C" : "#0D0F0E";
+          const pathD = buildSectorPath(cx, cy, rCore, rOuter, centerAng - halfSpan, centerAng + halfSpan, idx);
+          const greenShade = GREEN_PALETTE[idx % GREEN_PALETTE.length];
+          const fillCol = isFocused ? greenShade : idx % 2 === 0 ? greenShade : "#0A0C0B";
+          const fillOp = isFocused ? "0.28" : idx % 2 === 0 ? "0.14" : "0.07";
+          const strokeCol = isFocused ? "#072917" : idx % 2 === 0 ? greenShade : "#0A0C0B";
 
           const rx = cx + Math.cos(centerAng) * rOuter;
           const ry = cy + Math.sin(centerAng) * rOuter;
-          const lx = cx + Math.cos(centerAng) * (rOuter + 24);
-          const ly = cy + Math.sin(centerAng) * (rOuter + 24);
+          chordNodes.push({ x: rx, y: ry, col: strokeCol });
+
+          // Arco secundario de preferencia / transitabilidad
+          const arcR = rOuter + 12 + (street.prefScore / 5) * 14;
+          const ax = cx + Math.cos(centerAng) * arcR;
+          const ay = cy + Math.sin(centerAng) * arcR;
+
+          const lx = cx + Math.cos(centerAng) * (arcR + 22);
+          const ly = cy + Math.sin(centerAng) * (arcR + 22);
 
           sectorsHtml += `
             <g class="part-interactive ${!isOn ? "is-muted" : ""}"
                data-vidx="${idx}"
                data-jtitle="${street.name} · ${vObj.label} (${vObj.val})"
-               data-jdesc="${vObj.just}">
-              <path d="${pathD}" fill="${fillCol}" stroke="${strokeCol}" stroke-width="${strokeW.toFixed(1)}" />
+               data-jdesc="${vObj.just} · Pref: ${street.prefScore}/5 · Trans: ${getTransitabilidadIndex(street)}.">
+              <path d="${pathD}" fill="${fillCol}" fill-opacity="${fillOp}" stroke="${strokeCol}" stroke-width="${strokeW.toFixed(1)}" />
               <line x1="${(cx + Math.cos(centerAng) * rCore).toFixed(1)}"
                     y1="${(cy + Math.sin(centerAng) * rCore).toFixed(1)}"
-                    x2="${rx.toFixed(1)}" y2="${ry.toFixed(1)}"
+                    x2="${ax.toFixed(1)}" y2="${ay.toFixed(1)}"
                     stroke="${strokeCol}" stroke-width="${(0.8 + ratio * 1.4).toFixed(1)}" />
               <circle cx="${rx.toFixed(1)}" cy="${ry.toFixed(1)}" r="${(2 + ratio * 4.5).toFixed(1)}" fill="${strokeCol}" />
+              <circle cx="${ax.toFixed(1)}" cy="${ay.toFixed(1)}" r="${(2 + (street.prefScore / 5) * 3.5).toFixed(1)}"
+                      fill="#FFFFFF" stroke="#072917" stroke-width="1.6" />
               <text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}"
                     text-anchor="${Math.cos(centerAng) < -0.15 ? "end" : Math.cos(centerAng) > 0.15 ? "start" : "middle"}"
                     dominant-baseline="middle"
                     font-family="Montserrat, sans-serif" font-size="9.5"
-                    font-weight="${isFocused ? "800" : "600"}" fill="#0D0F0E">
+                    font-weight="${isFocused ? "800" : "600"}" fill="#0A0C0B">
                 ${vObj.label} ${vObj.val}
               </text>
             </g>
           `;
         });
 
+        for (let c = 0; c < chordNodes.length; c++) {
+          const n1 = chordNodes[c];
+          const n2 = chordNodes[(c + 3) % chordNodes.length];
+          abstractChords += `<line x1="${n1.x.toFixed(1)}" y1="${n1.y.toFixed(1)}" x2="${n2.x.toFixed(1)}" y2="${n2.y.toFixed(1)}"
+                                   stroke="#0E4D2C" stroke-opacity="0.16" stroke-width="0.9" stroke-dasharray="2 3" />`;
+        }
+
         svg.innerHTML = `
           ${polarGrid}
+          ${abstractChords}
           ${sectorsHtml}
           <g class="part-interactive"
              data-jtitle="${street.name} (${street.city})"
-             data-jdesc="Positiva: ${fmtEs(posVal)} (${fData.pos}) · Negativa: ${fmtEs(negVal)} (${fData.neg}).">
-            <circle cx="${cx}" cy="${cy}" r="${rCore}" fill="#FFFFFF" stroke="#0E4D2C" stroke-width="2.5" />
+             data-jdesc="Positiva: ${fmtEs(totPos / 5)} (${totPos}) · Negativa: ${fmtEs(totNeg / 5)} (${totNeg}) · Pref: ${street.prefScore}/5.">
+            <circle cx="${cx}" cy="${cy}" r="${rCore}" fill="#FFFFFF" stroke="#072917" stroke-width="2.6" />
             <text x="${cx}" y="${cy - 6}" text-anchor="middle"
-                  font-family="Montserrat, sans-serif" font-size="13" font-weight="800" fill="#0E4D2C">
-              +${fmtEs(posVal)} / −${fmtEs(negVal)}
+                  font-family="Montserrat, sans-serif" font-size="13" font-weight="800" fill="#072917">
+              +${fmtEs(totPos / 5)} / −${fmtEs(totNeg / 5)}
             </text>
             <text x="${cx}" y="${cy + 11}" text-anchor="middle"
-                  font-family="Montserrat, sans-serif" font-size="8.5" font-weight="700" fill="#49524D">
+                  font-family="Montserrat, sans-serif" font-size="8.5" font-weight="700" fill="#4E5752">
               ${street.short.toUpperCase()}
             </text>
           </g>
         `;
       } else {
-        const list =
-          state.morphMode === "chile"
-            ? STREETS.filter((s) => s.territory === "Chile")
-            : state.morphMode === "argentina"
-            ? STREETS.filter((s) => s.territory === "Argentina")
-            : STREETS;
-
-        const totPos = list.reduce((acc, s) => acc + getStreetFichasForDay(s).pos, 0);
-        const totNeg = list.reduce((acc, s) => acc + getStreetFichasForDay(s).neg, 0);
-        const maxFichas = Math.max(1, ...list.map((s) => {
-          const fd = getStreetFichasForDay(s);
-          return fd.pos + fd.neg;
-        }));
-
         let sectorsHtml = "";
-        const spread = state.morphMode === "total" ? Math.PI * 1.82 : Math.PI * 1.42;
+        const spread = state.morphMode === "total" ? Math.PI * 1.84 : Math.PI * 1.44;
         const start =
           state.morphMode === "chile"
             ? Math.PI * 0.85
@@ -1527,7 +1668,7 @@
 
         list.forEach((st, i) => {
           const fData = getStreetFichasForDay(st);
-          const wave = Math.sin(state.motionPhase * 0.052 + i * 1.1) * 0.032;
+          const wave = Math.sin(state.motionPhase * 0.055 + i * 1.15) * 0.034;
           const centerAng = start + (i / Math.max(1, list.length - 1)) * spread + wave;
 
           const vObj = st.vars[fKey];
@@ -1537,69 +1678,83 @@
           const totalFichas = fData.pos + fData.neg;
           const volRatio = totalFichas / maxFichas;
           const scoreRatio = vObj.score / vObj.max;
-          const combined = Math.min(1, volRatio * 0.65 + scoreRatio * 0.35);
+          const prefRatio = st.prefScore / 5;
+          const transRatio = Math.max(0.15, Math.min(1, getTransitabilidadIndex(st) / 5));
 
-          // Más fichas y puntaje = sector más largo y más ancho/grueso; menos = más corto y angosto
-          const rOuter = isOn ? rCore + 35 + Math.pow(combined, 1.15) * 180 : rCore + 24;
-          const halfSpan = isOn ? (0.07 + Math.pow(combined, 1.2) * 0.22) : 0.06;
-          const strokeW = isOn ? 1 + combined * 2.8 : 0.8;
+          let metricFactor = volRatio * 0.55 + scoreRatio * 0.45;
+          if (state.scopeFilter === "preferencia") metricFactor = prefRatio;
+          if (state.scopeFilter === "transitabilidad") metricFactor = transRatio;
+          metricFactor = Math.min(1, Math.max(0.12, metricFactor));
 
-          const pathD = buildSectorPath(cx, cy, rCore, rOuter, centerAng - halfSpan, centerAng + halfSpan);
+          // Más valor = sector más largo y más grueso; menos = más pequeño y delgado
+          const rOuter = isOn ? rCore + 34 + Math.pow(metricFactor, 1.15) * 190 : rCore + 24;
+          const halfSpan = isOn ? 0.07 + Math.pow(metricFactor, 1.2) * 0.23 : 0.06;
+          const strokeW = isOn ? 1 + metricFactor * 2.8 : 0.8;
 
-          // Cota radial de balance (positiva en verde oscuro, negativa en negro)
-          const netDelta = fData.pos - fData.neg;
-          const tagCol = netDelta >= 0 ? "#0E4D2C" : "#0D0F0E";
-          const tipLen = 10 + Math.min(26, Math.abs(netDelta) * 0.25);
+          const pathD = buildSectorPath(cx, cy, rCore, rOuter, centerAng - halfSpan, centerAng + halfSpan, i);
+
+          const shadeIdx = Math.min(GREEN_PALETTE.length - 1, Math.floor(metricFactor * GREEN_PALETTE.length));
+          const greenTone = GREEN_PALETTE[shadeIdx];
+          const isChile = st.territory === "Chile";
+
+          const fillCol = isSel ? greenTone : isChile ? greenTone : "#0A0C0B";
+          const fillOp = isSel ? "0.28" : isChile ? "0.15" : "0.08";
+          const strokeCol = isSel ? "#072917" : isChile ? greenTone : "#0A0C0B";
+
           const x1 = cx + Math.cos(centerAng) * rOuter;
           const y1 = cy + Math.sin(centerAng) * rOuter;
+          const tipLen = 10 + metricFactor * 28;
           const x2 = cx + Math.cos(centerAng) * (rOuter + tipLen);
           const y2 = cy + Math.sin(centerAng) * (rOuter + tipLen);
 
+          chordNodes.push({ x: x2, y: y2, col: strokeCol });
+
           const lx = cx + Math.cos(centerAng) * (rOuter + tipLen + 22);
           const ly = cy + Math.sin(centerAng) * (rOuter + tipLen + 22);
-
-          const fillCol = isSel
-            ? "rgba(14, 77, 44, 0.24)"
-            : st.territory === "Chile"
-            ? "rgba(14, 77, 44, 0.11)"
-            : "rgba(13, 15, 14, 0.06)";
-          const strokeCol = isSel ? "#0D0F0E" : st.territory === "Chile" ? "#0E4D2C" : "#0D0F0E";
 
           sectorsHtml += `
             <g class="part-interactive ${!isOn ? "is-muted" : ""}"
                data-select-street="${st.id}"
                data-jtitle="${st.name} (${st.city}) · ${fData.pos}+ / ${fData.neg}−"
-               data-jdesc="${vObj.just} · +${fmtEs(fData.pos / 5)} / −${fmtEs(fData.neg / 5)}.">
-              <path d="${pathD}" fill="${fillCol}" stroke="${strokeCol}" stroke-width="${strokeW.toFixed(1)}" />
+               data-jdesc="${vObj.just} · Pref: ${st.prefScore}/5 · Trans: ${getTransitabilidadIndex(st)} · +${fmtEs(fData.pos / 5)} / −${fmtEs(fData.neg / 5)}.">
+              <path d="${pathD}" fill="${fillCol}" fill-opacity="${fillOp}" stroke="${strokeCol}" stroke-width="${strokeW.toFixed(1)}" />
               <line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}"
-                    stroke="${tagCol}" stroke-width="${(1.2 + combined * 2.2).toFixed(1)}" />
-              <circle cx="${x2.toFixed(1)}" cy="${y2.toFixed(1)}" r="${(2.5 + combined * 4.5).toFixed(1)}" fill="${tagCol}" />
+                    stroke="${strokeCol}" stroke-width="${(1.1 + metricFactor * 2.2).toFixed(1)}" />
+              <circle cx="${x2.toFixed(1)}" cy="${y2.toFixed(1)}" r="${(2.5 + metricFactor * 4.5).toFixed(1)}" fill="${strokeCol}" />
               <text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}"
                     text-anchor="${Math.cos(centerAng) < -0.15 ? "end" : Math.cos(centerAng) > 0.15 ? "start" : "middle"}"
                     dominant-baseline="middle"
                     font-family="Montserrat, sans-serif" font-size="9.5"
-                    font-weight="${isSel ? "800" : "600"}" fill="#0D0F0E">
+                    font-weight="${isSel ? "800" : "600"}" fill="#0A0C0B">
                 ${st.short} (${fData.pos}+/${fData.neg}−)
               </text>
             </g>
           `;
         });
 
+        for (let c = 0; c < chordNodes.length; c++) {
+          const n1 = chordNodes[c];
+          const n2 = chordNodes[(c + 2) % chordNodes.length];
+          abstractChords += `<line x1="${n1.x.toFixed(1)}" y1="${n1.y.toFixed(1)}" x2="${n2.x.toFixed(1)}" y2="${n2.y.toFixed(1)}"
+                                   stroke="#0E4D2C" stroke-opacity="0.14" stroke-width="0.85" stroke-dasharray="2 4" />`;
+        }
+
         svg.innerHTML = `
           ${polarGrid}
+          ${abstractChords}
           ${sectorsHtml}
           <g class="part-interactive"
              data-jtitle="Centro Polar · ${modeLabels[state.morphMode]}"
              data-jdesc="+${fmtEs(totPos / 5)} (${totPos}) / −${fmtEs(totNeg / 5)} (${totNeg}).">
-            <circle cx="${cx}" cy="${cy}" r="${rCore}" fill="#FFFFFF" stroke="#0E4D2C" stroke-width="2.5" />
-            <circle cx="${cx}" cy="${cy}" r="45" fill="none" stroke="#0D0F0E" stroke-width="0.9" stroke-dasharray="2 3" />
+            <circle cx="${cx}" cy="${cy}" r="${rCore}" fill="#FFFFFF" stroke="#072917" stroke-width="2.6" />
+            <circle cx="${cx}" cy="${cy}" r="45" fill="none" stroke="#0A0C0B" stroke-width="0.9" stroke-dasharray="2 3" />
             <text x="${cx}" y="${cy - 6}" text-anchor="middle"
-                  font-family="Montserrat, sans-serif" font-size="13" font-weight="800" fill="#0E4D2C">
+                  font-family="Montserrat, sans-serif" font-size="13" font-weight="800" fill="#072917">
               +${fmtEs(totPos / 5)} / −${fmtEs(totNeg / 5)}
             </text>
             <text x="${cx}" y="${cy + 11}" text-anchor="middle"
-                  font-family="Montserrat, sans-serif" font-size="8.5" font-weight="700" fill="#49524D">
-              TOTAL
+                  font-family="Montserrat, sans-serif" font-size="8.5" font-weight="700" fill="#4E5752">
+              ${state.scopeFilter.toUpperCase()}
             </text>
           </g>
         `;
@@ -1629,111 +1784,156 @@
       });
     }
 
-    /* ==================== MAPA-GRÁFICO INFERIOR CON GLIFOS POLARES RONDANDO EN ONDA ==================== */
-    function renderRoamingMap() {
-      const mapSvg = document.getElementById("roamingMapSvg");
+    /* =========================================================================
+       GRÁFICO INFERIOR: DÍAS × LUGARES BAJO LAS TENDENCIAS (O INVERTIDO)
+       - Ejes invertibles con botón ("Invertir: Días × Lugares" / "Invertido: Lugares × Días").
+       - Ondas y glifos escalados por valor en blanco, negro y distintos verdes.
+       ========================================================================= */
+    function renderDaysPlacesGraph() {
+      const mSvg = document.getElementById("daysPlacesSvg");
       const fKey = getFocusedVarKey();
+      const fVarLabel = getStreet(state.selectedStreetId).vars[fKey].label;
 
-      const filtered = STREETS.filter((s) => {
-        const terrOk = state.territory === "Ambos" || s.territory === state.territory;
-        if (!terrOk) return false;
-        if (state.dayFilter === "Todos") return true;
-        return s.territory === "Chile" || (s.byDay && s.byDay[state.dayFilter]);
+      const daysList = state.dayFilter === "Todos" ? ["19 nov", "20 nov", "21 nov", "Gral."] : [state.dayFilter, "Gral."];
+      const placesList = STREETS.filter((s) => state.territory === "Ambos" || s.territory === state.territory);
+
+      const rowLabels = state.invertMatrix ? placesList.map((s) => `${s.short} (${s.city === "Valparaíso" ? "CHI" : "ARG"})`) : daysList;
+      const colLabels = state.invertMatrix ? daysList : placesList.map((s) => `${s.short} (${s.city === "Valparaíso" ? "CHI" : "ARG"})`);
+
+      const leftPad = 165;
+      const topPad = 95;
+      const plotW = 940;
+      const plotH = 420;
+
+      const rowsCount = Math.max(1, rowLabels.length);
+      const colsCount = Math.max(1, colLabels.length);
+      const rowStep = plotH / rowsCount;
+      const colStep = plotW / colsCount;
+
+      let gridLines = "";
+      let rowHeaders = "";
+      let colHeaders = "";
+
+      rowLabels.forEach((rLabel, rIdx) => {
+        const y = topPad + rIdx * rowStep + rowStep / 2;
+        const waveY = y + Math.sin(state.motionPhase * 0.045 + rIdx * 0.9) * 2.5;
+        gridLines += `<line x1="${leftPad}" y1="${waveY.toFixed(1)}" x2="${leftPad + plotW}" y2="${waveY.toFixed(1)}"
+                            stroke="rgba(10,12,11,0.12)" stroke-width="0.9" />`;
+        rowHeaders += `<text x="${leftPad - 14}" y="${waveY.toFixed(1)}" text-anchor="end" dominant-baseline="middle"
+                             font-family="Montserrat, sans-serif" font-size="10" font-weight="800" fill="#072917">
+                         ${rLabel.toUpperCase()}
+                       </text>`;
       });
 
-      const zonesBg = `
-        <rect x="36" y="48" width="492" height="468" fill="none" stroke="#0D0F0E" stroke-width="1.2" />
-        <line x1="36" y1="86" x2="528" y2="86" stroke="rgba(13,15,14,0.2)" />
-        <text x="56" y="72" font-family="Montserrat, sans-serif" font-size="10.5" font-weight="800" fill="#0E4D2C" letter-spacing="0.16em">
-          LUGAR · VALPARAÍSO (CHILE)
-        </text>
-
-        <rect x="592" y="48" width="492" height="468" fill="none" stroke="#0D0F0E" stroke-width="1.2" />
-        <line x1="592" y1="86" x2="1084" y2="86" stroke="rgba(13,15,14,0.2)" />
-        <text x="612" y="72" font-family="Montserrat, sans-serif" font-size="10.5" font-weight="800" fill="#0D0F0E" letter-spacing="0.16em">
-          LUGAR · BUENOS AIRES (ARGENTINA)
-        </text>
-      `;
-
-      let roamingNodes = "";
-      filtered.forEach((st, idx) => {
-        // Ronda ondulatoria continua
-        const wanderX = Math.cos(state.motionPhase * 0.03 + idx * 1.4) * 34;
-        const wanderY = Math.sin(state.motionPhase * 0.036 + idx * 1.9) * 24;
-        const gx = st.mapHome[0] + wanderX;
-        const gy = st.mapHome[1] + wanderY;
-
-        const fData = getStreetFichasForDay(st);
-        const vObj = st.vars[fKey];
-        const scoreRatio = vObj.score / vObj.max;
-        const rGlyph = 11 + scoreRatio * 18;
-        const ringW = 1 + scoreRatio * 2.8;
-        const isSel = st.id === state.selectedStreetId;
-        const col = st.territory === "Chile" ? "#0E4D2C" : "#0D0F0E";
-        const dayTag = st.territory === "Argentina" && state.dayFilter !== "Todos" ? state.dayFilter : st.dayGroup;
-
-        // Micro-sectores polares en onda alrededor del nodo
-        let microSectors = "";
-        for (let p = 0; p < 6; p++) {
-          const a0 = (p / 6) * Math.PI * 2 + Math.sin(state.motionPhase * 0.04 + p) * 0.12;
-          const a1 = a0 + 0.34;
-          const rOut = rGlyph + 4 + scoreRatio * 7 + Math.sin(state.motionPhase * 0.05 + p) * 1.5;
-          const sPath = buildSectorPath(0, 0, rGlyph, rOut, a0, a1);
-          microSectors += `<path d="${sPath}" fill="${col}" fill-opacity="0.22" stroke="${col}" stroke-width="0.9" />`;
-        }
-
-        roamingNodes += `
-          <g class="roaming-glyph" transform="translate(${gx.toFixed(1)}, ${gy.toFixed(1)})"
-             data-map-street="${st.id}">
-            ${microSectors}
-            <circle cx="0" cy="0" r="${rGlyph.toFixed(1)}" fill="${isSel ? "#0E4D2C" : "#FFFFFF"}" stroke="${col}" stroke-width="${ringW.toFixed(1)}" />
-            <circle cx="0" cy="0" r="${(2.5 + scoreRatio * 8.5).toFixed(1)}" fill="${isSel ? "#FFFFFF" : col}" opacity="0.88" />
-            <text x="0" y="${(rGlyph + 18).toFixed(1)}" text-anchor="middle"
-                  font-family="Montserrat, sans-serif" font-size="9.5" font-weight="700" fill="#0D0F0E">
-              ${st.short} · ${fData.pos}+/${fData.neg}−
-            </text>
-            <text x="0" y="${(rGlyph + 30).toFixed(1)}" text-anchor="middle"
-                  font-family="Montserrat, sans-serif" font-size="9" font-weight="600" fill="#49524D">
-              ${dayTag} · ${vObj.label} ${vObj.val}
-            </text>
-          </g>
-        `;
+      colLabels.forEach((cLabel, cIdx) => {
+        const x = leftPad + cIdx * colStep + colStep / 2;
+        const waveX = x + Math.cos(state.motionPhase * 0.045 + cIdx * 0.8) * 2.5;
+        gridLines += `<line x1="${waveX.toFixed(1)}" y1="${topPad - 12}" x2="${waveX.toFixed(1)}" y2="${topPad + plotH}"
+                            stroke="rgba(10,12,11,0.10)" stroke-width="0.8" stroke-dasharray="3 3" />`;
+        colHeaders += `<text x="${waveX.toFixed(1)}" y="${topPad - 24}" text-anchor="middle"
+                             font-family="Montserrat, sans-serif" font-size="9.5" font-weight="800" fill="#0A0C0B">
+                         ${cLabel}
+                       </text>`;
       });
 
-      mapSvg.innerHTML = `
-        ${zonesBg}
-        ${roamingNodes}
-        <text x="56" y="540" font-family="Montserrat, sans-serif" font-size="9.5" font-weight="700" fill="#49524D">
-          JORNADA: ${state.dayFilter.toUpperCase()} · TERRITORIO: ${state.territory.toUpperCase()} · CATEGORÍA: ${fKey.toUpperCase()} (1/5)
-        </text>
-      `;
+      // Curva de tendencia ondulada que recorre el gráfico
+      let waveCurvePts = [];
+      let nodesHtml = "";
 
-      mapSvg.querySelectorAll(".roaming-glyph").forEach((gEl) => {
-        gEl.addEventListener("click", () => {
-          const sid = gEl.getAttribute("data-map-street");
-          state.selectedStreetId = sid;
-          const st = getStreet(sid);
-          const fData = getStreetFichasForDay(st);
-          setJustification(
-            `Mapa-gráfico · ${st.name} (${st.city})`,
-            `${st.vars[fKey].just} · +${fmtEs(fData.pos / 5)} / −${fmtEs(fData.neg / 5)}.`
+      for (let r = 0; r < rowsCount; r++) {
+        for (let c = 0; c < colsCount; c++) {
+          const st = state.invertMatrix ? placesList[r] : placesList[c];
+          const dTag = state.invertMatrix ? colLabels[c] : rowLabels[r];
+
+          const dayKey = dTag === "Gral." ? "Todos" : dTag;
+          const fData = dayKey !== "Todos" && st.byDay && st.byDay[dayKey]
+            ? st.byDay[dayKey]
+            : { pos: st.posFichas, neg: st.negFichas };
+
+          const vScore = st.vars[fKey].score;
+          const intensity = Math.max(0.2, Math.min(1, (vScore / 5) * 0.6 + ((fData.pos + fData.neg) / 140) * 0.4));
+
+          const baseX = leftPad + c * colStep + colStep / 2;
+          const baseY = topPad + r * rowStep + rowStep / 2;
+
+          const ox = baseX + Math.sin(state.motionPhase * 0.05 + r * 1.1 + c * 0.7) * 5;
+          const oy = baseY + Math.cos(state.motionPhase * 0.05 + r * 0.8 + c * 1.2) * 5;
+
+          if (r === Math.floor(rowsCount / 2) || rowsCount === 1) {
+            waveCurvePts.push(`${ox.toFixed(1)},${oy.toFixed(1)}`);
+          }
+
+          const gIdx = Math.min(GREEN_PALETTE.length - 1, Math.floor(intensity * GREEN_PALETTE.length));
+          const tone = st.territory === "Chile" ? GREEN_PALETTE[gIdx] : "#0A0C0B";
+          const radius = 5 + intensity * Math.min(22, Math.min(rowStep, colStep) * 0.32);
+          const strokeW = 1 + intensity * 2.5;
+
+          const sectorPath = buildSectorPath(
+            ox,
+            oy,
+            radius * 0.35,
+            radius + 4,
+            -Math.PI * 0.4 + state.motionPhase * 0.03,
+            Math.PI * 0.6 + state.motionPhase * 0.03,
+            r + c
           );
+
+          nodesHtml += `
+            <g class="matrix-cell-node" data-street-id="${st.id}"
+               data-jtitle="${st.short} · ${dTag} · ${fVarLabel}"
+               data-jdesc="Tendencia ${fVarLabel} ${st.vars[fKey].val} · +${fmtEs(fData.pos / 5)} / −${fmtEs(fData.neg / 5)} (${fData.pos}+/${fData.neg}−).">
+              <path d="${sectorPath}" fill="${tone}" fill-opacity="0.20" stroke="${tone}" stroke-width="0.9" />
+              <circle cx="${ox.toFixed(1)}" cy="${oy.toFixed(1)}" r="${radius.toFixed(1)}"
+                      fill="${st.id === state.selectedStreetId ? "#072917" : "#FFFFFF"}"
+                      stroke="${tone}" stroke-width="${strokeW.toFixed(1)}" />
+              <circle cx="${ox.toFixed(1)}" cy="${oy.toFixed(1)}" r="${(radius * 0.42).toFixed(1)}"
+                      fill="${st.id === state.selectedStreetId ? "#FFFFFF" : tone}" />
+              <text x="${ox.toFixed(1)}" y="${(oy + radius + 12).toFixed(1)}" text-anchor="middle"
+                    font-family="Montserrat, sans-serif" font-size="8.5" font-weight="700" fill="#282E2B">
+                ${fData.pos}+/${fData.neg}−
+              </text>
+            </g>
+          `;
+        }
+      }
+
+      const wavePolyline = waveCurvePts.length > 1
+        ? `<polyline points="${waveCurvePts.join(" ")}" fill="none" stroke="#0E4D2C" stroke-width="1.8" stroke-dasharray="4 3" opacity="0.65" />`
+        : "";
+
+      mSvg.innerHTML = `
+        <rect x="24" y="24" width="1112" height="532" fill="none" stroke="#0A0C0B" stroke-width="1.2" />
+        <text x="42" y="48" font-family="Montserrat, sans-serif" font-size="10" font-weight="800" fill="#072917" letter-spacing="0.16em">
+          ${state.invertMatrix ? "ORDEN INVERTIDO · LUGARES (FILAS) × DÍAS (COLUMNAS)" : "ORDEN BASE · DÍAS (FILAS) × LUGARES (COLUMNAS)"} · TENDENCIA: ${fVarLabel.toUpperCase()}
+        </text>
+        ${gridLines}
+        ${wavePolyline}
+        ${rowHeaders}
+        ${colHeaders}
+        ${nodesHtml}
+      `;
+
+      mSvg.querySelectorAll(".matrix-cell-node").forEach((el) => {
+        el.addEventListener("click", () => {
+          const sid = el.getAttribute("data-street-id");
+          state.selectedStreetId = sid;
+          setJustification(el.getAttribute("data-jtitle"), el.getAttribute("data-jdesc"));
           playCueNote(440);
           renderAll();
         });
       });
     }
 
-    /* ==================== CANVAS DE ONDAS EN BLANCO, NEGRO Y VERDE OSCURO ==================== */
+    /* ==================== CANVAS DE ONDAS (BLANCO, NEGRO, VERDES) ==================== */
     const canvas = document.getElementById("motionCanvas");
     const ctx = canvas.getContext("2d");
-    const waveParticles = Array.from({ length: 48 }, (_, i) => ({
-      a: (i / 48) * Math.PI * 2,
-      baseR: 78 + (i % 7) * 28,
+    const waveParticles = Array.from({ length: 54 }, (_, i) => ({
+      a: (i / 54) * Math.PI * 2,
+      baseR: 76 + (i % 8) * 28,
       amp: 6 + (i % 4) * 3.5,
       sp: (i % 2 === 0 ? 1 : -1) * (0.004 + (i % 4) * 0.001),
       rad: i % 3 === 0 ? 2.4 : 1.5,
-      isForest: i % 2 === 0
+      tone: i % 3 === 0 ? "rgba(7, 41, 23, 0.36)" : i % 3 === 1 ? "rgba(39, 138, 82, 0.34)" : "rgba(10, 12, 11, 0.22)"
     }));
 
     function resizeCanvas() {
@@ -1748,7 +1948,7 @@
       const box = canvas.parentElement.getBoundingClientRect();
       ctx.clearRect(0, 0, box.width, box.height);
 
-      const scale = Math.min(box.width / 860, box.height / 660);
+      const scale = Math.min(box.width / 880, box.height / 680);
       const cx = box.width / 2;
       const cy = box.height / 2;
 
@@ -1759,14 +1959,14 @@
         const y = cy + Math.sin(p.a) * rNow * scale;
         ctx.beginPath();
         ctx.arc(x, y, p.rad, 0, Math.PI * 2);
-        ctx.fillStyle = p.isForest ? "rgba(14, 77, 44, 0.34)" : "rgba(13, 15, 14, 0.22)";
+        ctx.fillStyle = p.tone;
         ctx.fill();
       }
 
       state.motionPhase += 1;
       if (state.motionPhase % 2 === 0 && state.activeTab === "modelo") {
         renderAtlasSvg();
-        renderRoamingMap();
+        renderDaysPlacesGraph();
       }
 
       requestAnimationFrame(stepLoop);
@@ -1801,31 +2001,69 @@
     }
 
     function renderInspector() {
+      const scopeLabels = {
+        todo: "Vista: Todo",
+        argentina: "Vista: Todo Argentina",
+        chile: "Vista: Todo Chile",
+        preferencia: "Vista: Preferencia Calle",
+        transitabilidad: "Vista: Transitabilidad"
+      };
+      document.getElementById("scopeActiveLabel").textContent = scopeLabels[state.scopeFilter];
+
+      const scopedStreets =
+        state.scopeFilter === "argentina"
+          ? STREETS.filter((s) => s.territory === "Argentina")
+          : state.scopeFilter === "chile"
+          ? STREETS.filter((s) => s.territory === "Chile")
+          : STREETS;
+
       const s = getStreet(state.selectedStreetId);
-      const fData = getStreetFichasForDay(s);
-      const posVal = fData.pos / 5;
-      const negVal = fData.neg / 5;
+
+      // Si el alcance es "todo", "argentina" o "chile" y no se está en calle individual, muestra el agregado de ese conjunto o la calle enfocada
+      const useGroupAgg = state.morphMode !== "calle" && (state.scopeFilter === "todo" || state.scopeFilter === "argentina" || state.scopeFilter === "chile");
+
+      const aggPos = scopedStreets.reduce((acc, st) => acc + getStreetFichasForDay(st).pos, 0);
+      const aggNeg = scopedStreets.reduce((acc, st) => acc + getStreetFichasForDay(st).neg, 0);
+      const fSingle = getStreetFichasForDay(s);
+
+      const dispPosFichas = useGroupAgg ? aggPos : fSingle.pos;
+      const dispNegFichas = useGroupAgg ? aggNeg : fSingle.neg;
+
+      document.getElementById("inspName").textContent = useGroupAgg
+        ? state.scopeFilter === "todo"
+          ? "Todo · Valparaíso + Buenos Aires"
+          : state.scopeFilter === "argentina"
+          ? "Todo Argentina · Buenos Aires"
+          : "Todo Chile · Valparaíso"
+        : s.name;
+
+      document.getElementById("inspCity").textContent = useGroupAgg
+        ? `${scopedStreets.length} calles · Calle base: ${s.short}`
+        : `${s.city} · ${s.territory} · Pref: ${s.prefScore}/5`;
+
+      document.getElementById("inspPos").textContent = fmtEs(dispPosFichas / 5);
+      document.getElementById("inspPosSub").textContent = `Positiva · ${dispPosFichas}`;
+      document.getElementById("inspNeg").textContent = fmtEs(dispNegFichas / 5);
+      document.getElementById("inspNegSub").textContent = `Negativa · ${dispNegFichas}`;
+
       const fKey = getFocusedVarKey();
-
-      document.getElementById("inspName").textContent = s.name;
-      document.getElementById("inspCity").textContent = `${s.city} · ${s.territory}`;
-
-      document.getElementById("inspPos").textContent = fmtEs(posVal);
-      document.getElementById("inspPosSub").textContent = `Positiva · ${fData.pos}`;
-      document.getElementById("inspNeg").textContent = fmtEs(negVal);
-      document.getElementById("inspNegSub").textContent = `Negativa · ${fData.neg}`;
 
       document.getElementById("varRows").innerHTML = VAR_KEYS.map((key, idx) => {
         const v = s.vars[key];
         const on = state.visibleVars[key];
         const focused = key === fKey;
-        const pct = (v.score / v.max) * 100;
+
+        // Promedio de la variable en el alcance activo si se está viendo "todo" / "argentina" / "chile"
+        const avgScore =
+          scopedStreets.reduce((acc, st) => acc + st.vars[key].score, 0) / Math.max(1, scopedStreets.length);
+        const shownScore = useGroupAgg ? avgScore : v.score;
+        const pct = (shownScore / v.max) * 100;
 
         return `
           <div class="var-row-item ${focused ? "is-focused" : ""} ${!on ? "is-off" : ""}" data-vidx="${idx}">
             <div class="var-row-top">
-              <span class="var-row-name">${v.label} ${!on ? "(Excluida)" : ""}</span>
-              <span class="var-row-val">${v.val}</span>
+              <span class="var-row-name">${v.label} ${!on ? "(Filtrada)" : ""}</span>
+              <span class="var-row-val">${useGroupAgg ? `${fmtEs(shownScore)}/5` : v.val}</span>
             </div>
             <div class="var-track">
               <div class="var-fill" style="width:${pct}%"></div>
@@ -1841,6 +2079,13 @@
           const k = VAR_KEYS[idx];
           setJustification(`${s.vars[k].label} (${s.vars[k].val}) · ${s.name}`, s.vars[k].just);
           playCueNote(369.99);
+          renderAll();
+        });
+        card.addEventListener("dblclick", () => {
+          const idx = parseInt(card.getAttribute("data-vidx"), 10);
+          const k = VAR_KEYS[idx];
+          state.visibleVars[k] = !state.visibleVars[k];
+          playCueNote(293.66);
           renderAll();
         });
       });
@@ -1929,22 +2174,62 @@
       renderInspector();
       renderVariantsTab();
       renderAtlasSvg();
-      renderRoamingMap();
+      renderDaysPlacesGraph();
       renderComparisonTab();
     }
+
+    /* ==================== EVENTOS ==================== */
+    document.querySelectorAll(".scope-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const sc = btn.getAttribute("data-scope");
+        state.scopeFilter = sc;
+        if (sc === "argentina") {
+          state.territory = "Argentina";
+          state.morphMode = "argentina";
+        } else if (sc === "chile") {
+          state.territory = "Chile";
+          state.morphMode = "chile";
+        } else if (sc === "todo") {
+          state.territory = "Ambos";
+          state.morphMode = "total";
+        }
+
+        document.querySelectorAll(".scope-btn").forEach((b) => b.classList.remove("is-active"));
+        btn.classList.add("is-active");
+        document.querySelectorAll(".terr-btn").forEach((b) => {
+          b.classList.toggle("is-active", b.getAttribute("data-terr") === state.territory);
+        });
+        document.querySelectorAll(".morph-btn").forEach((b) => {
+          b.classList.toggle("is-active", b.getAttribute("data-morph") === state.morphMode);
+        });
+
+        playCueNote(349.23);
+        renderAll();
+      });
+    });
 
     document.querySelectorAll(".morph-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
         const m = btn.getAttribute("data-morph");
         state.morphMode = m;
-        if (m === "chile") state.territory = "Chile";
-        else if (m === "argentina") state.territory = "Argentina";
-        else if (m === "total") state.territory = "Ambos";
+        if (m === "chile") {
+          state.territory = "Chile";
+          state.scopeFilter = "chile";
+        } else if (m === "argentina") {
+          state.territory = "Argentina";
+          state.scopeFilter = "argentina";
+        } else if (m === "total") {
+          state.territory = "Ambos";
+          state.scopeFilter = "todo";
+        }
 
         document.querySelectorAll(".morph-btn").forEach((b) => b.classList.remove("is-active"));
         btn.classList.add("is-active");
         document.querySelectorAll(".terr-btn").forEach((b) => {
           b.classList.toggle("is-active", b.getAttribute("data-terr") === state.territory);
+        });
+        document.querySelectorAll(".scope-btn").forEach((b) => {
+          b.classList.toggle("is-active", b.getAttribute("data-scope") === state.scopeFilter);
         });
 
         playCueNote(349.23);
@@ -1969,16 +2254,32 @@
         const t = btn.getAttribute("data-terr");
         state.territory = t;
         state.morphMode = t === "Chile" ? "chile" : t === "Argentina" ? "argentina" : "total";
+        state.scopeFilter = t === "Chile" ? "chile" : t === "Argentina" ? "argentina" : "todo";
 
         document.querySelectorAll(".terr-btn").forEach((b) => b.classList.remove("is-active"));
         btn.classList.add("is-active");
         document.querySelectorAll(".morph-btn").forEach((b) => {
           b.classList.toggle("is-active", b.getAttribute("data-morph") === state.morphMode);
         });
+        document.querySelectorAll(".scope-btn").forEach((b) => {
+          b.classList.toggle("is-active", b.getAttribute("data-scope") === state.scopeFilter);
+        });
 
         playCueNote(329.63);
         renderAll();
       });
+    });
+
+    document.getElementById("invertMatrixBtn").addEventListener("click", () => {
+      state.invertMatrix = !state.invertMatrix;
+      const btn = document.getElementById("invertMatrixBtn");
+      btn.classList.toggle("is-inverted", state.invertMatrix);
+      btn.textContent = state.invertMatrix ? "Invertido: Lugares × Días" : "Invertir: Días × Lugares";
+      document.getElementById("matrixOrientationDesc").textContent = state.invertMatrix
+        ? "Eje principal invertido: Lugares (Valparaíso y Buenos Aires) cruzados con Días (19 nov, 20 nov, 21 nov, Gral.) bajo tendencias."
+        : "Eje principal: Días (19 nov, 20 nov, 21 nov, Gral.) cruzados con Lugares (Valparaíso y Buenos Aires) bajo tendencias.";
+      playCueNote(440);
+      renderDaysPlacesGraph();
     });
 
     document.querySelectorAll(".filter-pill[data-day]").forEach((btn) => {
@@ -1997,8 +2298,7 @@
         state.activeTab = target;
 
         document.querySelectorAll(".ws-tab").forEach((t) => {
-          const active = t === tab;
-          t.classList.toggle("is-active", active);
+          t.classList.toggle("is-active", t === tab);
         });
 
         document.querySelectorAll(".tab-pane").forEach((pane) => {
@@ -2008,7 +2308,7 @@
         if (target === "modelo") {
           resizeCanvas();
           renderAtlasSvg();
-          renderRoamingMap();
+          renderDaysPlacesGraph();
         }
       });
     });
