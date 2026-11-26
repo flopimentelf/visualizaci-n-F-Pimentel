@@ -1,655 +1,528 @@
+# PROMPT MAESTRO: EL PESO DE CAMINAR
+## Sistema interactivo de visualización de datos urbanos | Tramas de elección
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>El peso de caminar | Tramas de elección</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-:root{
---bg:#eae7dd;
---paper:#f2efe7;
---ink:#282e29;
---muted:#85877f;
---line:#cbc8bd;
---green:#668b73;
---green2:#a4bca2;
---blue:#759caa;
---blue2:#b2c9ca;
---orange:#ce8058;
---red:#b95f4d;
---white:#f8f6ef;
-}
-*{box-sizing:border-box}
-body{
-margin:0;background:var(--bg);color:var(--ink);
-font-family:Montserrat,sans-serif;
-overflow-x:hidden;
-}
-button,select{font:inherit}
-button{cursor:pointer}
-header{
-height:66px;padding:0 4vw;display:flex;
-align-items:center;justify-content:space-between;
-border-bottom:1px solid var(--line);
-position:sticky;top:0;z-index:20;
-background:rgba(234,231,221,.94);
-backdrop-filter:blur(12px);
-}
-.logo{font-size:10px;font-weight:800;letter-spacing:2.5px}
-.header-meta{font-size:9px;letter-spacing:2px;color:var(--muted)}
-main{max-width:1700px;margin:auto}
-.hero{padding:42px 4vw 30px}
-.kicker{font-size:9px;letter-spacing:3px;font-weight:700;color:var(--green)}
-h1{font-size:clamp(48px,8vw,96px);line-height:.9;letter-spacing:-6px;margin:18px 0;font-weight:800}
-h1 span{color:var(--green)}
-.hero-bottom{display:flex;justify-content:space-between;align-items:end;gap:20px}
-.hero p{font-size:12px;line-height:1.9;color:#74766f;max-width:500px;margin:0}
-.edition{font-size:9px;letter-spacing:2px;color:var(--muted);white-space:nowrap}
-nav{
-padding:0 4vw;display:flex;gap:8px;align-items:center;
-border-top:1px solid var(--line);border-bottom:1px solid var(--line);
-min-height:62px;flex-wrap:wrap;
-}
-.nav-label{font-size:9px;letter-spacing:2px;color:var(--muted);margin-right:12px}
-.tab{
-border:1px solid transparent;background:transparent;
-padding:11px 16px;border-radius:30px;
-font-size:9px;font-weight:700;letter-spacing:1px;color:#77796f;
-}
-.tab.active{border-color:var(--ink);color:var(--ink);background:var(--paper)}
-.tab:hover{border-color:var(--green)}
-main .workspace{
-padding:30px 4vw 50px;
-display:grid;grid-template-columns:minmax(0,1.4fr) minmax(320px,.8fr);
-gap:20px;align-items:stretch;
-}
-.visual-panel,.control-panel{
-border:1px solid var(--line);background:var(--paper);
-min-width:0;
-}
-.panel-head{
-padding:17px 20px;border-bottom:1px solid var(--line);
-display:flex;justify-content:space-between;align-items:center;gap:10px;
-}
-.panel-label{font-size:9px;letter-spacing:2px;font-weight:700}
-.panel-meta{font-size:9px;color:var(--muted)}
-#riverSvg{width:100%;height:auto;display:block;min-height:300px}
-.water{
-stroke:none;opacity:.65;
-}
-.waterline{fill:none;stroke:#f7f5ed;stroke-width:1.3;opacity:.75}
-.river{
-fill:none;stroke-linecap:round;stroke-linejoin:round;
-cursor:pointer;transition:opacity .5s,stroke-width .5s;
-}
-.river:hover{opacity:1!important}
-.river.selected{filter:drop-shadow(0 2px 3px rgba(30,60,45,.2))}
-.river-label{
-font:700 10px Montserrat,sans-serif;
-letter-spacing:1px;fill:#34463c;pointer-events:none;
-}
-.river-small{font:9px Montserrat,sans-serif;fill:#7d8177}
-.flow-particle{fill:#f7f5ed;opacity:.8;pointer-events:none}
-.svg-mode-label{font:700 10px Montserrat;letter-spacing:2px;fill:#52675a}
-.svg-count{font:9px Montserrat;fill:#58665c}
-.visual-footer{
-display:flex;justify-content:space-between;gap:12px;
-padding:14px 18px;border-top:1px solid var(--line);
-font-size:9px;color:var(--muted);flex-wrap:wrap;
-}
-.legend{display:flex;gap:15px;flex-wrap:wrap}
-.legend span{display:flex;gap:6px;align-items:center}
-.legend i{width:8px;height:8px;border-radius:50%}
-.control-panel{display:flex;flex-direction:column}
-.control-content{padding:20px;display:flex;flex-direction:column;gap:20px}
-.control-section{border-bottom:1px solid var(--line);padding-bottom:17px}
-.control-title{font-size:9px;font-weight:800;letter-spacing:2px;margin-bottom:13px}
-.city-switch{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.city-option{
-border:1px solid var(--line);background:transparent;padding:13px 8px;
-text-align:left;color:var(--ink);font-size:10px;
-}
-.city-option.active{background:#dce5d9;border-color:var(--green)}
-.city-option.arg.active{background:#eaded2;border-color:var(--orange)}
-.city-option small{display:block;margin-top:5px;font-size:8px;color:#777}
-.street-select{
-width:100%;padding:13px;border:1px solid var(--line);
-background:#fffdf6;color:var(--ink);font-size:10px;
-}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.stat{
-padding:15px;background:#e7eee6;border:1px solid #d4dfd2;
-}
-.stat.negative{background:#f0e5de;border-color:#e1cfc3}
-.stat-label{font-size:8px;letter-spacing:1px;color:#72776d}
-.stat-number{font-size:34px;font-weight:800;letter-spacing:-2px;margin:5px 0}
-.stat-detail{font-size:8px;color:#777}
-.metric{margin:13px 0}
-.metric-top{display:flex;justify-content:space-between;font-size:9px;margin-bottom:7px}
-.metric-track{height:5px;background:#dcdad0;border-radius:5px;overflow:hidden}
-.metric-fill{height:100%;background:var(--green);border-radius:5px}
-.metric-fill.high{background:var(--orange)}
-.layer-list{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.layer-item{
-display:flex;align-items:center;gap:7px;
-font-size:9px;color:#696c65;
-}
-.layer-item input{accent-color:var(--green)}
-.street-data{
-background:#ebe8de;padding:14px;font-size:10px;line-height:1.8;
-}
-.street-data strong{font-size:9px;letter-spacing:1px}
-.small-note{font-size:8px;color:var(--muted);line-height:1.7}
-.compare-panel{
-margin:0 4vw 40px;padding:25px;
-border:1px solid var(--line);background:var(--paper);
-}
-.section-heading{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:20px}
-.section-heading h2{font-size:clamp(23px,3vw,36px);letter-spacing:-1.5px;margin:7px 0}
-.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.compare-card{border:1px solid var(--line);padding:17px;min-width:0}
-.compare-card h3{font-size:17px;margin:10px 0}
-.compare-card .city{font-size:8px;letter-spacing:2px;color:var(--green);font-weight:700}
-.compare-card .number{font-size:38px;font-weight:800;margin:10px 0}
-.compare-controls{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
-.compare-controls label{font-size:8px;letter-spacing:1px;display:block;margin-bottom:8px}
-.compare-controls select{width:100%;padding:12px;background:transparent;border:1px solid var(--line);font-size:10px}
-.comparison-bars{margin-top:12px}
-.comparison-row{display:grid;grid-template-columns:95px 1fr 28px;gap:8px;align-items:center;margin:9px 0;font-size:8px}
-.comparison-track{height:5px;background:#e1ded4}
-.comparison-fill{height:100%;background:var(--green)}
-.street-catalog{padding:0 4vw 50px}
-.catalog-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.catalog-card{
-border:1px solid var(--line);background:var(--paper);
-padding:17px;cursor:pointer;transition:.2s;
-}
-.catalog-card:hover,.catalog-card.selected{border-color:var(--green);background:#e2e9df}
-.catalog-city{font-size:8px;letter-spacing:2px;color:var(--muted)}
-.catalog-name{font-size:13px;font-weight:700;margin:10px 0}
-.catalog-balance{font-size:22px;font-weight:800}
-.catalog-caption{font-size:8px;color:var(--muted)}
-footer{
-padding:22px 4vw;border-top:1px solid var(--line);
-display:flex;justify-content:space-between;gap:15px;
-font-size:8px;letter-spacing:2px;color:var(--muted);
-}
-.hidden{display:none!important}
-#comparisonSection{scroll-margin-top:90px}
-@media(max-width:900px){
-main .workspace{grid-template-columns:1fr}
-.catalog-grid{grid-template-columns:repeat(2,1fr)}
-}
-@media(max-width:520px){
-h1{letter-spacing:-3px}
-.hero-bottom{align-items:start;flex-direction:column}
-main .workspace{padding:15px 3vw 30px}
-.compare-panel{margin:0 3vw 30px;padding:15px}
-.compare-grid{grid-template-columns:1fr}
-.compare-controls{grid-template-columns:1fr}
-.catalog-grid{grid-template-columns:1fr 1fr}
-.panel-head{padding:13px}
-.control-content{padding:15px}
-nav{padding:10px 3vw}
-.nav-label{width:100%}
-}
-</style>
-</head>
-<body>
+Actúa como director de arte digital, diseñador de información, especialista en visualización de datos y desarrollador frontend creativo. Necesito construir una experiencia web interactiva, compleja y visualmente sofisticada, utilizando HTML, CSS, JavaScript, SVG y Canvas cuando corresponda.
 
-<header>
-<div class="logo">TRAMAS DE ELECCIÓN</div>
-<div class="header-meta">MODELO 02 / 2026</div>
-</header>
+El proyecto forma parte de una investigación universitaria de diseño sobre la percepción y la transitabilidad peatonal en dos ciudades portuarias: Valparaíso, Chile, y Buenos Aires, Argentina.
 
-<main>
-<section class="hero">
-<div class="kicker">CARTOGRAFÍA DE LA EXPERIENCIA PEATONAL</div>
-<h1>EL PESO<br>DE <span>CAMINAR.</span></h1>
-<div class="hero-bottom">
-<p>Un lago, dos territorios y ocho recorridos. Una exploración de las elecciones peatonales y las condiciones que transforman la experiencia de desplazarse por la ciudad.</p>
-<div class="edition">VALPARAÍSO ↔ BUENOS AIRES</div>
-</div>
-</section>
+No quiero un dashboard convencional, una página institucional ni una colección de gráficos independientes. Quiero una pieza de visualización de datos experimental, editorial, generativa y animada, en la que los datos construyan un paisaje visual interactivo.
 
-<nav>
-<span class="nav-label">EXPLORAR TERRITORIO</span>
-<button class="tab active" data-mode="all">01 / OCHO CALLES</button>
-<button class="tab" data-mode="chile">02 / CHILE</button>
-<button class="tab" data-mode="argentina">03 / ARGENTINA</button>
-<button class="tab" data-mode="compare">04 / COMPARAR</button>
-</nav>
+El resultado debe tener una identidad visual propia, una navegación intuitiva y una relación directa entre las variables de investigación y los comportamientos gráficos.
 
-<div class="workspace">
-<section class="visual-panel">
-<div class="panel-head">
-<span class="panel-label" id="visualTitle">EL SISTEMA FLUVIAL</span>
-<span class="panel-meta" id="visualMeta">08 CORRIENTES ACTIVAS</span>
-</div>
-<svg id="riverSvg" viewBox="0 0 900 610" role="img" aria-label="Lago dividido en dos territorios y ocho ríos de calles"></svg>
-<div class="visual-footer">
-<div class="legend">
-<span><i style="background:#668b73"></i> Chile</span>
-<span><i style="background:#ce8058"></i> Argentina</span>
-<span><i style="background:#b95f4d"></i> Valoración negativa</span>
-</div>
-<span>SELECCIONA UNA CORRIENTE</span>
-</div>
-</section>
+---
 
-<aside class="control-panel">
-<div class="panel-head">
-<span class="panel-label">CENTRO DE EXPLORACIÓN</span>
-<span class="panel-meta">DATOS / VARIABLES</span>
-</div>
-<div class="control-content">
-<section class="control-section">
-<div class="control-title">01 / TERRITORIO</div>
-<div class="city-switch">
-<button class="city-option active" id="chileButton">CHILE<small>Valparaíso / 4 calles</small></button>
-<button class="city-option arg active" id="argButton">ARGENTINA<small>Buenos Aires / 4 calles</small></button>
-</div>
-</section>
+# 1. CONCEPTO GENERAL
 
-<section class="control-section">
-<div class="control-title">02 / CALLE SELECCIONADA</div>
-<select class="street-select" id="streetSelect"></select>
-</section>
+**Nombre:** EL PESO DE CAMINAR.
 
-<section class="control-section">
-<div class="control-title">03 / ELECCIÓN PEATONAL</div>
-<div class="stats">
-<div class="stat">
-<div class="stat-label">POSITIVA</div>
-<div class="stat-number" id="positiveValue">1,8</div>
-<div class="stat-detail" id="positiveDetail">9 fichas / 5</div>
-</div>
-<div class="stat negative">
-<div class="stat-label">NEGATIVA</div>
-<div class="stat-number" id="negativeValue">1,0</div>
-<div class="stat-detail" id="negativeDetail">5 fichas / 5</div>
-</div>
-</div>
-<div class="metric" style="margin-top:15px">
-<div class="metric-top"><span>BALANCE DE VALORACIÓN</span><strong id="balanceValue">+0,8</strong></div>
-<div class="metric-track"><div class="metric-fill" id="balanceBar" style="width:80%"></div></div>
-</div>
-<p class="small-note">Una equivalencia corresponde a cinco fichas. Los valores decimales representan personas equivalentes, no individuos contados directamente.</p>
-</section>
+**Proyecto:** TRAMAS DE ELECCIÓN.
 
-<section class="control-section">
-<div class="control-title">04 / VARIABLES DE LA FICHA</div>
-<div id="physicalMetrics">
-<div class="small-note">Las mediciones físicas se incorporarán cuando se confirme la correspondencia entre los siete tramos observados y las ocho calles.</div>
-</div>
-</section>
+**Concepto:** Dos territorios, ocho calles y distintas experiencias de desplazamiento.
 
-<section class="control-section">
-<div class="control-title">05 / CAPAS DE INFORMACIÓN</div>
-<div class="layer-list">
-<label class="layer-item"><input type="checkbox" checked data-layer="positive"> Positivas</label>
-<label class="layer-item"><input type="checkbox" checked data-layer="negative"> Negativas</label>
-<label class="layer-item"><input type="checkbox" checked data-layer="particles"> Partículas</label>
-<label class="layer-item"><input type="checkbox" checked data-layer="labels"> Nombres</label>
-</div>
-</section>
+La metáfora visual principal es un lago dividido en dos mitades:
 
-<section>
-<div class="control-title">06 / OBSERVACIÓN</div>
-<div class="street-data" id="streetObservation">
-<strong>LECTURA DEL RECORRIDO</strong><br>
-Selecciona una calle para consultar sus datos.
-</div>
-</section>
-</div>
-</aside>
-</div>
+- Una mitad representa Chile, específicamente Valparaíso.
+- La otra mitad representa Argentina, específicamente Buenos Aires.
 
-<section class="compare-panel hidden" id="comparisonSection">
-<div class="section-heading">
-<div>
-<div class="kicker">LECTURA COMPARATIVA / 03</div>
-<h2>Dos recorridos, dos experiencias.</h2>
-</div>
-<div class="panel-meta">COMPARACIÓN SIMULTÁNEA</div>
-</div>
-<div class="compare-controls">
-<div>
-<label>PRIMER RECORRIDO</label>
-<select id="compareA"></select>
-</div>
-<div>
-<label>SEGUNDO RECORRIDO</label>
-<select id="compareB"></select>
-</div>
-</div>
-<div class="compare-grid" id="compareResults"></div>
-</section>
+Desde ambas mitades nacen ocho ríos o corrientes orgánicas, cuatro por territorio. Cada río representa una calle estudiada.
 
-<section class="street-catalog">
-<div class="section-heading">
-<div>
-<div class="kicker">CATÁLOGO DE RECORRIDOS / 04</div>
-<h2>Ocho calles, ocho corrientes.</h2>
-</div>
-<div class="panel-meta">SELECCIONAR PARA EXPLORAR</div>
-</div>
-<div class="catalog-grid" id="catalogGrid"></div>
-</section>
-</main>
+El lago representa el origen de los registros y las elecciones peatonales. Los ríos representan los recorridos urbanos y las diferentes condiciones de transitabilidad.
 
-<footer>
-<span>TRAMAS DE ELECCIÓN / 2026</span>
-<span>EL PESO DE CAMINAR</span>
-<span>VALPARAÍSO / BUENOS AIRES</span>
-</footer>
+La visualización debe permitir observar el sistema completo, separar los territorios, desplegar cada calle individualmente y comparar recorridos de ambas ciudades.
 
-<script>
-const DATA = [
-{id:"serrano",city:"Chile",name:"Serrano",positive:9,negative:5},
-{id:"cochrane",city:"Chile",name:"Cochrane",positive:5,negative:4},
-{id:"blanco",city:"Chile",name:"Blanco",positive:7,negative:7},
-{id:"errazuriz",city:"Chile",name:"Errázuriz",positive:6,negative:2},
-{id:"colon",city:"Argentina",name:"Av. Paseo Colón",positive:9,negative:5},
-{id:"azopardo",city:"Argentina",name:"Azopardo",positive:5,negative:4},
-{id:"huergo",city:"Argentina",name:"Av. Ingeniero Huergo",positive:7,negative:7},
-{id:"alicia",city:"Argentina",name:"Av. Alicia Moreau de Justo",positive:6,negative:2}
-];
+La metáfora fluvial no debe ser solamente decorativa. El comportamiento de los ríos debe responder a los datos reales.
 
-const COLORS={Chile:"#668b73",Argentina:"#ce8058"};
-const PHYSICAL=[
-"Estado del suelo","Continuidad","Ritmo de marcha",
-"Esfuerzo físico","Atención visual","Relieve / desnivel",
-"Estabilidad","Dificultad global"
-];
+# 2. LAS OCHO CALLES
 
-let mode="all";
-let selected="serrano";
-let showPositive=true;
-let showNegative=true;
-let showParticles=true;
-let showLabels=true;
-let phase=0;
-let paused=false;
+## Chile / Valparaíso
 
-const $=id=>document.getElementById(id);
-const svg=$("riverSvg");
-const NS="http://www.w3.org/2000/svg";
+1. Serrano.
+2. Cochrane.
+3. Blanco.
+4. Errázuriz.
 
-function element(tag,attrs={},parent=svg){
- const e=document.createElementNS(NS,tag);
- Object.entries(attrs).forEach(([k,v])=>e.setAttribute(k,v));
- parent.appendChild(e);
- return e;
-}
+## Argentina / Buenos Aires
 
-function visibleData(){
- if(mode==="chile")return DATA.filter(d=>d.city==="Chile");
- if(mode==="argentina")return DATA.filter(d=>d.city==="Argentina");
- if(mode==="compare")return DATA.filter(d=>d.id===selected);
- return DATA;
-}
+1. Avenida Paseo Colón.
+2. Azopardo.
+3. Avenida Ingeniero Huergo.
+4. Avenida Alicia Moreau de Justo.
 
-function fmt(n){return (n/5).toFixed(1).replace(".",",")}
-function pathFor(x,y,side,index,variant=0){
- const dir=side==="Chile"?-1:1;
- const spread=(index-1.5)*27;
- const wave=Math.sin(phase+index*.8)*4;
- const endX=x+dir*(125+index*17)+spread+wave;
- const endY=500+index*12;
- const middleX=x+dir*(55+index*9)+spread*.4;
- return `M ${x} ${y}
- C ${middleX} ${y+65}, ${middleX+dir*35} ${y+140}, ${x+dir*(70+index*12)+spread} ${y+225}
- S ${endX-dir*40} ${endY-80}, ${endX+variant*12} ${endY}`;
-}
+Cada calle debe tener identidad propia dentro de la visualización.
 
-function drawLake(){
- const g=element("g");
- element("path",{
- d:"M 95 108 C 65 30 220 24 345 55 C 430 25 480 65 450 115 C 420 160 320 150 270 174 C 190 188 120 165 95 108Z",
- fill:"#b3c9b8",class:"water"
- },g);
- element("path",{
- d:"M 455 115 C 430 65 505 25 590 54 C 720 20 840 40 810 110 C 790 169 700 173 620 155 C 535 183 480 158 455 115Z",
- fill:"#d5bba4",class:"water"
- },g);
- for(let i=0;i<5;i++){
-  element("path",{
-   d:`M ${130+i*55} ${92+i%2*12} Q ${260+i*25} ${45+i*5} ${410-i*25} ${110+i*4}`,
-   class:"waterline"
-  },g);
-  element("path",{
-   d:`M ${480+i*60} ${103-i%2*12} Q ${630+i*10} ${35+i*5} ${790-i*12} ${100+i*3}`,
-   class:"waterline"
-  },g);
- }
- element("path",{
- d:"M 450 58 C 435 95 465 130 450 166",
- stroke:"#eae7dd", "stroke-width":"5",fill:"none"
- },g);
- element("text",{x:260,y:91,"text-anchor":"middle",class:"svg-mode-label"},g).textContent="CHILE";
- element("text",{x:260,y:107,"text-anchor":"middle",class:"svg-count"},g).textContent="VALPARAÍSO";
- element("text",{x:650,y:91,"text-anchor":"middle",class:"svg-mode-label"},g).textContent="ARGENTINA";
- element("text",{x:650,y:107,"text-anchor":"middle",class:"svg-count"},g).textContent="BUENOS AIRES";
-}
+Las ocho corrientes deben poder separarse, seleccionarse, expandirse y compararse sin perder su pertenencia territorial.
 
-function drawRivers(){
- svg.innerHTML="";
- drawLake();
- const data=visibleData();
- const all=mode==="all";
- const single=mode==="compare";
- const positions=mode==="chile"?[145,350,555,760]:
- mode==="argentina"?[145,350,555,760]:
- all?[160,250,340,425,475,565,655,745]:[450];
+# 3. ESTRUCTURA DE NAVEGACIÓN
 
- data.forEach((d,i)=>{
-  const side=d.city;
-  const x=all?(side==="Chile"?positions[i]:positions[i]):positions[i];
-  const startY=155;
-  const positiveWidth=2+d.positive*.8;
-  const negativeWidth=2+d.negative*.8;
-  const positivePath=pathFor(x,startY,side,i);
-  const negativePath=pathFor(x+ (side==="Chile"?-7:7),startY,side,i,1);
-  const isSelected=d.id===selected;
-  const opacity=single||isSelected?1:.78;
-  const color=COLORS[side];
-  const riverGroup=element("g",{opacity:opacity});
-  const addRiver=(path,width,stroke,enabled,dash)=>{
-   if(!enabled)return;
-   const p=element("path",{
-    d:path,class:"river",
-    stroke:stroke,
-    "stroke-width":width,
-    opacity:isSelected?1:.78,
-    "stroke-dasharray":dash||"none"
-   },riverGroup);
-   p.addEventListener("click",()=>selectStreet(d.id));
-   p.addEventListener("mouseenter",()=>p.setAttribute("opacity","1"));
-   p.addEventListener("mouseleave",()=>p.setAttribute("opacity",isSelected?"1":".78"));
-   return p;
-  };
-  addRiver(positivePath,positiveWidth,color,showPositive);
-  addRiver(negativePath,negativeWidth,"#b95f4d",showNegative,"7 4");
-  if(showParticles){
-   for(let j=0;j<3;j++){
-    const circle=element("circle",{
-     r:2.2,fill:"#fffdf4",class:"flow-particle",
-     opacity:".85"
-    },riverGroup);
-    const anim=element("animateMotion",{
-     dur:(5+j*1.5)+"s",
-     repeatCount:"indefinite",
-     begin:(-j*1.4)+"s",
-     path:positivePath
-    },circle);
-   }
-  }
-  if(showLabels){
-   const labelY=510+(i%4)*18;
-   const labelX=x;
-   const label=element("text",{
-    x:labelX,y:labelY,
-    "text-anchor":"middle",
-    class:"river-label",
-    fill:color
-   });
-   label.textContent=d.name.toUpperCase();
-   label.style.cursor="pointer";
-   label.addEventListener("click",()=>selectStreet(d.id));
-   element("text",{
-    x:labelX,y:labelY+14,
-    "text-anchor":"middle",class:"river-small"
-   }).textContent=fmt(d.positive)+" / "+fmt(d.negative);
-  }
- });
- if(mode==="all"){
-  element("text",{x:450,y:585,"text-anchor":"middle",class:"river-small"}).textContent="OCHO CORRIENTES / DOS TERRITORIOS";
- }else if(mode==="chile"){
-  element("text",{x:450,y:585,"text-anchor":"middle",class:"river-small"}).textContent="CUATRO RECORRIDOS / VALPARAÍSO";
- }else if(mode==="argentina"){
-  element("text",{x:450,y:585,"text-anchor":"middle",class:"river-small"}).textContent="CUATRO RECORRIDOS / BUENOS AIRES";
- }else{
-  element("text",{x:450,y:585,"text-anchor":"middle",class:"river-small"}).textContent="RECORRIDO SELECCIONADO";
- }
-}
+La página debe tener cuatro modos principales:
 
-function renderPhysical(){
- $("physicalMetrics").innerHTML=PHYSICAL.map(name=>`
- <div class="metric">
- <div class="metric-top"><span>${name}</span><span>ND</span></div>
- <div class="metric-track"><div class="metric-fill" style="width:0%"></div></div>
- </div>`).join("")+
- `<p class="small-note">ND = dato aún no asociado con certeza a esta calle. Se conserva la escala original de 1 a 5.</p>`;
-}
+**MODO 01: TODAS LAS CALLES**
 
-function renderDetail(){
- const d=DATA.find(x=>x.id===selected);
- if(!d)return;
- $("streetSelect").value=d.id;
- $("positiveValue").textContent=fmt(d.positive);
- $("negativeValue").textContent=fmt(d.negative);
- $("positiveDetail").textContent=d.positive+" fichas / 5";
- $("negativeDetail").textContent=d.negative+" fichas / 5";
- const balance=(d.positive-d.negative)/5;
- $("balanceValue").textContent=(balance>0?"+":"")+balance.toFixed(1).replace(".",",");
- $("balanceBar").style.width=Math.min(100,Math.abs(balance)*50)+"%";
- $("balanceBar").style.background=balance>=0?"#668b73":"#b95f4d";
- $("streetObservation").innerHTML=`
- <strong>${d.name.toUpperCase()} / ${d.city==="Chile"?"VALPARAÍSO":"BUENOS AIRES"}</strong><br>
- Valoración positiva: ${d.positive} fichas.<br>
- Valoración negativa: ${d.negative} fichas.<br>
- Equivalencia: ${fmt(d.positive)} positivas y ${fmt(d.negative)} negativas.<br>
- <br>
- <span style="color:#777">Las observaciones físicas se incorporarán una vez establecida la correspondencia entre los tramos de levantamiento y las calles.</span>`;
- $("visualMeta").textContent=mode==="all"?"08 CORRIENTES ACTIVAS":mode==="chile"?"04 CORRIENTES / CHILE":mode==="argentina"?"04 CORRIENTES / ARGENTINA":"01 CORRIENTE";
- $("visualTitle").textContent=mode==="all"?"EL SISTEMA FLUVIAL":mode==="chile"?"TERRITORIO / VALPARAÍSO":mode==="argentina"?"TERRITORIO / BUENOS AIRES":"DESGLOSE / "+d.name.toUpperCase();
-}
+Mostrar el lago completo, dividido en Chile y Argentina, con los ocho ríos emergiendo de ambas mitades.
 
-function renderCatalog(){
- $("catalogGrid").innerHTML=visibleData().map(d=>`
- <article class="catalog-card ${selected===d.id?"selected":""}" data-id="${d.id}">
- <div class="catalog-city">${d.city==="Chile"?"VALPARAÍSO":"BUENOS AIRES"}</div>
- <div class="catalog-name">${d.name}</div>
- <div class="catalog-balance">${fmt(d.positive)} / ${fmt(d.negative)}</div>
- <div class="catalog-caption">POSITIVAS / NEGATIVAS EQUIVALENTES</div>
- </article>`).join("");
- document.querySelectorAll(".catalog-card").forEach(c=>{
- c.addEventListener("click",()=>selectStreet(c.dataset.id));
- });
-}
+Es la vista general del sistema.
 
-function renderCompare(){
- const a=DATA.find(d=>d.id===$("compareA").value);
- const b=DATA.find(d=>d.id===$("compareB").value);
- if(!a||!b)return;
- $("compareResults").innerHTML=[a,b].map(d=>`
- <article class="compare-card">
- <div class="city">${d.city==="Chile"?"VALPARAÍSO":"BUENOS AIRES"}</div>
- <h3>${d.name}</h3>
- <div class="number">${fmt(d.positive)} <span style="color:#b95f4d">${fmt(d.negative)}</span></div>
- <div class="small-note">POSITIVAS / NEGATIVAS EQUIVALENTES</div>
- <div class="comparison-bars">
- <div class="comparison-row"><span>POSITIVA</span><div class="comparison-track"><div class="comparison-fill" style="width:${d.positive/15*100}%"></div></div><b>${d.positive}</b></div>
- <div class="comparison-row"><span>NEGATIVA</span><div class="comparison-track"><div class="comparison-fill" style="background:#b95f4d;width:${d.negative/15*100}%"></div></div><b>${d.negative}</b></div>
- </div>
- </article>`).join("");
-}
+Deben poder observarse simultáneamente las diferencias de grosor, ramificación, densidad, movimiento y comportamiento de las corrientes.
 
-function selectStreet(id){
- selected=id;
- renderDetail();
- renderCatalog();
- drawRivers();
-}
+**MODO 02: SOLO CHILE**
 
-function fillSelects(){
- const options=DATA.map(d=>`<option value="${d.id}">${d.city==="Chile"?"Chile":"Argentina"} / ${d.name}</option>`).join("");
- $("streetSelect").innerHTML=options;
- $("compareA").innerHTML=options;
- $("compareB").innerHTML=options;
- $("compareA").value="serrano";
- $("compareB").value="colon";
- $("streetSelect").value=selected;
- $("compareA").addEventListener("change",renderCompare);
- $("compareB").addEventListener("change",renderCompare);
- $("streetSelect").addEventListener("change",e=>selectStreet(e.target.value));
-}
+La mitad argentina se atenúa o desaparece progresivamente.
 
-function setMode(next){
- mode=next;
- document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.mode===mode));
- $("comparisonSection").classList.toggle("hidden",mode!=="compare");
- if(mode==="chile"&&!DATA.filter(d=>d.city==="Chile").some(d=>d.id===selected))selected="serrano";
- if(mode==="argentina"&&!DATA.filter(d=>d.city==="Argentina").some(d=>d.id===selected))selected="colon";
- if(mode==="compare")$("comparisonSection").scrollIntoView({behavior:"smooth",block:"nearest"});
- drawRivers();
- renderDetail();
- renderCatalog();
-}
+Los cuatro ríos de Valparaíso se expanden para ocupar el espacio disponible.
 
-document.querySelectorAll(".tab").forEach(b=>{
- b.addEventListener("click",()=>setMode(b.dataset.mode));
-});
+Se pueden seleccionar individualmente Serrano, Cochrane, Blanco y Errázuriz.
 
-$("chileButton").addEventListener("click",()=>{
- $("chileButton").classList.add("active");
- $("argButton").classList.remove("active");
- setMode("chile");
-});
-$("argButton").addEventListener("click",()=>{
- $("argButton").classList.add("active");
- $("chileButton").classList.remove("active");
- setMode("argentina");
-});
+**MODO 03: SOLO ARGENTINA**
 
-document.querySelectorAll("[data-layer]").forEach(input=>{
- input.addEventListener("change",()=>{
-  const layer=input.dataset.layer;
-  if(layer==="positive")showPositive=input.checked;
-  if(layer==="negative")showNegative=input.checked;
-  if(layer==="particles")showParticles=input.checked;
-  if(layer==="labels")showLabels=input.checked;
-  drawRivers();
- });
-});
+La mitad chilena se atenúa o desaparece.
 
-function animate(){
- if(!paused){
-  phase+=.008;
-  drawRivers();
- }
- requestAnimationFrame(animate);
-}
+Los cuatro ríos de Buenos Aires se expanden.
 
-fillSelects();
-renderDetail();
-renderCatalog();
-renderCompare();
-drawRivers();
-animate();
-</script>
-</body>
-</html>
+Se pueden seleccionar individualmente Colón, Azopardo, Huergo y Alicia Moreau de Justo.
+
+**MODO 04: COMPARAR**
+
+Permitir seleccionar dos calles cualesquiera, independientemente de su ciudad.
+
+Los dos ríos seleccionados deben desprenderse visualmente del sistema general y expandirse para mostrar sus diferencias.
+
+La comparación debe mantener exactamente las mismas escalas y convenciones visuales.
+
+La transición entre modos debe ser animada y fluida. No quiero cambios bruscos de pantalla.
+
+# 4. COMPOSICIÓN DE LA INTERFAZ
+
+Tomar como referencia estructural la captura de interfaz que compartí anteriormente, combinada con el lenguaje visual y la sofisticación de mi primer HTML.
+
+La composición debe ser moderna, editorial, profesional y relativamente minimalista.
+
+Distribución principal:
+
+**ENCABEZADO**
+
+- Identidad TRAMAS DE ELECCIÓN.
+- Título EL PESO DE CAMINAR.
+- Identificación de los territorios.
+- Navegación entre los cuatro modos.
+
+**ÁREA PRINCIPAL**
+
+Distribución aproximada:
+- 55% para la visualización generativa.
+- 45% para el panel de información.
+
+IZQUIERDA:
+- Lago dividido.
+- Ocho corrientes.
+- Ramificaciones.
+- Partículas animadas.
+- Nodos.
+- Etiquetas de calles.
+- Mascota caminante.
+
+DERECHA:
+- Calle seleccionada.
+- Ciudad y territorio.
+- Cantidad de elecciones positivas y negativas.
+- Condiciones físicas del recorrido.
+- Indicadores de transitabilidad.
+- Información contextual.
+
+**ÁREA INFERIOR**
+
+Incluir una sección de capas de exploración con controles para activar y desactivar:
+
+- Materialidad.
+- Desniveles.
+- Obstáculos.
+- Flujo peatonal.
+- Dificultad.
+- Continuidad.
+- Esfuerzo físico.
+- Estabilidad.
+
+También debe existir una sección comparativa y un catálogo de las ocho calles.
+
+No saturar la composición con tarjetas. Priorizar la visualización principal, el espacio negativo y la jerarquía tipográfica.
+
+# 5. EL LAGO Y LOS OCHO RÍOS
+
+Esta es la parte visual más importante.
+
+No utilizar ocho líneas rectas ni un gráfico radial convencional.
+
+Construir un sistema generativo mediante SVG y/o Canvas.
+
+El lago debe tener una forma orgánica, irregular, con una división central que represente los dos territorios.
+
+Desde sus dos mitades deben emerger cuatro corrientes cada una.
+
+Los ríos deben tener:
+
+- Curvas orgánicas.
+- Bifurcaciones.
+- Ramificaciones secundarias.
+- Nodos.
+- Partículas que recorren los cauces.
+- Variaciones de grosor.
+- Cambios de dirección.
+- Diferentes velocidades.
+- Acumulaciones y separaciones.
+
+El resultado debe recordar a una combinación de cartografía topográfica, sistemas fluviales, diagramas generativos y visualización científica.
+
+No debe parecer una ilustración de un mapa geográfico real.
+
+## Comportamiento de los ríos
+
+El grosor debe representar la cantidad de registros de elección.
+
+Las corrientes positivas y negativas deben diferenciarse mediante colores o trazos.
+
+Las ramificaciones deben representar la complejidad de las condiciones observadas, cuando existan datos suficientes.
+
+La continuidad debe influir en la conexión visual de los recorridos.
+
+Las interrupciones deben representar obstáculos o discontinuidades observadas.
+
+El esfuerzo y la dificultad pueden influir en la turbulencia o irregularidad de los trazos, siempre que las escalas y su interpretación estén correctamente definidas.
+
+Las partículas deben desplazarse siguiendo los recorridos.
+
+Al seleccionar un río, este debe iluminarse, ampliarse y revelar su información.
+
+Las transiciones deben interpolar posiciones y formas, evitando que los elementos simplemente desaparezcan y reaparezcan.
+
+# 6. VARIABLES DE INVESTIGACIÓN
+
+La visualización debe integrar dos conjuntos de información claramente diferenciados.
+
+## A. ELECCIONES PEATONALES
+
+Representan la percepción y las valoraciones registradas.
+
+Se deben mostrar:
+
+- Cantidad de fichas positivas.
+- Cantidad de fichas negativas.
+- Equivalencia de personas.
+- Balance entre valoraciones.
+
+Importante: cinco fichas equivalen a una persona.
+
+La fórmula es:
+
+Personas equivalentes = cantidad de fichas / 5.
+
+Conservar los decimales. Por ejemplo, nueve fichas equivalen a 1,8 personas equivalentes.
+
+No redondear los valores.
+
+## B. CONDICIONES FÍSICAS DEL RECORRIDO
+
+Incorporar las variables disponibles en las fichas de calidad del suelo y observación de tránsito.
+
+Entre las variables a considerar están:
+
+- Estado del suelo.
+- Continuidad.
+- Ritmo de marcha.
+- Esfuerzo físico.
+- Atención al suelo.
+- Relieve y desnivel.
+- Estabilidad.
+- Dificultad global.
+- Materialidad.
+- Obstáculos.
+- Cambios de superficie.
+- Flujo peatonal.
+
+Las variables deben mostrarse en sus escalas originales.
+
+No asumir que una puntuación alta siempre significa una condición favorable. La dirección de interpretación debe definirse según cada indicador.
+
+No inventar mediciones que no estén disponibles.
+
+Cuando falten datos, mostrar ND o pendiente de registro.
+
+Mantener separadas las observaciones físicas y las percepciones de los participantes. No presentar correlaciones como causalidades demostradas.
+
+# 7. DATOS REALES DE ELECCIÓN PEATONAL
+
+Utilizar los siguientes valores confirmados.
+
+Todos los números corresponden a fichas. Dividir entre cinco para mostrar personas equivalentes.
+
+## VALPARAÍSO
+
+| Calle | Positivas | Negativas |
+| Serrano | 9 | 5 |
+| Cochrane | 5 | 4 |
+| Blanco | 7 | 7 |
+| Errázuriz | 6 | 2 |
+
+## BUENOS AIRES
+
+| Calle | Positivas | Negativas |
+| Avenida Paseo Colón | 22 | 22 |
+| Azopardo | 14 | 19 |
+| Avenida Ingeniero Huergo | 12 | 20 |
+| Avenida Alicia Moreau de Justo | 20 | 19 |
+
+IMPORTANTE: estos últimos valores son los conteos de fichas por calle, no los conteos de la categoría transitabilidad. Para la categoría transitabilidad de Buenos Aires se tienen estos registros:
+
+| Calle | Positivas | Negativas |
+| Avenida Paseo Colón | 5 | 5 |
+| Azopardo | 5 | 4 |
+| Avenida Ingeniero Huergo | 7 | 7 |
+| Avenida Alicia Moreau de Justo | 6 | 2 |
+
+Para Valparaíso, los registros de transitabilidad son:
+
+| Calle | Positivas | Negativas |
+| Serrano | 9 | 5 |
+| Cochrane | 5 | 4 |
+| Blanco | 7 | 7 |
+| Errázuriz | 6 | 2 |
+
+Utilizar exclusivamente los valores de transitabilidad para representar las elecciones positivas y negativas de esta visualización.
+
+No confundir los totales generales de fichas con las fichas específicas de transitabilidad.
+
+# 8. MASCOTA INTERACTIVA
+
+Incorporar una pequeña figura humana caminante inspirada en la referencia de pictogramas que compartí.
+
+Debe ser un vector SVG original, con:
+
+- Cabeza circular.
+- Cuerpo geométrico.
+- Extremidades redondeadas.
+- Silueta minimalista.
+- Sin rostro.
+- Apariencia de señalética urbana contemporánea.
+
+No debe parecer una mascota infantil ni un chatbot.
+
+Su función es acompañar la exploración.
+
+Comportamientos:
+
+- Camina alrededor del lago.
+- Se desplaza hacia la mitad seleccionada.
+- Recorre los ríos.
+- Se detiene al encontrar información relevante.
+- Señala indicadores y capas.
+- Se detiene o esquiva obstáculos cuando se muestran.
+- Cambia de dirección según el recorrido.
+- Puede abrir pequeñas explicaciones al hacer clic.
+
+Debe tener animación de piernas y brazos mediante SVG y JavaScript.
+
+Debe integrarse dentro de la visualización, no quedarse fija en una esquina.
+
+Su movimiento debe ser fluido y discreto.
+
+# 9. ANIMACIÓN DE INICIO
+
+Crear una secuencia inicial cinematográfica y breve.
+
+Secuencia:
+
+1. Fondo limpio.
+2. Aparece una pequeña acumulación de partículas.
+3. Se forma el lago.
+4. Se revela su división territorial.
+5. Nacen las ocho corrientes.
+6. Las partículas comienzan a recorrer los cauces.
+7. Aparece la figura caminante.
+8. Se revela el título EL PESO DE CAMINAR.
+9. Se habilita la exploración interactiva.
+
+Incluir un botón para saltar la animación.
+
+La secuencia debe reproducirse al cargar la página, pero no debe obligar al usuario a esperar para acceder a la información.
+
+# 10. SISTEMA DE CAPAS
+
+Permitir activar y desactivar diferentes conjuntos de información.
+
+Cada capa debe modificar efectivamente la visualización.
+
+**MATERIALIDAD:** mostrar los tipos de superficies identificados.
+
+**DESNIVELES:** destacar variaciones de altura.
+
+**OBSTÁCULOS:** localizar interrupciones físicas.
+
+**FLUJO PEATONAL:** mostrar los conteos de personas observados.
+
+**DIFICULTAD:** visualizar los indicadores correspondientes.
+
+**CONTINUIDAD:** mostrar la conexión o interrupción de los recorridos.
+
+**ESFUERZO:** visualizar la exigencia física registrada.
+
+**ESTABILIDAD:** mostrar las condiciones de estabilidad.
+
+La activación de cada capa debe producir una transformación gráfica y no limitarse a cambiar el color de un botón.
+
+# 11. COMPARACIÓN
+
+Crear una herramienta de comparación interactiva.
+
+Debe permitir comparar:
+
+- Calles de una misma ciudad.
+- Calles de ciudades diferentes.
+- Calles con valoraciones similares.
+- Calles con condiciones físicas diferentes.
+
+Mostrar:
+
+- Elecciones positivas.
+- Elecciones negativas.
+- Equivalencias.
+- Balance.
+- Variables físicas.
+- Materialidad.
+- Continuidad.
+- Obstáculos.
+
+Utilizar escalas compartidas.
+
+Al seleccionar dos calles, sus corrientes deben separarse y aparecer una junto a otra.
+
+# 12. DIRECCIÓN DE ARTE
+
+La estética debe ser contemporánea, editorial, experimental y profesional.
+
+Inspiraciones:
+- Kamis Sonoros de las ciudades puerto.
+- Visualizaciones generativas.
+- Cartografía topográfica.
+- Redes fluviales.
+- Diseño editorial de información.
+- Sistemas gráficos científicos.
+
+Evitar:
+- Dashboards empresariales.
+- Tarjetas excesivas.
+- Gráficos circulares convencionales.
+- Ilustraciones infantiles.
+- Gradientes decorativos sin función.
+- Interfaces genéricas.
+- Estética de plantilla prediseñada.
+
+## PALETA
+
+Trabajar con una base marfil y tonos naturales.
+
+- Fondo: #EAE7DD.
+- Superficie: #F2EFE7.
+- Verde: #668B73.
+- Verde claro: #A4BCA2.
+- Azul: #759CAA.
+- Terracota: #CE8058.
+- Rojo: #B95F4D.
+- Texto: #282E29.
+
+Los colores deben tener una función semántica consistente.
+
+Mantener diferenciación entre territorios y valoraciones.
+
+## TIPOGRAFÍA
+
+Montserrat o Helvetica.
+
+- Títulos grandes.
+- Tipografía sans serif.
+- Jerarquía editorial clara.
+- Interletrado moderado.
+- Etiquetas pequeñas en mayúsculas.
+- Datos numéricos destacados.
+
+# 13. TECNOLOGÍA
+
+Desarrollar utilizando:
+
+- HTML5.
+- CSS3.
+- JavaScript.
+- SVG para los cauces y el personaje.
+- Canvas para partículas y animaciones complejas cuando resulte conveniente.
+
+El proyecto debe funcionar directamente en GitHub Pages.
+
+No depender de un servidor backend para la primera versión.
+
+Preparar la estructura de datos para una futura conexión con Supabase.
+
+Separar los datos de la lógica de visualización para facilitar futuras actualizaciones.
+
+# 14. RESPONSIVE
+
+La página debe funcionar en escritorio, tablet y móvil.
+
+En escritorio:
+- Visualización a la izquierda.
+- Panel de información a la derecha.
+
+En móvil:
+- Visualización arriba.
+- Panel de datos debajo.
+- Navegación compacta.
+- Capas desplegables.
+- Comparaciones adaptadas a una columna.
+
+# 15. REQUISITOS DE CALIDAD
+
+No entregar solamente un concepto o una maqueta.
+
+Construir una página funcional.
+
+Todos los controles deben funcionar realmente.
+
+Las calles deben seleccionarse.
+
+Los modos deben cambiar.
+
+Las capas deben activarse.
+
+Las comparaciones deben actualizarse.
+
+Los ríos deben animarse.
+
+La mascota debe desplazarse.
+
+Las transiciones deben ser suaves.
+
+La visualización debe responder a los datos.
+
+No inventar mediciones.
+
+No utilizar números ficticios para completar espacios vacíos.
+
+No utilizar imágenes estáticas como sustituto de la visualización generativa.
+
+No dejar botones decorativos sin funcionalidad.
+
+El código debe estar organizado, completo y listo para publicar.
+
+# 16. RESULTADO ESPERADO
+
+Quiero una pieza gráfica interactiva que combine diseño de información, investigación urbana, cartografía experimental y animación generativa.
+
+El lago dividido debe ser el elemento central de la identidad visual.
+
+Los ocho ríos deben ser el sistema que permite comprender las diferencias entre las calles.
+
+El panel lateral debe proporcionar precisión y profundidad a la lectura.
+
+La mascota debe acompañar el recorrido y facilitar el descubrimiento de información.
+
+La experiencia debe permitir pasar de una visión general de dos ciudades a una lectura minuciosa de cada calle.
+
+**La idea fundamental es que el usuario no solamente observe datos sobre transitabilidad: que pueda recorrerlos, descubrirlos, separarlos y compararlos.**
+
+Construye la experiencia completa manteniendo esta dirección conceptual y visual. Prioriza la calidad gráfica, la coherencia metodológica y la interacción real.
