@@ -2,583 +2,1459 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#000000">
-<title>SENTIR LA CALLE</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-:root{
-  --orange:#ff6b24;
-  --black:#080808;
-  --white:#f5f3ef;
-  --gray:#777;
-  --line:#d7d4d0;
-  --font:'Montserrat',sans-serif;
-  --mono:'DM Mono',monospace;
-  --ease:cubic-bezier(.2,.8,.2,1);
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--white);color:var(--black);font-family:var(--font);overflow-x:hidden}
-body.intro-active{overflow:hidden}
-button,a{font:inherit}
-button{cursor:pointer}
-a{color:inherit;text-decoration:none}
-::selection{background:var(--orange);color:var(--black)}
-.mono,.eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:.16em}
-.eyebrow{font-size:10px}
-#intro{position:fixed;inset:0;z-index:10000;background:#000;display:flex;align-items:center;justify-content:center;overflow:hidden;transition:opacity 1s,visibility 1s}
-#intro.hide{opacity:0;visibility:hidden;pointer-events:none}
-#introVector{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
-#introTitle{position:absolute;z-index:2;margin:0;color:white;text-align:center;font-size:clamp(48px,11vw,140px);font-weight:800;line-height:.9;letter-spacing:-.04em;opacity:0;transform:translateY(25px);transition:1s}
-#intro.show-title #introVector{opacity:0}
-#intro.show-title #introTitle{opacity:1;transform:translateY(0)}
-#skipIntro{position:absolute;right:5vw;top:30px;z-index:4;color:white;background:transparent;border:1px solid #777;padding:12px 16px;font:10px var(--mono);letter-spacing:.15em}
-#skipIntro:hover{background:var(--orange);color:#000;border-color:var(--orange)}
-.progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--orange);z-index:200}
-.topbar{position:fixed;top:0;left:0;width:100%;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:23px 5vw;color:white;mix-blend-mode:difference}
-.brand{font-size:11px;font-weight:800;letter-spacing:.17em}
-.topbar nav{display:flex;gap:30px;font:9px var(--mono);letter-spacing:.15em}
-.topbar nav a{opacity:.75}
-.topbar nav a:hover{opacity:1}
-.hero{min-height:100svh;background:var(--black);color:white;padding:140px 5vw 55px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
-.hero:before,.hero:after{content:"";position:absolute;border:1px solid #333;border-radius:50%;pointer-events:none}
-.hero:before{width:65vw;height:65vw;right:-20vw;top:5%}
-.hero:after{width:40vw;height:40vw;right:-7vw;top:21%}
-.hero-meta{display:flex;justify-content:space-between;position:relative;z-index:2}
-.hero h1{position:relative;z-index:2;margin:8vh 0 5vh;font-size:clamp(76px,16vw,220px);font-weight:800;line-height:.8;letter-spacing:-.055em}
-.hero h1 span{display:block;color:var(--orange);padding-left:14vw}
-.hero-bottom{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:end;gap:30px}
-.hero-bottom p{max-width:480px;font-size:clamp(15px,1.6vw,21px);line-height:1.7;letter-spacing:.025em}
-.scroll-cue{font:10px var(--mono);color:#aaa;letter-spacing:.19em}
-.hero-orbit{position:absolute;width:13px;height:13px;border-radius:50%;background:var(--orange);right:18%;top:42%;box-shadow:0 0 50px 20px #ff6b2440;animation:orbit 7s ease-in-out infinite alternate}
-@keyframes orbit{to{transform:translate(-90px,120px) scale(1.8)}}
-.marquee{overflow:hidden;background:var(--orange);color:#000;padding:18px 0;white-space:nowrap}
-.marquee-track{display:flex;width:max-content;animation:marquee 28s linear infinite}
-.marquee span{font-size:11px;font-weight:800;letter-spacing:.23em;padding:0 30px}
-@keyframes marquee{to{transform:translateX(-50%)}}
-.section{padding:130px 7vw;position:relative}
-.section-dark{background:var(--black);color:white}
-.section-head{display:grid;grid-template-columns:1fr 2fr;gap:30px;margin-bottom:75px;align-items:start}
-.section-index{font:10px var(--mono);letter-spacing:.2em;color:var(--orange)}
-.section h2{margin:0;font-size:clamp(40px,7vw,95px);line-height:1.02;letter-spacing:-.045em;font-weight:700}
-.intro-copy{max-width:800px;margin-left:auto;font-size:clamp(20px,3vw,38px);line-height:1.5;letter-spacing:-.02em}
-.intro-copy em{font-style:normal;color:var(--orange)}
-.split-statement{display:grid;grid-template-columns:1fr 1fr;gap:8vw;margin-top:100px}
-.statement{border-top:1px solid var(--line);padding-top:22px}
-.statement .number{font:10px var(--mono);letter-spacing:.2em;color:var(--orange)}
-.statement h3{font-size:clamp(24px,3vw,40px);letter-spacing:-.025em;margin:30px 0 15px}
-.statement p{max-width:390px;color:var(--gray);font-size:13px;line-height:1.9;letter-spacing:.025em}
-.territories{background:var(--black);color:white}
-.territory-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.territory{min-height:440px;padding:35px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;background:#171717;transition:background .6s}
-.territory:hover{background:#302018}
-.territory-number{font:10px var(--mono);letter-spacing:.2em;color:#aaa}
-.territory h3{font-size:clamp(38px,5vw,68px);line-height:1;letter-spacing:-.04em;margin:0;position:relative;z-index:2}
-.territory p{max-width:330px;font-size:12px;line-height:1.9;color:#c6c6c6}
-.territory-shape{position:absolute;width:260px;height:260px;border:1px solid #555;border-radius:50%;right:-80px;top:90px;transition:transform 1s}
-.territory-shape:before,.territory-shape:after{content:"";position:absolute;border:1px solid #555;border-radius:50%;inset:30px}
-.territory-shape:after{inset:70px}
-.territory:hover .territory-shape{transform:scale(1.35) rotate(30deg)}
-.data-section{background:var(--white)}
-.data-intro{max-width:780px;font-size:clamp(19px,2.4vw,29px);line-height:1.6;letter-spacing:-.02em;margin:0 0 65px}
-.explorer{display:grid;grid-template-columns:minmax(190px,.65fr) minmax(0,2fr) minmax(230px,.85fr);border-top:1px solid #111;border-bottom:1px solid #111;min-height:700px}
-.explorer-menu{padding:25px 22px 25px 0;border-right:1px solid var(--line)}
-.explorer-menu-label{font:9px var(--mono);letter-spacing:.18em;color:var(--gray);margin-bottom:30px}
-.dimension-button{display:block;width:100%;text-align:left;padding:18px 8px 18px 0;border:0;border-top:1px solid var(--line);background:transparent;color:var(--gray);font-size:12px;line-height:1.5;transition:color .3s,padding .4s}
-.dimension-button span{display:block;font:9px var(--mono);letter-spacing:.2em;margin-bottom:8px;color:#999}
-.dimension-button.active,.dimension-button:hover{color:var(--orange);padding-left:12px}
-.explorer-main{padding:30px 24px;min-width:0}
-.explorer-heading{display:flex;justify-content:space-between;gap:20px;align-items:start}
-.explorer-heading h3{font-size:clamp(24px,3vw,43px);letter-spacing:-.04em;line-height:1.1;margin:0}
-.explorer-heading p{font:9px var(--mono);letter-spacing:.15em;color:var(--gray);white-space:nowrap}
-.dimension-description{font-size:12px;line-height:1.9;color:var(--gray);max-width:570px;margin:20px 0 25px}
-.circle-stage{min-height:470px;position:relative;overflow:hidden;background:#111;border-radius:2px;display:flex;align-items:center;justify-content:center;padding:35px 10px}
-.circle-groups{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:center;position:relative;z-index:2}
-.people-group{position:relative;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px}
-.people-ring{width:min(100%,190px);aspect-ratio:1;border:1px solid #555;border-radius:50%;position:relative;display:grid;place-items:center;transition:border-color .5s,transform .6s}
-.people-ring:before,.people-ring:after{content:"";position:absolute;border:1px solid #444;border-radius:50%;inset:12%}
-.people-ring:after{inset:25%}
-.people-group.active .people-ring{border-color:var(--orange);transform:scale(1.04)}
-.people-cloud{position:absolute;inset:8%;z-index:2}
-.person{position:absolute;width:22px;height:39px;opacity:0;transform:translate(-50%,-50%) scale(.65);transition:left 1.15s var(--ease),top 1.15s var(--ease),opacity .5s,transform .65s var(--ease)}
-.person.arrived{opacity:1;transform:translate(-50%,-50%) scale(1)}
-.person svg{width:100%;height:100%;overflow:visible}
-.person .body{fill:var(--white)}
-.person .limb{fill:none;stroke:var(--white);stroke-width:3.5;stroke-linecap:round}
-.person.orange .body{fill:var(--orange)}
-.person.orange .limb{stroke:var(--orange)}
-.person.black .body{fill:#080808}
-.person.black .limb{stroke:#080808}
-.person.walking svg{animation:walk .4s ease-in-out infinite alternate}
-@keyframes walk{to{transform:translateY(-2px)}}
-.group-name{font:9px var(--mono);letter-spacing:.12em;text-align:center;color:var(--white);min-height:26px}
-.group-value{font-size:clamp(23px,3vw,34px);font-weight:700;letter-spacing:-.05em;color:var(--orange);text-align:center}
-.group-count{font:8px var(--mono);letter-spacing:.1em;color:#aaa;text-align:center}
-.stage-label{position:absolute;z-index:4;bottom:13px;left:16px;font:8px var(--mono);letter-spacing:.16em;color:#aaa}
-.stage-bottom{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-top:20px}
-.stage-note{font-size:9px;line-height:1.8;color:var(--gray);max-width:360px}
-.reorganize{border:0;background:var(--orange);color:#000;padding:14px 15px;font:9px var(--mono);letter-spacing:.16em;white-space:nowrap;transition:transform .3s}
-.reorganize:hover{transform:translateY(-4px)}
-.city-switch{display:flex;gap:6px;margin-top:22px;flex-wrap:wrap}
-.city-switch button{border:1px solid var(--line);background:transparent;padding:9px 11px;font:8px var(--mono);letter-spacing:.13em;color:var(--gray)}
-.city-switch button.active{background:#000;color:white;border-color:#000}
-.legend{display:flex;flex-wrap:wrap;gap:15px;margin-top:24px}
-.legend-item{display:flex;align-items:center;gap:7px;font:8px var(--mono);letter-spacing:.08em;color:var(--gray)}
-.legend-dot{width:9px;height:9px;border-radius:50%;display:inline-block}
-.legend-dot.orange{background:var(--orange)}
-.legend-dot.white{background:#fff;border:1px solid #999}
-.legend-dot.black{background:#000}
-.info-panel{border-left:1px solid var(--line);padding:25px 0 25px 22px;min-width:0}
-.info-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:20px}
-.info-top span{font:9px var(--mono);letter-spacing:.17em;color:var(--gray)}
-.country-tabs{display:flex;gap:5px;margin-bottom:28px}
-.country-tab{flex:1;padding:10px 6px;border:1px solid var(--line);background:transparent;font:8px var(--mono);letter-spacing:.12em;color:var(--gray)}
-.country-tab.active{background:#000;color:white;border-color:#000}
-.info-country{font-size:clamp(23px,2.3vw,32px);line-height:1.05;letter-spacing:-.035em;margin:0 0 10px}
-.info-subtitle{font:8px var(--mono);letter-spacing:.16em;color:var(--orange);margin-bottom:25px}
-.info-tabs{display:flex;flex-wrap:wrap;gap:6px;border-bottom:1px solid var(--line);padding-bottom:12px}
-.info-tab{border:0;background:transparent;padding:7px 0;margin-right:10px;font:8px var(--mono);letter-spacing:.1em;color:var(--gray)}
-.info-tab.active{color:var(--orange);border-bottom:1px solid var(--orange)}
-.info-content{padding-top:22px;min-height:265px}
-.info-content h4{font-size:15px;letter-spacing:-.02em;margin:0 0 12px}
-.info-content p{font-size:10px;line-height:1.9;color:#666;margin:0 0 14px}
-.info-content .fact{border-top:1px solid var(--line);padding:13px 0;margin-top:13px}
-.info-content .fact strong{display:block;font:8px var(--mono);letter-spacing:.13em;color:var(--orange);margin-bottom:7px}
-.info-source{border-top:1px solid var(--line);padding-top:15px;font:8px var(--mono);line-height:1.8;letter-spacing:.06em;color:var(--gray)}
-.info-source a{text-decoration:underline;text-underline-offset:3px}
-.note{margin-top:25px;padding:18px 20px;background:#e8e5e1;border-left:3px solid var(--orange);font-size:10px;line-height:1.9;color:#514d49}
-.interlude{min-height:75vh;background:var(--orange);color:#000;display:flex;flex-direction:column;justify-content:space-between;padding:80px 7vw;overflow:hidden;position:relative}
-.interlude h2{position:relative;z-index:2;margin:0;font-size:clamp(65px,12vw,165px);line-height:.9;letter-spacing:-.045em;max-width:1100px}
-.interlude h2 span{color:white}
-.interlude .orb{position:absolute;border:1px solid #0005;border-radius:50%;width:40vw;height:40vw;right:-8vw;top:10%;animation:float 9s ease-in-out infinite alternate}
-.interlude .orb:before{content:"";position:absolute;inset:18%;border:1px solid #0005;border-radius:50%}
-@keyframes float{to{transform:translate(-50px,50px) scale(1.1)}}
-.footer{padding:35px 7vw;background:#000;color:white;display:flex;justify-content:space-between;gap:20px;font:9px var(--mono);letter-spacing:.18em}
-.reveal{opacity:0;transform:translateY(45px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
-.reveal.visible{opacity:1;transform:translateY(0)}
-@media(max-width:1100px){
- .explorer{grid-template-columns:180px minmax(0,1fr)}
- .info-panel{grid-column:1/-1;border-left:0;border-top:1px solid var(--line);padding:25px 0;display:grid;grid-template-columns:220px 1fr;gap:25px}
- .info-panel .info-top,.info-panel .country-tabs{grid-column:1/-1}
- .info-panel .info-top{margin-bottom:0}
- .info-panel .info-content{min-height:180px}
-}
-@media(max-width:800px){
- .topbar nav{gap:13px}
- .section{padding:90px 6vw}
- .section-head{grid-template-columns:1fr;gap:20px;margin-bottom:45px}
- .split-statement,.territory-grid{grid-template-columns:1fr}
- .territory{min-height:350px}
- .explorer{grid-template-columns:1fr}
- .explorer-menu{border-right:0;padding:15px 0;display:grid;grid-template-columns:1fr 1fr;gap:0 15px}
- .explorer-menu-label{grid-column:1/-1}
- .explorer-main{padding:25px 0}
- .info-panel{display:block}
-}
-@media(max-width:560px){
- .topbar{padding:18px 5vw}
- .topbar nav{gap:9px;font-size:8px}
- .topbar nav a:nth-child(2){display:none}
- .hero{padding:120px 6vw 40px}
- .hero h1{font-size:19vw;margin:13vh 0}
- .hero h1 span{padding-left:5vw}
- .hero-bottom{display:block}
- .scroll-cue{margin-top:35px}
- .hero-meta{font-size:8px}
- .territory{min-height:310px;padding:25px}
- .circle-stage{min-height:370px;padding:25px 5px}
- .circle-groups{gap:3px}
- .people-ring{width:100%;max-width:112px}
- .person{width:14px;height:26px}
- .group-name{font-size:7px;letter-spacing:.04em}
- .group-value{font-size:20px}
- .group-count{font-size:7px}
- .stage-bottom{align-items:start;flex-direction:column}
- .explorer-heading{display:block}
- .explorer-heading p{margin-top:12px}
- .interlude{min-height:65vh;padding:60px 6vw}
- .footer{flex-direction:column}
- #skipIntro{top:18px;right:5vw;font-size:8px}
- .info-panel{padding-top:25px}
-}
-@media(prefers-reduced-motion:reduce){
- *,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Caminar no es neutral | Transitabilidad</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.20.0/matter.min.js"></script>
+
+    <style>
+        :root {
+            --green: #174B36;
+            --green2: #477B5D;
+            --light: #B8CCB8;
+            --paper: #F5F5F0;
+            --ink: #171A17;
+            --muted: #858A82;
+            --line: #D9DCD4;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background: var(--paper);
+            color: var(--ink);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        button {
+            font: inherit;
+            cursor: pointer;
+        }
+
+        #intro {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: var(--paper);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1s, visibility 1s;
+        }
+
+        #intro.hide {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        #introCanvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .intro-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 30px 5vw;
+            pointer-events: none;
+        }
+
+        .intro-top,
+        .intro-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .intro-label {
+            font: 11px 'DM Mono';
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .intro-counter {
+            font: 11px 'DM Mono';
+        }
+
+        .intro-middle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            text-align: center;
+        }
+
+        .frame {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity .8s;
+            pointer-events: none;
+        }
+
+        .frame.active {
+            opacity: 1;
+        }
+
+        .frame h1 {
+            font-size: clamp(48px, 10vw, 130px);
+            line-height: .85;
+            letter-spacing: -.085em;
+            font-weight: 900;
+            margin: 0;
+        }
+
+        .frame h1 span {
+            color: var(--green);
+        }
+
+        .frame p {
+            font: 12px 'DM Mono';
+            line-height: 1.8;
+            margin-top: 25px;
+        }
+
+        .walker {
+            width: 90px;
+            height: 150px;
+            color: var(--green);
+            margin-bottom: 35px;
+        }
+
+        .walker svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .frame.active .walker {
+            animation: walk .55s ease-in-out infinite alternate;
+        }
+
+        @keyframes walk {
+            from {
+                transform: translateY(0) rotate(-4deg);
+            }
+
+            to {
+                transform: translateY(-9px) rotate(4deg);
+            }
+        }
+
+        .intro-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            pointer-events: auto;
+        }
+
+        .intro-btn {
+            background: var(--green);
+            color: white;
+            border: 1px solid var(--green);
+            padding: 13px 20px;
+            font: 11px 'DM Mono';
+            text-transform: uppercase;
+        }
+
+        .intro-btn.secondary {
+            background: transparent;
+            color: var(--ink);
+            border-color: var(--ink);
+        }
+
+        .sound-control {
+            position: fixed;
+            z-index: 1002;
+            right: 5vw;
+            top: 25px;
+            border: 1px solid var(--line);
+            background: var(--paper);
+            padding: 10px 13px;
+            font: 10px 'DM Mono';
+        }
+
+        #soundToggle {
+            display: none;
+        }
+
+        header {
+            padding: 28px 5vw 18px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .topline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font: 11px 'DM Mono';
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .tag {
+            background: var(--green);
+            color: white;
+            padding: 9px 13px;
+        }
+
+        h1 {
+            font-size: clamp(43px, 8vw, 104px);
+            line-height: .85;
+            letter-spacing: -6px;
+            margin: 65px 0 20px;
+            font-weight: 900;
+            max-width: 900px;
+        }
+
+        header h1 span {
+            color: var(--green);
+        }
+
+        .subtitle {
+            font: 13px 'DM Mono';
+            max-width: 500px;
+            line-height: 1.7;
+            color: #62685F;
+        }
+
+        main {
+            padding: 30px 5vw 80px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+            margin: 25px 0 35px;
+        }
+
+        .group {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+        }
+
+        .control {
+            border: 1px solid var(--line);
+            background: transparent;
+            padding: 11px 16px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .7px;
+        }
+
+        .control.active {
+            background: var(--green);
+            color: white;
+            border-color: var(--green);
+        }
+
+        .section-label {
+            font: 11px 'DM Mono';
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .visual-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.25fr) minmax(280px, .75fr);
+            gap: 30px;
+            align-items: center;
+        }
+
+        .radial-panel {
+            background: white;
+            padding: 20px;
+            min-height: 490px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        #radial {
+            width: 100%;
+            max-width: 550px;
+            overflow: visible;
+        }
+
+        .ring {
+            fill: none;
+            stroke: var(--line);
+            stroke-width: 15;
+        }
+
+        .ring-positive {
+            fill: none;
+            stroke: var(--green);
+            stroke-width: 15;
+            transition: stroke-dasharray 1s;
+        }
+
+        .ring-negative {
+            fill: none;
+            stroke: var(--light);
+            stroke-width: 15;
+            transition: stroke-dasharray 1s;
+        }
+
+        .ring-label {
+            font: 11px 'DM Mono';
+            fill: var(--ink);
+        }
+
+        .center-title {
+            font: 700 17px 'Montserrat';
+            fill: var(--green);
+        }
+
+        .center-small {
+            font: 10px 'DM Mono';
+            fill: var(--muted);
+        }
+
+        .legend {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            font: 10px 'DM Mono';
+            margin-top: 15px;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+
+        .stats {
+            display: grid;
+            gap: 12px;
+        }
+
+        .stat {
+            border-bottom: 1px solid var(--line);
+            padding: 18px 0;
+        }
+
+        .stat-number {
+            font-size: clamp(44px, 6vw, 75px);
+            font-weight: 900;
+            letter-spacing: -4px;
+            color: var(--green);
+            line-height: 1;
+        }
+
+        .stat-name {
+            font: 11px 'DM Mono';
+            text-transform: uppercase;
+            margin-top: 9px;
+        }
+
+        .stat-detail {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 5px;
+        }
+
+        .street-section {
+            margin-top: 75px;
+        }
+
+        .section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            border-bottom: 2px solid var(--ink);
+            padding-bottom: 14px;
+            margin-bottom: 20px;
+            gap: 15px;
+        }
+
+        h2 {
+            font-size: clamp(25px, 4vw, 42px);
+            letter-spacing: -2px;
+            margin: 8px 0 0;
+        }
+
+        .street-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .street-card {
+            background: white;
+            padding: 17px;
+            min-height: 210px;
+            border-top: 3px solid var(--green);
+            transition: transform .3s;
+        }
+
+        .street-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .street-card h3 {
+            font-size: 15px;
+            margin: 0 0 8px;
+        }
+
+        .street-card .date {
+            font: 10px 'DM Mono';
+            color: var(--muted);
+        }
+
+        .people {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3px;
+            margin: 22px 0 15px;
+            min-height: 35px;
+        }
+
+        .person {
+            width: 17px;
+            height: 29px;
+            opacity: 0;
+            animation: appear .4s forwards;
+        }
+
+        .person svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .person.positive {
+            color: var(--green);
+        }
+
+        .person.negative {
+            color: var(--light);
+        }
+
+        @keyframes appear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            from {
+                opacity: 0;
+                transform: translateY(9px);
+            }
+        }
+
+        .card-numbers {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid var(--line);
+            padding-top: 10px;
+            font: 10px 'DM Mono';
+        }
+
+        .card-numbers strong {
+            font-size: 16px;
+        }
+
+        .pending {
+            background: #E9EBE5;
+            border-top-color: #AEB5A9;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .pending .pending-label {
+            font: 10px 'DM Mono';
+            color: var(--muted);
+        }
+
+        .pending .pending-text {
+            font-size: 12px;
+            line-height: 1.7;
+            color: var(--muted);
+        }
+
+        .comparison {
+            margin-top: 75px;
+            background: var(--green);
+            color: white;
+            padding: 35px;
+        }
+
+        .comparison h2 {
+            font-size: clamp(28px, 5vw, 55px);
+            max-width: 650px;
+        }
+
+        .comparison p {
+            font: 12px 'DM Mono';
+            line-height: 1.8;
+            color: #D4E2D7;
+            max-width: 650px;
+        }
+
+        .comparison .big {
+            font-size: clamp(45px, 8vw, 90px);
+            font-weight: 900;
+            letter-spacing: -5px;
+        }
+
+        footer {
+            padding: 25px 5vw;
+            border-top: 1px solid var(--line);
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            font: 10px 'DM Mono';
+            color: var(--muted);
+        }
+
+        @media (max-width: 800px) {
+            .visual-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .radial-panel {
+                min-height: 370px;
+            }
+
+            .street-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            h1 {
+                letter-spacing: -3px;
+            }
+        }
+
+        @media (max-width: 440px) {
+            .street-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 7px;
+            }
+
+            .street-card {
+                padding: 12px;
+            }
+
+            .radial-panel {
+                padding: 5px;
+                min-height: 300px;
+            }
+
+            .controls {
+                margin-top: 15px;
+            }
+
+            .intro-content {
+                padding: 20px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: .01ms !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
 </head>
-<body class="intro-active">
-<div id="intro">
- <button id="skipIntro" type="button">SALTAR INTRODUCCIÓN ↗</button>
- <img id="introVector" src="caminar_frames/frame-01.webp" alt="">
- <h1 id="introTitle">SENTIR<br>LA CALLE.</h1>
-</div>
-<div class="progress" id="progress"></div>
-<header class="topbar">
- <a href="#" class="brand">SENTIR LA CALLE.</a>
- <nav>
-  <a href="#pregunta">PROYECTO</a>
-  <a href="#territorios">TERRITORIOS</a>
-  <a href="#visualizacion">EXPLORAR</a>
- </nav>
-</header>
-<main>
-<section class="hero">
- <div class="hero-meta eyebrow"><span>Investigación urbana</span><span>Valparaíso / Buenos Aires</span></div>
- <div>
-  <h1>SENTIR<br><span>LA CALLE.</span></h1>
-  <div class="hero-bottom">
-   <p>Caminar es una experiencia construida entre el cuerpo, la infraestructura y las prácticas cotidianas de la ciudad.</p>
-   <div class="scroll-cue">DESPLAZARSE PARA DESCUBRIR ↓</div>
-  </div>
- </div>
- <div class="hero-orbit"></div>
-</section>
-<div class="marquee"><div class="marquee-track">
- <span>CAMINAR</span><span>OBSERVAR</span><span>CRUZAR</span><span>HABITAR</span><span>TRANSITAR</span>
- <span>CAMINAR</span><span>OBSERVAR</span><span>CRUZAR</span><span>HABITAR</span><span>TRANSITAR</span>
-</div></div>
-<section class="section" id="pregunta">
- <div class="section-head reveal">
-  <div class="section-index">01 / LA PREGUNTA</div>
-  <h2>¿Qué significa realmente poder caminar?</h2>
- </div>
- <p class="intro-copy reveal">La calle parece un espacio compartido. Pero <em>no todas las personas la experimentan de la misma manera.</em> Su forma, sus cruces y las decisiones de quienes la recorren transforman cada desplazamiento.</p>
- <div class="split-statement">
-  <article class="statement reveal">
-   <div class="number">01 / LO QUE EXISTE</div><h3>La calle construida</h3>
-   <p>Veredas, pavimentos, cruces peatonales, semáforos, intersecciones y condiciones materiales que configuran el recorrido.</p>
-  </article>
-  <article class="statement reveal">
-   <div class="number">02 / LO QUE SE VIVE</div><h3>La calle percibida</h3>
-   <p>Las decisiones, hábitos, dificultades y experiencias que aparecen cuando las personas se desplazan por el espacio público.</p>
-  </article>
- </div>
-</section>
-<section class="section territories" id="territorios">
- <div class="section-head reveal">
-  <div class="section-index">02 / DOS CONTEXTOS</div>
-  <h2>Dos territorios.<br>Una pregunta compartida.</h2>
- </div>
- <div class="territory-grid">
-  <article class="territory reveal">
-   <div class="territory-number">01 / CHILE</div><div class="territory-shape"></div>
-   <div><h3>Barrio Puerto<br>Valparaíso.</h3><p>Sector de estudio delimitado entre Plaza Sotomayor y Plaza Echaurren.</p></div>
-  </article>
-  <article class="territory reveal">
-   <div class="territory-number">02 / ARGENTINA</div><div class="territory-shape"></div>
-   <div><h3>Buenos<br>Aires.</h3><p>Sector delimitado entre Avenida Belgrano y Avenida Independencia, según el área de estudio definida.</p></div>
-  </article>
- </div>
-</section>
-<section class="section data-section" id="visualizacion">
- <div class="section-head reveal">
-  <div class="section-index">03 / EXPLORACIÓN</div>
-  <h2>Una misma persona.<br>Distintas experiencias.</h2>
- </div>
- <p class="data-intro reveal">Las figuras representan personas que se agrupan según las respuestas asociadas a cada dimensión. Selecciona una categoría y observa cómo se reorganiza el conjunto.</p>
- <div class="explorer reveal">
-  <aside class="explorer-menu">
-   <div class="explorer-menu-label">SELECCIONAR DIMENSIÓN</div>
-   <button class="dimension-button active" data-dimension="0"><span>01</span>Calidad de la calle</button>
-   <button class="dimension-button" data-dimension="1"><span>02</span>Cruces peatonales</button>
-   <button class="dimension-button" data-dimension="2"><span>03</span>Semáforos y circulación</button>
-   <button class="dimension-button" data-dimension="3"><span>04</span>Percepción y prácticas</button>
-  </aside>
-  <div class="explorer-main">
-   <div class="explorer-heading">
-    <h3 id="dimensionTitle">Calidad de la calle</h3>
-    <p id="dimensionNumber">DIMENSIÓN 01 / 04</p>
-   </div>
-   <p class="dimension-description" id="dimensionDescription">Condiciones materiales del espacio: veredas, pavimentos, continuidad, obstáculos y accesibilidad.</p>
-   <div class="circle-stage" id="circleStage">
-    <div class="circle-groups">
-     <div class="people-group" data-group="0">
-      <div class="people-ring"><div class="people-cloud" id="cloud0"></div></div>
-      <div class="group-name" id="groupName0">DESFAVORABLE</div>
-      <div class="group-value" id="groupValue0">--</div>
-      <div class="group-count" id="groupCount0">SIN DATOS</div>
-     </div>
-     <div class="people-group" data-group="1">
-      <div class="people-ring"><div class="people-cloud" id="cloud1"></div></div>
-      <div class="group-name" id="groupName1">INTERMEDIA</div>
-      <div class="group-value" id="groupValue1">--</div>
-      <div class="group-count" id="groupCount1">SIN DATOS</div>
-     </div>
-     <div class="people-group" data-group="2">
-      <div class="people-ring"><div class="people-cloud" id="cloud2"></div></div>
-      <div class="group-name" id="groupName2">FAVORABLE</div>
-      <div class="group-value" id="groupValue2">--</div>
-      <div class="group-count" id="groupCount2">SIN DATOS</div>
-     </div>
-    </div>
-    <div class="stage-label">FIGURAS VECTORIALES / RESPUESTAS AGRUPADAS</div>
-   </div>
-   <div class="stage-bottom">
-    <p class="stage-note" id="stageNote">Selecciona una dimensión para observar la distribución de las respuestas.</p>
-    <button class="reorganize" id="reorganize">VOLVER A AGRUPAR ↗</button>
-   </div>
-   <div class="city-switch">
-    <button class="active" data-city="comparacion">COMPARACIÓN</button>
-    <button data-city="valparaiso">BARRIO PUERTO</button>
-    <button data-city="buenosaires">BUENOS AIRES</button>
-   </div>
-   <div class="legend">
-    <div class="legend-item"><span class="legend-dot orange"></span>EXPERIENCIA DESFAVORABLE</div>
-    <div class="legend-item"><span class="legend-dot white"></span>EXPERIENCIA INTERMEDIA</div>
-    <div class="legend-item"><span class="legend-dot black"></span>EXPERIENCIA FAVORABLE</div>
-   </div>
-  </div>
-  <aside class="info-panel">
-   <div class="info-top"><span>CONTEXTO DE TRÁNSITO</span><span>04 / 04</span></div>
-   <div>
-    <div class="country-tabs">
-     <button class="country-tab active" data-country="chile">CHILE</button>
-     <button class="country-tab" data-country="argentina">ARGENTINA</button>
-    </div>
-    <h3 class="info-country" id="infoCountry">Chile</h3>
-    <div class="info-subtitle" id="infoSubtitle">LEY DE TRÁNSITO / 18.290</div>
-    <div class="info-tabs">
-     <button class="info-tab active" data-topic="normativa">NORMATIVA</button>
-     <button class="info-tab" data-topic="cruces">CRUCES</button>
-     <button class="info-tab" data-topic="semaforos">SEMÁFOROS</button>
-     <button class="info-tab" data-topic="practicas">PRÁCTICAS</button>
-    </div>
-   </div>
-   <div><div class="info-content" id="infoContent"></div><div class="info-source" id="infoSource"></div></div>
-  </aside>
- </div>
- <div class="note reveal">Los colores representan tres tipos de respuesta dentro de la visualización. La distribución y los porcentajes actuales son demostrativos y deben sustituirse por resultados reales antes de presentar la visualización como evidencia de la investigación.</div>
-</section>
-<section class="interlude">
- <div class="eyebrow">SENTIR LA CALLE / UNA INVESTIGACIÓN EN MOVIMIENTO</div>
- <div class="orb"></div>
- <h2>NO SOLO<br>IMPORTA<br><span>POR DÓNDE.</span><br>TAMBIÉN<br>CÓMO.</h2>
- <div class="eyebrow">VALPARAÍSO — BUENOS AIRES</div>
-</section>
-</main>
-<footer class="footer">
- <span>SENTIR LA CALLE.</span><span>EXPERIENCIA PEATONAL / 2026</span><span>INVESTIGACIÓN URBANA</span>
-</footer>
-<script>
-const TOTAL_FRAMES=53;
-const FRAME_DURATION=120;
-const FRAME_PATH="caminar_frames/frame-";
-const intro=document.getElementById("intro");
-const introVector=document.getElementById("introVector");
-const skipIntro=document.getElementById("skipIntro");
-let currentFrame=1,sequenceTimer=null,titleTimer=null,introFinished=false;
-function frameUrl(number){return FRAME_PATH+String(number).padStart(2,"0")+".webp"}
-function finishIntro(){
- if(introFinished)return;
- introFinished=true;clearInterval(sequenceTimer);clearTimeout(titleTimer);
- intro.classList.add("hide");document.body.classList.remove("intro-active");
- setTimeout(()=>intro.remove(),1100);
-}
-function showIntroTitle(){
- if(introFinished)return;
- intro.classList.add("show-title");titleTimer=setTimeout(finishIntro,2300);
-}
-function startIntro(){
- currentFrame=1;introVector.src=frameUrl(1);
- sequenceTimer=setInterval(()=>{
-  currentFrame++;
-  if(currentFrame>TOTAL_FRAMES){clearInterval(sequenceTimer);showIntroTitle();return}
-  introVector.src=frameUrl(currentFrame);
- },FRAME_DURATION);
-}
-skipIntro.addEventListener("click",finishIntro);
-function loadIntro(){
- const firstFrame=new Image();let started=false;
- const fallbackTimer=setTimeout(()=>{if(!started){started=true;showIntroTitle()}},5000);
- firstFrame.onload=()=>{
-  if(started)return;started=true;clearTimeout(fallbackTimer);
-  introVector.src=frameUrl(1);
-  for(let i=2;i<=TOTAL_FRAMES;i++){const image=new Image();image.src=frameUrl(i)}
-  if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)showIntroTitle();
-  else startIntro();
- };
- firstFrame.onerror=()=>{
-  if(started)return;started=true;clearTimeout(fallbackTimer);
-  introVector.style.display="none";showIntroTitle();
- };
- firstFrame.src=frameUrl(1);
-}
-loadIntro();
 
-const dimensions=[
- {title:"Calidad de la calle",description:"Condiciones materiales del espacio: veredas, pavimentos, continuidad, obstáculos y accesibilidad."},
- {title:"Cruces peatonales",description:"Pasos peatonales, visibilidad, ubicación, demarcación y decisiones que toman las personas al atravesar una calle."},
- {title:"Semáforos y circulación",description:"Señales peatonales, tiempos de espera, tiempos de cruce y relación entre peatones y vehículos."},
- {title:"Percepción y prácticas",description:"Experiencias, hábitos, decisiones y percepciones que se construyen al caminar por el espacio público."}
-];
+<body>
 
-/* Datos de demostración. Reemplazar por las cantidades reales de cada categoría. */
-const sampleData={
- valparaiso:[
-  [50,30,20],[45,35,20],[40,35,25],[50,30,20]
- ],
- buenosaires:[
-  [35,40,25],[30,40,30],[35,35,30],[40,35,25]
- ]
-};
-const TOTAL=50;
-const colors=["orange","white","black"];
-const clouds=[0,1,2].map(i=>document.getElementById("cloud"+i));
-let activeDimension=0;
-let activeCity="comparacion";
-let people=[];
+    <section id="intro">
+        <canvas id="introCanvas"></canvas>
 
-function personSVG(){
- return `<svg viewBox="0 0 40 70" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
- <circle class="body" cx="20" cy="9" r="6"/>
- <path class="body" d="M13 19 Q20 15 27 19 L29 39 L24 40 L23 31 L23 44 L29 65 L23 65 L19 48 L15 65 L9 65 L16 40 L11 39 Z"/>
- <path class="limb" d="M13 22 L6 36 M27 22 L34 35 M17 43 L12 63 M23 43 L28 63"/>
- </svg>`;
-}
-function makePeople(){
- clouds.forEach((cloud,index)=>{
-  cloud.innerHTML="";
-  people[index]=[];
-  for(let i=0;i<TOTAL;i++){
-   const person=document.createElement("div");
-   person.className="person walking "+colors[index];
-   person.innerHTML=personSVG();
-   cloud.appendChild(person);
-   people[index].push(person);
-  }
- });
-}
-function randomPosition(index,count){
- const angle=index*2.399963;
- const radius=Math.sqrt((index+.5)/Math.max(count,1))*.39;
- return {x:50+Math.cos(angle)*radius*100,y:50+Math.sin(angle)*radius*100};
-}
-function distributeGroup(groupIndex,count,delayBase=0){
- const group=people[groupIndex];
- group.forEach((person,index)=>{
-  const shouldShow=index<count;
-  const position=randomPosition(index,count);
-  person.style.transitionDelay=(delayBase+Math.min(index,49)*8)+"ms";
-  if(shouldShow){
-   person.style.left=position.x+"%";
-   person.style.top=position.y+"%";
-   requestAnimationFrame(()=>person.classList.add("arrived"));
-  }else{
-   person.classList.remove("arrived");
-   person.style.left="50%";
-   person.style.top="50%";
-  }
- });
-}
-function getValues(city){
- if(city==="comparacion"){
-  const a=sampleData.valparaiso[activeDimension];
-  const b=sampleData.buenosaires[activeDimension];
-  return a.map((v,i)=>Math.round((v+b[i])/2));
- }
- return sampleData[city][activeDimension];
-}
-function updateVisualization(){
- const values=getValues(activeCity);
- const cityText=activeCity==="comparacion"?"PROMEDIO VISUAL DE AMBOS TERRITORIOS":activeCity==="valparaiso"?"BARRIO PUERTO":"BUENOS AIRES";
- values.forEach((value,index)=>{
-  const count=Math.round(value/100*TOTAL);
-  distributeGroup(index,count,index*100);
-  document.getElementById("groupValue"+index).textContent=value+"%";
-  document.getElementById("groupCount"+index).textContent=count+" DE 50 FIGURAS";
-  document.querySelectorAll(".people-group")[index].classList.toggle("active",count>0);
- });
- document.getElementById("stageNote").textContent=cityText+". Distribución demostrativa de respuestas. Los valores no corresponden a resultados de campo.";
-}
-function selectDimension(index){
- activeDimension=index;
- document.querySelectorAll(".dimension-button").forEach((button,i)=>button.classList.toggle("active",i===index));
- document.getElementById("dimensionTitle").textContent=dimensions[index].title;
- document.getElementById("dimensionDescription").textContent=dimensions[index].description;
- document.getElementById("dimensionNumber").textContent="DIMENSIÓN 0"+(index+1)+" / 04";
- updateVisualization();
-}
-document.querySelectorAll(".dimension-button").forEach(button=>{
- button.addEventListener("click",()=>selectDimension(Number(button.dataset.dimension)));
-});
-document.querySelectorAll(".city-switch button").forEach(button=>{
- button.addEventListener("click",()=>{
-  activeCity=button.dataset.city;
-  document.querySelectorAll(".city-switch button").forEach(item=>item.classList.toggle("active",item===button));
-  updateVisualization();
- });
-});
-document.getElementById("reorganize").addEventListener("click",()=>{
- people.forEach(group=>group.forEach(person=>person.classList.remove("arrived")));
- setTimeout(updateVisualization,100);
-});
-makePeople();
-selectDimension(0);
+        <div class="intro-content">
 
-/* Contenido de referencia normativa */
-const countryData={
- chile:{
-  name:"Chile",subtitle:"LEY DE TRÁNSITO / 18.290",
-  source:'Fuente: <a href="https://www.bcn.cl/leychile/navegar?idNorma=1007469" target="_blank" rel="noopener">Biblioteca del Congreso Nacional</a>',
-  topics:{
-   normativa:{title:"Reglas para peatones",text:"La Ley de Tránsito establece que los peatones deben circular por las aceras y cruzar por pasos peatonales o pasos a desnivel. En lugares regulados por Carabineros o semáforos, deben respetar las indicaciones antes de iniciar el cruce.",fact:"PREFERENCIA PEATONAL",detail:"En pasos peatonales no regulados, los peatones tienen preferencia respecto de los vehículos."},
-   cruces:{title:"Pasos peatonales",text:"La normativa indica que el cruce debe realizarse por los pasos habilitados y prohíbe cruzar diagonalmente o por el área de intersección de las calzadas.",fact:"QUÉ OBSERVAR EN TERRENO",detail:"Demarcación, desgaste de las franjas, continuidad entre veredas, visibilidad y vehículos detenidos sobre el cruce."},
-   semaforos:{title:"Señales y tiempos",text:"En lugares regulados por semáforos, el peatón debe esperar la indicación que habilita el cruce. Quien ya inició correctamente el cruce puede terminarlo aunque cambie la señal.",fact:"QUÉ OBSERVAR EN TERRENO",detail:"Duración de la espera, tiempo disponible para cruzar, señal visible y comportamiento de vehículos que viran."},
-   practicas:{title:"Prácticas peatonales",text:"La ley describe conductas exigidas, pero no permite concluir por sí sola cómo se comportan cotidianamente las personas en Valparaíso.",fact:"PREGUNTAS PARA EL ESTUDIO",detail:"¿Se espera la señal? ¿Se cruza por la esquina? ¿Se evita un cruce? Estas prácticas deben registrarse en terreno."}
-  }
- },
- argentina:{
-  name:"Argentina",subtitle:"LEY NACIONAL DE TRÁNSITO / 24.449",
-  source:'Fuente: <a href="https://www.argentina.gob.ar/normativa/nacional/ley-24449-818" target="_blank" rel="noopener">InfoLEG / Normativa Nacional</a>',
-  topics:{
-   normativa:{title:"Reglas para peatones",text:"La Ley Nacional de Tránsito establece pautas de circulación peatonal y prioridad en los espacios habilitados para el cruce. La aplicación y regulación también puede complementarse con normas locales.",fact:"PRIORIDAD PEATONAL",detail:"La observación debe considerar tanto la normativa nacional como la señalización y regulación del área de estudio."},
-   cruces:{title:"Pasos peatonales",text:"Los cruces habilitados y las demarcaciones organizan la circulación de peatones y vehículos. Su presencia y estado deben observarse directamente en el sector delimitado.",fact:"QUÉ OBSERVAR EN TERRENO",detail:"Demarcación, continuidad de veredas, visibilidad, obstáculos y respeto de la prioridad peatonal."},
-   semaforos:{title:"Señales y tiempos",text:"La señalización luminosa regula los movimientos de peatones y vehículos. Los tiempos y condiciones concretas deben registrarse en cada intersección observada.",fact:"QUÉ OBSERVAR EN TERRENO",detail:"Tiempo de espera, duración del cruce, señal peatonal y comportamiento de vehículos que viran."},
-   practicas:{title:"Prácticas peatonales",text:"La normativa no permite deducir por sí sola los hábitos de cruce de las personas en Buenos Aires. Estos requieren observación directa con una pauta comparable.",fact:"PREGUNTAS PARA EL ESTUDIO",detail:"Registrar espera, cruces fuera de demarcación, observación de ambos sentidos y cesión del paso."}
-  }
- }
-};
-let currentCountry="chile";
-let currentTopic="normativa";
-function renderInfo(){
- const data=countryData[currentCountry];
- const topic=data.topics[currentTopic];
- document.getElementById("infoCountry").textContent=data.name;
- document.getElementById("infoSubtitle").textContent=data.subtitle;
- document.getElementById("infoContent").innerHTML=`<h4>${topic.title}</h4><p>${topic.text}</p><div class="fact"><strong>${topic.fact}</strong><p>${topic.detail}</p></div>`;
- document.getElementById("infoSource").innerHTML=data.source;
-}
-document.querySelectorAll(".country-tab").forEach(button=>{
- button.addEventListener("click",()=>{
-  currentCountry=button.dataset.country;
-  document.querySelectorAll(".country-tab").forEach(item=>item.classList.toggle("active",item===button));
-  renderInfo();
- });
-});
-document.querySelectorAll(".info-tab").forEach(button=>{
- button.addEventListener("click",()=>{
-  currentTopic=button.dataset.topic;
-  document.querySelectorAll(".info-tab").forEach(item=>item.classList.toggle("active",item===button));
-  renderInfo();
- });
-});
-renderInfo();
+            <div class="intro-top">
+                <span class="intro-label">Estudio de percepción urbana / 2026</span>
+                <span class="intro-counter" id="frameCounter">01 / 05</span>
+            </div>
 
-/* Animaciones de entrada y progreso */
-const revealObserver=new IntersectionObserver(entries=>{
- entries.forEach(entry=>{
-  if(entry.isIntersecting){entry.target.classList.add("visible");revealObserver.unobserve(entry.target)}
- });
-},{threshold:.12});
-document.querySelectorAll(".reveal").forEach(element=>revealObserver.observe(element));
-window.addEventListener("scroll",()=>{
- const max=document.documentElement.scrollHeight-window.innerHeight;
- document.getElementById("progress").style.width=(max>0?window.scrollY/max*100:0)+"%";
-});
-</script>
+            <div class="intro-middle">
+
+                <div class="frame active">
+                    <div class="walker">
+                        <svg viewBox="0 0 100 160" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round">
+                            <circle cx="51" cy="17" r="12" fill="currentColor" stroke="none"/>
+                            <path d="M50 39 L47 88 L25 125 M48 84 L76 120 M49 46 L20 74 M49 47 L78 69"/>
+                        </svg>
+                    </div>
+
+                    <h1>CAMINAR<br>ES <span>MOVERSE.</span></h1>
+                    <p>CADA RECORRIDO CONSTRUYE UNA EXPERIENCIA.</p>
+                </div>
+
+                <div class="frame">
+                    <div class="walker">
+                        <svg viewBox="0 0 100 160" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round">
+                            <circle cx="51" cy="17" r="12" fill="currentColor" stroke="none"/>
+                            <path d="M50 39 L47 88 L25 125 M48 84 L76 120 M49 46 L20 74 M49 47 L78 69"/>
+                        </svg>
+                    </div>
+
+                    <h1>NO TODAS<br>LAS CALLES <span>SE VIVEN</span><br>IGUAL.</h1>
+                    <p>EL ESPACIO URBANO TAMBIÉN SE PERCIBE.</p>
+                </div>
+
+                <div class="frame">
+                    <div class="walker">
+                        <svg viewBox="0 0 100 160" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round">
+                            <circle cx="51" cy="17" r="12" fill="currentColor" stroke="none"/>
+                            <path d="M50 39 L47 88 L25 125 M48 84 L76 120 M49 46 L20 74 M49 47 L78 69"/>
+                        </svg>
+                    </div>
+
+                    <h1>¿CÓMO<br>SE <span>CAMINA</span><br>LA CIUDAD?</h1>
+                    <p>OBSERVAR · RECORRER · PREGUNTAR.</p>
+                </div>
+
+                <div class="frame">
+                    <h1><span>VALPARAÍSO</span><br>↔<br>BUENOS AIRES</h1>
+                    <p>OCHO CALLES. DOS TERRITORIOS. MÚLTIPLES PERCEPCIONES.</p>
+                </div>
+
+                <div class="frame">
+                    <h1>CAMINAR<br>NO ES <span>NEUTRAL.</span></h1>
+                    <p>UNA LECTURA DE LA TRANSITABILIDAD DESDE LA EXPERIENCIA PEATONAL.</p>
+                </div>
+
+            </div>
+
+            <div class="intro-bottom">
+                <span class="intro-label">Information design / PUCV</span>
+
+                <div class="intro-actions">
+                    <button class="intro-btn secondary" id="skipIntro">
+                        Saltar introducción ↗
+                    </button>
+
+                    <button class="intro-btn" id="startIntro">
+                        Iniciar experiencia ↗
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <button class="sound-control" id="soundToggle">
+        ♫ ACTIVAR SONIDO
+    </button>
+
+    <header>
+        <div class="topline">
+            <span>Information design / 2026</span>
+            <span class="tag">Estudio de transitabilidad</span>
+        </div>
+
+        <h1>CAMINAR<br>NO ES <span>NEUTRAL.</span></h1>
+
+        <p class="subtitle">
+            Una exploración de la percepción de la transitabilidad urbana a través de las experiencias de quienes recorren las calles de Barrio Puerto y Buenos Aires.
+        </p>
+    </header>
+
+    <main>
+
+        <div class="controls">
+
+            <div>
+                <div class="section-label">01 / Territorio</div>
+
+                <div class="group" style="margin-top:10px">
+                    <button class="control active" data-city="all">Ambas ciudades</button>
+                    <button class="control" data-city="argentina">Buenos Aires</button>
+                    <button class="control" data-city="valparaiso">Barrio Puerto</button>
+                </div>
+            </div>
+
+            <div>
+                <div class="section-label">02 / Jornada</div>
+
+                <div class="group" style="margin-top:10px">
+                    <button class="control active" data-day="all">Total</button>
+                    <button class="control" data-day="0">19 NOV</button>
+                    <button class="control" data-day="1">20 NOV</button>
+                    <button class="control" data-day="2">21 NOV</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="visual-grid">
+
+            <div>
+                <div class="section-label">03 / Distribución de respuestas</div>
+
+                <div class="radial-panel">
+                    <svg id="radial" viewBox="0 0 500 500"></svg>
+                </div>
+
+                <div class="legend">
+                    <span><i class="dot" style="background:var(--green)"></i>POSITIVA</span>
+                    <span><i class="dot" style="background:var(--light)"></i>NEGATIVA</span>
+                    <span><i class="dot" style="background:var(--line)"></i>SIN REGISTRO</span>
+                </div>
+            </div>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <div class="section-label">Respuestas positivas</div>
+                    <div class="stat-number" id="positive">25</div>
+                    <div class="stat-detail">Percepción favorable de la transitabilidad</div>
+                </div>
+
+                <div class="stat">
+                    <div class="section-label">Respuestas negativas</div>
+                    <div class="stat-number" id="negative">18</div>
+                    <div class="stat-detail">Percepción desfavorable de la transitabilidad</div>
+                </div>
+
+                <div class="stat">
+                    <div class="section-label">Total de registros</div>
+                    <div class="stat-number" id="total">43</div>
+                    <div class="stat-detail">Fichas de transitabilidad contabilizadas</div>
+                </div>
+
+            </div>
+        </div>
+
+        <section class="street-section">
+
+            <div class="section-heading">
+                <div>
+                    <div class="section-label">04 / Lectura territorial</div>
+                    <h2>Ocho calles.<br>Distintas experiencias.</h2>
+                </div>
+
+                <div class="section-label" id="day-label">
+                    TODAS LAS JORNADAS
+                </div>
+            </div>
+
+            <div class="street-grid" id="streets"></div>
+
+        </section>
+
+        <section class="comparison">
+            <div class="section-label" style="color:#B8CCB8">
+                05 / Observación
+            </div>
+
+            <h2>La calle también se construye desde la percepción.</h2>
+
+            <div class="big" id="percentage">58,1%</div>
+
+            <p id="insight">
+                Porcentaje de respuestas positivas de las fichas registradas en Buenos Aires.
+            </p>
+        </section>
+
+    </main>
+
+    <footer>
+        <span>CAMINAR NO ES NEUTRAL / VISUALIZACIÓN EXPERIMENTAL</span>
+        <span>PUERTO × BUENOS AIRES</span>
+    </footer>
+
+    <script>
+        const days = [
+            '19 noviembre',
+            '20 noviembre',
+            '21 noviembre'
+        ];
+
+        const data = {
+            argentina: [
+                {
+                    name: 'Av. Colón',
+                    values: [[4, 2], [4, 1], [1, 2]]
+                },
+                {
+                    name: 'Azopardo',
+                    values: [[0, 2], [2, 1], [3, 1]]
+                },
+                {
+                    name: 'Av. Huergo',
+                    values: [[3, 1], [2, 0], [2, 6]]
+                },
+                {
+                    name: 'Av. Alicia',
+                    values: [[2, 1], [2, 0], [0, 1]]
+                }
+            ],
+
+            valparaiso: [
+                {
+                    name: 'Serrano',
+                    values: [null, null, null]
+                },
+                {
+                    name: 'Cochrane',
+                    values: [null, null, null]
+                },
+                {
+                    name: 'Blanco',
+                    values: [null, null, null]
+                },
+                {
+                    name: 'Errázuriz',
+                    values: [null, null, null]
+                }
+            ]
+        };
+
+        let city = 'all';
+        let day = 'all';
+
+        function getStreets() {
+            let selected = [];
+
+            if (city === 'all' || city === 'valparaiso') {
+                selected.push(
+                    ...data.valparaiso.map(s => ({
+                        ...s,
+                        city: 'Barrio Puerto'
+                    }))
+                );
+            }
+
+            if (city === 'all' || city === 'argentina') {
+                selected.push(
+                    ...data.argentina.map(s => ({
+                        ...s,
+                        city: 'Buenos Aires'
+                    }))
+                );
+            }
+
+            return selected;
+        }
+
+        function getValues(street) {
+            if (day === 'all') {
+                if (street.values.some(v => v === null)) {
+                    return null;
+                }
+
+                return street.values.reduce(
+                    (a, v) => [
+                        a[0] + v[0],
+                        a[1] + v[1]
+                    ],
+                    [0, 0]
+                );
+            }
+
+            return street.values[Number(day)];
+        }
+
+        function totals() {
+            let p = 0;
+            let n = 0;
+
+            getStreets().forEach(s => {
+                const v = getValues(s);
+
+                if (v) {
+                    p += v[0];
+                    n += v[1];
+                }
+            });
+
+            return { p, n };
+        }
+
+        function drawRadial() {
+            const svg = document.getElementById('radial');
+            const streets = getStreets().filter(
+                s => getValues(s) !== null
+            );
+
+            const { p, n } = totals();
+
+            let html = '';
+
+            const cx = 250;
+            const cy = 250;
+
+            streets.forEach((s, i) => {
+                const v = getValues(s);
+                const r = 85 + i * 43;
+                const c = 2 * Math.PI * r;
+
+                const positive = (v[0] / 10) * c;
+                const negative = (v[1] / 10) * c;
+
+                html += `
+                    <circle
+                        class="ring"
+                        cx="${cx}"
+                        cy="${cy}"
+                        r="${r}"
+                    />
+                `;
+
+                html += `
+                    <circle
+                        class="ring-positive"
+                        cx="${cx}"
+                        cy="${cy}"
+                        r="${r}"
+                        stroke-dasharray="${positive} ${c - positive}"
+                        transform="rotate(-90 ${cx} ${cy})"
+                    />
+                `;
+
+                html += `
+                    <circle
+                        class="ring-negative"
+                        cx="${cx}"
+                        cy="${cy}"
+                        r="${r}"
+                        stroke-dasharray="${negative} ${c - negative}"
+                        stroke-dashoffset="${-positive}"
+                        transform="rotate(-90 ${cx} ${cy})"
+                    />
+                `;
+
+                const angle = (-90 + i * 90) * Math.PI / 180;
+
+                html += `
+                    <text
+                        class="ring-label"
+                        x="${cx + (r + 14) * Math.cos(angle)}"
+                        y="${cy + (r + 14) * Math.sin(angle)}"
+                        text-anchor="middle"
+                    >${s.name}</text>
+                `;
+            });
+
+            html += `
+                <circle
+                    cx="250"
+                    cy="250"
+                    r="55"
+                    fill="#F5F5F0"
+                />
+
+                <text
+                    class="center-title"
+                    x="250"
+                    y="244"
+                    text-anchor="middle"
+                >${p + n}</text>
+
+                <text
+                    class="center-small"
+                    x="250"
+                    y="263"
+                    text-anchor="middle"
+                >RESPUESTAS</text>
+            `;
+
+            svg.innerHTML = html;
+        }
+
+        function personIcon(type, index) {
+            return `
+                <span
+                    class="person ${type}"
+                    style="animation-delay:${index * .035}s"
+                >
+                    <svg viewBox="0 0 24 36" fill="currentColor">
+                        <circle cx="12" cy="5" r="4"/>
+                        <path d="M9 10 Q5 11 6 17 L4 25 Q3 29 7 30 L10 21 L9 32 L5 35 L11 35 L13 27 L16 35 L22 35 L17 30 L16 20 L20 25 Q23 28 24 24 L19 16 Q17 11 13 10Z"/>
+                    </svg>
+                </span>
+            `;
+        }
+
+        function drawStreets() {
+            const container = document.getElementById('streets');
+
+            container.innerHTML = '';
+
+            getStreets().forEach(street => {
+                const v = getValues(street);
+                const card = document.createElement('article');
+
+                card.className = 'street-card' + (!v ? ' pending' : '');
+
+                if (!v) {
+                    card.innerHTML = `
+                        <div>
+                            <div class="pending-label">${street.city}</div>
+                            <h3 style="margin-top:15px">${street.name}</h3>
+                        </div>
+
+                        <div class="pending-text">
+                            Datos pendientes de incorporar.<br>
+                            Sin registros disponibles.
+                        </div>
+                    `;
+                } else {
+                    let people = '';
+
+                    for (let i = 0; i < v[0]; i++) {
+                        people += personIcon('positive', i);
+                    }
+
+                    for (let i = 0; i < v[1]; i++) {
+                        people += personIcon('negative', i + v[0]);
+                    }
+
+                    card.innerHTML = `
+                        <div class="date">${street.city}</div>
+
+                        <h3>${street.name}</h3>
+
+                        <div class="people">
+                            ${people || '<span class="date">Sin respuestas</span>'}
+                        </div>
+
+                        <div class="card-numbers">
+                            <span>
+                                + <strong style="color:var(--green)">${v[0]}</strong>
+                            </span>
+
+                            <span>
+                                − <strong style="color:var(--green2)">${v[1]}</strong>
+                            </span>
+
+                            <span>
+                                TOTAL <strong>${v[0] + v[1]}</strong>
+                            </span>
+                        </div>
+                    `;
+                }
+
+                container.appendChild(card);
+            });
+        }
+
+        function update() {
+            const { p, n } = totals();
+
+            document.getElementById('positive').textContent = p;
+            document.getElementById('negative').textContent = n;
+            document.getElementById('total').textContent = p + n;
+
+            const pct = p + n ? (p / (p + n)) * 100 : 0;
+
+            document.getElementById('percentage').textContent =
+                pct.toFixed(1).replace('.', ',') + '%';
+
+            document.getElementById('insight').textContent = p + n
+                ? `${pct.toFixed(1).replace('.', ',')}% de las respuestas registradas corresponde a valoraciones positivas de transitabilidad. El porcentaje se calcula sobre las fichas disponibles para la selección actual, no sobre el total de habitantes.`
+                : 'No existen registros disponibles para esta selección.';
+
+            document.getElementById('day-label').textContent =
+                day === 'all'
+                    ? 'TODAS LAS JORNADAS'
+                    : days[Number(day)].toUpperCase();
+
+            drawRadial();
+            drawStreets();
+        }
+
+        document.querySelectorAll('[data-city]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                city = btn.dataset.city;
+
+                document.querySelectorAll('[data-city]').forEach(b => {
+                    b.classList.toggle('active', b === btn);
+                });
+
+                update();
+            });
+        });
+
+        document.querySelectorAll('[data-day]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                day = btn.dataset.day;
+
+                document.querySelectorAll('[data-day]').forEach(b => {
+                    b.classList.toggle('active', b === btn);
+                });
+
+                update();
+            });
+        });
+
+        update();
+
+        const intro = document.getElementById('intro');
+        const frames = [...document.querySelectorAll('.frame')];
+        const counter = document.getElementById('frameCounter');
+
+        let currentFrame = 0;
+        let introTimer = null;
+        let introStarted = false;
+        let engine = null;
+        let runner = null;
+        let render = null;
+        let rainTimer = null;
+
+        function showFrame(i) {
+            frames.forEach((f, j) => {
+                f.classList.toggle('active', i === j);
+            });
+
+            counter.textContent =
+                String(i + 1).padStart(2, '0') + ' / 05';
+        }
+
+        function startSequence() {
+            if (introStarted) return;
+
+            introStarted = true;
+
+            document.getElementById('startIntro').style.display = 'none';
+            document.getElementById('skipIntro').textContent = 'Saltar ↗';
+
+            startRain();
+            showFrame(0);
+
+            introTimer = setInterval(() => {
+                currentFrame++;
+
+                if (currentFrame >= frames.length) {
+                    clearInterval(introTimer);
+                    setTimeout(closeIntro, 1800);
+                    return;
+                }
+
+                showFrame(currentFrame);
+            }, 2600);
+        }
+
+        function closeIntro() {
+            clearInterval(introTimer);
+            intro.classList.add('hide');
+            stopRain();
+        }
+
+        document.getElementById('startIntro').addEventListener('click', () => {
+            startSequence();
+            startMusic();
+        });
+
+        document.getElementById('skipIntro').addEventListener('click', closeIntro);
+
+        function startRain() {
+            if (!window.Matter) return;
+
+            const canvas = document.getElementById('introCanvas');
+
+            const {
+                Engine,
+                Render,
+                Runner,
+                Bodies,
+                Body,
+                Composite
+            } = Matter;
+
+            engine = Engine.create();
+            engine.gravity.y = .95;
+
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+
+            render = Render.create({
+                canvas,
+                engine,
+                options: {
+                    width,
+                    height,
+                    wireframes: false,
+                    background: 'transparent',
+                    pixelRatio: Math.min(devicePixelRatio || 1, 2)
+                }
+            });
+
+            const ground = Bodies.rectangle(
+                width / 2,
+                height + 35,
+                width + 100,
+                70,
+                {
+                    isStatic: true,
+                    render: { visible: false }
+                }
+            );
+
+            const left = Bodies.rectangle(
+                -30,
+                height / 2,
+                60,
+                height * 2,
+                {
+                    isStatic: true,
+                    render: { visible: false }
+                }
+            );
+
+            const right = Bodies.rectangle(
+                width + 30,
+                height / 2,
+                60,
+                height * 2,
+                {
+                    isStatic: true,
+                    render: { visible: false }
+                }
+            );
+
+            Composite.add(engine.world, [ground, left, right]);
+
+            const colors = [
+                '#174B36',
+                '#477B5D',
+                '#B8CCB8'
+            ];
+
+            let count = 0;
+
+            rainTimer = setInterval(() => {
+                if (!engine || count > 100) {
+                    clearInterval(rainTimer);
+                    return;
+                }
+
+                const radius = 18 + Math.random() * 18;
+
+                const piece = Bodies.polygon(
+                    Math.random() * width,
+                    -50,
+                    5,
+                    radius,
+                    {
+                        restitution: .22,
+                        friction: .8,
+                        frictionAir: .02,
+                        render: {
+                            fillStyle: colors[count % 3],
+                            strokeStyle: 'transparent'
+                        }
+                    }
+                );
+
+                Body.setVelocity(piece, {
+                    x: (Math.random() - .5) * 2,
+                    y: 0
+                });
+
+                Body.setAngularVelocity(
+                    piece,
+                    (Math.random() - .5) * .04
+                );
+
+                Composite.add(engine.world, piece);
+
+                count++;
+            }, 130);
+
+            runner = Runner.create();
+
+            Render.run(render);
+            Runner.run(runner, engine);
+        }
+
+        function stopRain() {
+            if (!engine) return;
+
+            clearInterval(rainTimer);
+
+            Matter.Runner.stop(runner);
+            Matter.Render.stop(render);
+
+            if (render.canvas) {
+                render.canvas.remove();
+            }
+
+            Matter.Engine.clear(engine);
+
+            engine = null;
+            runner = null;
+            render = null;
+        }
+
+        let audio = null;
+        let musicOn = false;
+        let musicTimer = null;
+        let noteIndex = 0;
+
+        const melody = [
+            [659, .13],
+            [784, .13],
+            [988, .2],
+            [784, .13],
+            [659, .13],
+            [523, .2],
+            [587, .13],
+            [659, .2],
+            [784, .13],
+            [880, .13],
+            [784, .13],
+            [659, .2],
+            [587, .13],
+            [659, .13],
+            [784, .25],
+            [659, .2],
+            [523, .13],
+            [587, .13],
+            [659, .2],
+            [784, .13],
+            [659, .13],
+            [523, .25],
+            [440, .2],
+            [523, .2]
+        ];
+
+        function playNote(freq, duration) {
+            if (!audio || !musicOn) return;
+
+            const now = audio.currentTime;
+
+            const osc = audio.createOscillator();
+            const gain = audio.createGain();
+
+            const low = audio.createOscillator();
+            const lowGain = audio.createGain();
+
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, now);
+
+            gain.gain.setValueAtTime(.0001, now);
+            gain.gain.exponentialRampToValueAtTime(.12, now + .015);
+            gain.gain.exponentialRampToValueAtTime(.0001, now + duration);
+
+            low.type = 'sine';
+            low.frequency.setValueAtTime(freq / 2, now);
+
+            lowGain.gain.setValueAtTime(.0001, now);
+            lowGain.gain.exponentialRampToValueAtTime(.035, now + .02);
+            lowGain.gain.exponentialRampToValueAtTime(.0001, now + duration * .9);
+
+            osc.connect(gain);
+            gain.connect(audio.destination);
+
+            low.connect(lowGain);
+            lowGain.connect(audio.destination);
+
+            osc.start(now);
+            osc.stop(now + duration + .03);
+
+            low.start(now);
+            low.stop(now + duration + .03);
+        }
+
+        function musicStep() {
+            if (!musicOn) return;
+
+            const [freq, duration] = melody[noteIndex % melody.length];
+
+            playNote(freq, duration);
+
+            if (noteIndex % 4 === 0) {
+                const bass = [
+                    130.81,
+                    164.81,
+                    196,
+                    164.81
+                ][Math.floor(noteIndex / 4) % 4];
+
+                playNote(bass, .18);
+            }
+
+            noteIndex++;
+
+            musicTimer = setTimeout(musicStep, 190);
+        }
+
+        async function startMusic() {
+            if (!audio) {
+                audio = new (
+                    window.AudioContext || window.webkitAudioContext
+                )();
+            }
+
+            if (audio.state === 'suspended') {
+                await audio.resume();
+            }
+
+            musicOn = true;
+            noteIndex = 0;
+
+            clearTimeout(musicTimer);
+
+            musicStep();
+            updateSoundButton();
+        }
+
+        function stopMusic() {
+            musicOn = false;
+
+            clearTimeout(musicTimer);
+
+            updateSoundButton();
+        }
+
+        function updateSoundButton() {
+            document.getElementById('soundToggle').textContent =
+                musicOn ? '♫ SILENCIAR' : '♫ ACTIVAR SONIDO';
+        }
+
+        document.getElementById('soundToggle').addEventListener('click', () => {
+            if (musicOn) {
+                stopMusic();
+            } else {
+                startMusic();
+            }
+        });
+    </script>
+
 </body>
 </html>
