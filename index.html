@@ -3,961 +3,676 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10110f">
 <title>Sentir la calle</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #101310;
-  --panel: #171c18;
-  --ink: #f1f0e9;
-  --muted: #92988e;
-  --line: #343b34;
-  --green: #a7c957;
-  --yellow: #e8c547;
-  --blue: #5b9bd5;
-  --red: #d96b55;
-  --white: #e9e7dc;
+:root{
+  --bg:#10110f;
+  --paper:#e9e8df;
+  --muted:#92958b;
+  --line:#383b34;
+  --orange:#d77a42;
+  --green:#8eaa67;
+  --blue:#7199b2;
+  --yellow:#d8bc62;
+  --red:#bd6857;
+  --purple:#a18aab;
+  --font:'Montserrat',sans-serif;
+  --mono:'DM Mono',monospace;
 }
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--ink);
-  font-family: 'Montserrat', sans-serif;
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--paper);font-family:var(--font)}
+button,select{font:inherit}
+button{cursor:pointer}
+::selection{background:var(--orange);color:#111}
+#intro{
+  position:fixed;inset:0;z-index:50;background:#080908;
+  display:grid;place-items:center;overflow:hidden;
+  transition:opacity .8s,visibility .8s
 }
-button, select { font: inherit; }
-button { cursor: pointer; }
-#intro {
-  position: fixed;
-  inset: 0;
-  z-index: 20;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  background: #080a08;
-  overflow: hidden;
-  transition: opacity .8s ease, visibility .8s ease;
+#intro.done{opacity:0;visibility:hidden;pointer-events:none}
+#intro img{position:absolute;width:100%;height:100%;object-fit:contain}
+.intro-title{
+  position:absolute;bottom:11%;text-align:center;
+  font-size:clamp(42px,9vw,110px);font-weight:800;
+  line-height:.85;letter-spacing:-.075em;opacity:0;
+  transform:translateY(20px);transition:opacity .8s,transform .8s
 }
-#intro.hidden {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
+#intro.title-on .intro-title{opacity:1;transform:translateY(0)}
+.intro-tools{position:absolute;top:24px;right:25px;display:flex;gap:8px}
+.intro-tools button{
+  border:1px solid #777;background:#111;color:#eee;
+  padding:10px 13px;font:9px var(--mono);letter-spacing:.12em
 }
-#introVisual {
-  width: min(80vw, 760px);
-  height: min(70vh, 620px);
-  object-fit: contain;
+.intro-tools button:hover{background:var(--paper);color:#111}
+header{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:22px 5vw;border-bottom:1px solid var(--line)
 }
-.intro-title {
-  position: absolute;
-  bottom: 12%;
-  text-align: center;
+.brand{font-size:10px;font-weight:800;letter-spacing:.2em}
+header nav{display:flex;gap:25px}
+header a{color:var(--paper);text-decoration:none;font:9px var(--mono);letter-spacing:.13em}
+.hero{padding:9vh 7vw 7vh;min-height:77vh;display:flex;flex-direction:column;justify-content:space-between}
+.eyebrow{font:10px var(--mono);letter-spacing:.19em;text-transform:uppercase;color:var(--orange)}
+.hero h1{font-size:clamp(68px,14vw,190px);line-height:.78;letter-spacing:-.09em;margin:8vh 0 5vh;font-weight:800}
+.hero h1 span{color:var(--orange);padding-left:12vw}
+.hero-bottom{display:flex;justify-content:space-between;align-items:end;gap:30px}
+.hero-bottom p{max-width:520px;color:#b6b8ae;font-size:clamp(14px,1.5vw,19px);line-height:1.8}
+.hero-bottom small{font:9px var(--mono);letter-spacing:.15em;color:var(--muted)}
+.marquee{overflow:hidden;border-block:1px solid var(--line);padding:15px 0;white-space:nowrap}
+.marquee div{width:max-content;animation:marquee 35s linear infinite}
+.marquee span{font:10px var(--mono);letter-spacing:.25em;padding:0 25px;color:#bfc1b7}
+@keyframes marquee{to{transform:translateX(-50%)}}
+section.content{padding:100px 7vw}
+.section-head{display:grid;grid-template-columns:.5fr 1.5fr;gap:35px;margin-bottom:55px}
+.section-head h2{font-size:clamp(35px,6vw,76px);line-height:.98;letter-spacing:-.065em;margin:0}
+.section-head p{max-width:470px;color:#b3b5ab;font-size:13px;line-height:1.9;margin:8px 0 0}
+.territory-intro{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.territory-card{border-top:1px solid var(--line);padding:20px 0}
+.territory-card span{font:9px var(--mono);letter-spacing:.18em;color:var(--orange)}
+.territory-card h3{font-size:clamp(25px,3vw,42px);letter-spacing:-.05em;margin:25px 0 10px}
+.territory-card p{max-width:370px;color:var(--muted);font-size:11px;line-height:1.8}
+.visual-section{padding:90px 4vw 100px;background:#151713}
+.visual-top{display:flex;justify-content:space-between;align-items:end;gap:30px;padding:0 3vw 28px}
+.visual-top h2{font-size:clamp(38px,6vw,78px);letter-spacing:-.07em;line-height:.9;margin:12px 0 0}
+.visual-top p{max-width:370px;color:#a7aa9f;font-size:11px;line-height:1.8}
+.filters{
+  display:flex;flex-wrap:wrap;gap:12px;align-items:end;
+  padding:20px 3vw;border-block:1px solid var(--line)
 }
-.intro-title span {
-  display: block;
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: .35em;
-  color: #9ba296;
-  margin-bottom: 14px;
+.filter{display:grid;gap:7px}
+.filter label{font:8px var(--mono);letter-spacing:.16em;color:var(--muted)}
+select{
+  background:#20231e;color:var(--paper);border:1px solid #55594f;
+  padding:11px 30px 11px 12px;min-width:155px;font:10px var(--mono)
 }
-.intro-title h1 {
-  font-size: clamp(34px, 7vw, 82px);
-  letter-spacing: -.07em;
-  line-height: .9;
-  margin: 0;
-  font-weight: 700;
+.mode{display:flex;gap:5px;margin-left:auto}
+.mode button,.reset{
+  background:transparent;border:1px solid #55594f;color:#d4d5ca;
+  padding:11px 13px;font:9px var(--mono);letter-spacing:.1em
 }
-#skipIntro {
-  position: absolute;
-  top: 28px;
-  right: 30px;
-  background: transparent;
-  border: 1px solid #62685f;
-  color: #ddd;
-  padding: 10px 15px;
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: .12em;
-  text-transform: uppercase;
+.mode button.active,.mode button:hover,.reset:hover{
+  background:var(--orange);border-color:var(--orange);color:#111
 }
-#skipIntro:hover { background: white; color: black; }
-main {
-  max-width: 1600px;
-  margin: auto;
-  padding: 34px clamp(18px, 4vw, 64px) 70px;
+.legend{display:flex;flex-wrap:wrap;gap:20px;padding:19px 3vw}
+.legend span{display:flex;align-items:center;gap:7px;font:9px var(--mono);color:#c1c3b9}
+.swatch{width:9px;height:9px;border-radius:50%;display:inline-block}
+.chart-shell{background:#0e100e;border:1px solid #353a32;overflow:hidden}
+.chart-meta{display:flex;justify-content:space-between;padding:18px 22px;border-bottom:1px solid #353a32;font:9px var(--mono);letter-spacing:.14em;color:#a7aa9f}
+#roadChart{display:block;width:100%;height:auto}
+.zone-title{font:700 21px var(--font);fill:#f1f0e8}
+.zone-sub{font:9px var(--mono);fill:#969b90;letter-spacing:2px}
+.road-name{font:10px var(--mono);fill:#e6e5dc}
+.road-total{font:9px var(--mono);fill:#a9ada2}
+.road-path{fill:none;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;cursor:pointer;transition:opacity .3s,stroke-width .3s}
+.road-path:hover,.road-path.selected{stroke-width:5.5}
+.road-path.dim{opacity:.12}
+.road-under{fill:none;stroke:#353a33;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+.node{stroke:#10110f;stroke-width:2}
+.chart-legend{font:9px var(--mono);fill:#a9ada2}
+.detail-area{display:grid;grid-template-columns:1.1fr .9fr;gap:15px;margin-top:15px}
+.detail-card{border:1px solid var(--line);padding:22px;min-height:210px}
+.detail-card h3{font-size:22px;letter-spacing:-.05em;margin:0 0 5px}
+.detail-card .sub{font:9px var(--mono);letter-spacing:.13em;color:var(--muted);margin-bottom:24px}
+.metric{display:grid;grid-template-columns:110px 1fr 35px;align-items:center;gap:12px;margin:14px 0;font:9px var(--mono);color:#c8c9c0}
+.track{height:6px;background:#343931}
+.fill{height:100%}
+.metric strong{text-align:right;font-weight:400}
+.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-top:0}
+.summary{padding:17px 20px;border-right:1px solid var(--line)}
+.summary:last-child{border:0}
+.summary small{display:block;font:8px var(--mono);letter-spacing:.14em;color:var(--muted);margin-bottom:10px}
+.summary strong{font-size:clamp(24px,3vw,38px);letter-spacing:-.06em}
+.summary span{display:block;font:9px var(--mono);color:var(--muted);margin-top:5px}
+.method{margin-top:20px;padding:17px 20px;border-left:2px solid var(--orange);background:#20231e;color:#b8bbb0;font-size:10px;line-height:1.8}
+footer{display:flex;justify-content:space-between;gap:20px;padding:25px 5vw;font:9px var(--mono);letter-spacing:.13em;color:var(--muted);border-top:1px solid var(--line)}
+@media(max-width:800px){
+  header nav{gap:12px}
+  .hero{min-height:70vh;padding:8vh 6vw}
+  .hero h1{font-size:18vw}
+  .hero-bottom{display:block}
+  .hero-bottom small{display:block;margin-top:25px}
+  section.content{padding:75px 6vw}
+  .section-head{grid-template-columns:1fr;gap:18px}
+  .visual-section{padding:70px 4vw}
+  .visual-top{display:block}
+  .visual-top p{margin-top:20px}
+  .mode{margin-left:0;width:100%}
+  .mode button{flex:1}
+  .detail-area{grid-template-columns:1fr}
+  .summary-grid{grid-template-columns:repeat(2,1fr)}
+  .summary:nth-child(2){border-right:0}
+  .summary:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  footer{flex-direction:column}
 }
-.topline {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid var(--line);
-  padding-bottom: 15px;
-  font: 10px 'DM Mono', monospace;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.hero {
-  display: grid;
-  grid-template-columns: 1.2fr .8fr;
-  gap: 40px;
-  padding: 48px 0 35px;
-  align-items: end;
-}
-.kicker {
-  color: var(--green);
-  font: 11px 'DM Mono', monospace;
-  letter-spacing: .2em;
-  text-transform: uppercase;
-}
-h1 {
-  font-size: clamp(48px, 8vw, 112px);
-  letter-spacing: -.09em;
-  line-height: .82;
-  margin: 20px 0 0;
-  font-weight: 700;
-}
-.hero p {
-  color: #b6b9af;
-  font-size: 13px;
-  line-height: 1.8;
-  max-width: 460px;
-  margin: 0 0 4px;
-}
-.controls {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: end;
-  gap: 12px;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  padding: 18px 0;
-}
-.control {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-}
-.control label {
-  font: 9px 'DM Mono', monospace;
-  color: var(--muted);
-  letter-spacing: .16em;
-  text-transform: uppercase;
-}
-select {
-  color: var(--ink);
-  background: #1b211c;
-  border: 1px solid #444b42;
-  padding: 11px 32px 11px 12px;
-  border-radius: 0;
-  min-width: 150px;
-  font-size: 11px;
-}
-select:focus { outline: 1px solid var(--green); }
-.mode-buttons {
-  display: flex;
-  gap: 5px;
-  margin-left: auto;
-}
-.mode-buttons button, .small-button {
-  background: transparent;
-  border: 1px solid #454c43;
-  color: #c7c9c0;
-  padding: 11px 14px;
-  font: 10px 'DM Mono', monospace;
-  text-transform: uppercase;
-  letter-spacing: .08em;
-}
-.mode-buttons button.active, .mode-buttons button:hover,
-.small-button:hover {
-  background: var(--green);
-  border-color: var(--green);
-  color: #11170f;
-}
-.legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 22px;
-  padding: 20px 0;
-  border-bottom: 1px solid var(--line);
-}
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font: 10px 'DM Mono', monospace;
-  color: #c2c6bb;
-}
-.dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-}
-.visual-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-  padding: 34px 0 15px;
-}
-.visual-head h2 {
-  font-size: clamp(22px, 3vw, 34px);
-  letter-spacing: -.06em;
-  margin: 0;
-}
-.visual-head span {
-  color: var(--muted);
-  font: 10px 'DM Mono', monospace;
-}
-#chartWrap {
-  position: relative;
-  border: 1px solid var(--line);
-  background: #121712;
-  overflow: hidden;
-}
-#chart {
-  display: block;
-  width: 100%;
-  height: auto;
-  min-height: 420px;
-}
-.territory-label {
-  font: 700 20px 'Montserrat', sans-serif;
-  fill: #f0efe8;
-}
-.territory-sub {
-  font: 10px 'DM Mono', monospace;
-  fill: #90988d;
-  letter-spacing: 2px;
-}
-.road-label {
-  font: 11px 'DM Mono', monospace;
-  fill: #d8d9d0;
-}
-.road-path {
-  fill: none;
-  stroke-width: 3.2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  transition: opacity .3s, stroke-width .3s;
-  cursor: pointer;
-}
-.road-path:hover { stroke-width: 6; }
-.road-path.dim { opacity: .12; }
-.road-path.selected { stroke-width: 5.5; }
-.road-node { cursor: pointer; }
-.road-node circle {
-  fill: var(--bg);
-  stroke-width: 2;
-}
-.road-node text {
-  fill: #d8d9d0;
-  font: 9px 'DM Mono', monospace;
-}
-.stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  border: 1px solid var(--line);
-  border-top: 0;
-}
-.stat {
-  padding: 18px;
-  border-right: 1px solid var(--line);
-}
-.stat:last-child { border: 0; }
-.stat small {
-  display: block;
-  color: var(--muted);
-  font: 9px 'DM Mono', monospace;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  margin-bottom: 9px;
-}
-.stat strong {
-  font-size: clamp(22px, 3vw, 36px);
-  letter-spacing: -.07em;
-  font-weight: 600;
-}
-.stat span {
-  display: block;
-  color: #a4a99f;
-  font: 10px 'DM Mono', monospace;
-  margin-top: 4px;
-}
-.details {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
-  padding-top: 30px;
-}
-.detail-panel {
-  border: 1px solid var(--line);
-  padding: 22px;
-  min-height: 190px;
-}
-.detail-panel h3 {
-  font-size: 18px;
-  letter-spacing: -.04em;
-  margin: 0 0 5px;
-}
-.detail-panel .meta {
-  font: 9px 'DM Mono', monospace;
-  color: var(--muted);
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  margin-bottom: 24px;
-}
-.bars { display: grid; gap: 13px; }
-.bar-row {
-  display: grid;
-  grid-template-columns: 105px 1fr 30px;
-  gap: 10px;
-  align-items: center;
-  font: 10px 'DM Mono', monospace;
-}
-.bar-track { height: 6px; background: #30372f; }
-.bar-fill { height: 100%; }
-.bar-value { text-align: right; color: #d7d9d0; }
-.note {
-  margin-top: 24px;
-  border-top: 1px solid var(--line);
-  padding-top: 14px;
-  color: #9da398;
-  font-size: 10px;
-  line-height: 1.7;
-}
-footer {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  border-top: 1px solid var(--line);
-  margin-top: 45px;
-  padding-top: 15px;
-  color: var(--muted);
-  font: 9px 'DM Mono', monospace;
-  letter-spacing: .1em;
-}
-@media(max-width:760px) {
-  main { padding: 22px 16px 50px; }
-  .hero { grid-template-columns: 1fr; gap: 25px; padding: 38px 0 28px; }
-  .hero p { max-width: 100%; }
-  .mode-buttons { margin-left: 0; width: 100%; }
-  .mode-buttons button { flex: 1; }
-  .stats { grid-template-columns: repeat(2, 1fr); }
-  .stat:nth-child(2) { border-right: 0; }
-  .stat:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
-  .details { grid-template-columns: 1fr; }
-  #chart { min-height: 300px; }
-  .visual-head { align-items: start; flex-direction: column; gap: 8px; }
-  footer { flex-direction: column; }
+@media(max-width:520px){
+  header{padding:17px 5vw}
+  header nav a:nth-child(2){display:none}
+  .territory-intro{grid-template-columns:1fr}
+  .filters{padding-inline:4vw}
+  select{min-width:135px}
+  .chart-meta{font-size:8px;padding:13px}
 }
 </style>
 </head>
 <body>
 
-<section id="intro">
-  <button id="skipIntro">Saltar secuencia</button>
-  <img id="introVisual" src="caminar_frames/frame-01.webp" alt="">
-  <div class="intro-title">
-    <span>VALPARAÍSO / BUENOS AIRES</span>
-    <h1>SENTIR<br>LA CALLE</h1>
+<div id="intro">
+  <img id="introFrame" src="caminar_frames/frame-01.webp" alt="">
+  <div class="intro-title">SENTIR<br>LA CALLE.</div>
+  <div class="intro-tools">
+    <button id="soundButton">ACTIVAR SONIDO</button>
+    <button id="skipButton">SALTAR ↗</button>
+  </div>
+</div>
+
+<header>
+  <div class="brand">SENTIR LA CALLE.</div>
+  <nav>
+    <a href="#proyecto">PROYECTO</a>
+    <a href="#territorios">TERRITORIOS</a>
+    <a href="#explorar">EXPLORAR</a>
+  </nav>
+</header>
+
+<main>
+<section class="hero" id="proyecto">
+  <div class="eyebrow">INVESTIGACIÓN URBANA / 2026</div>
+  <h1>SENTIR<br><span>LA CALLE.</span></h1>
+  <div class="hero-bottom">
+    <p>Caminar no es neutral. La experiencia peatonal se construye entre las condiciones materiales de la ciudad y la manera en que las personas las viven.</p>
+    <small>VALPARAÍSO / BUENOS AIRES<br>DESPLAZARSE PARA EXPLORAR ↓</small>
   </div>
 </section>
 
-<main>
-  <div class="topline">
-    <span>Investigación territorial / Visualización</span>
-    <span>2026</span>
+<div class="marquee"><div>
+  <span>CAMINAR</span><span>OBSERVAR</span><span>CRUZAR</span><span>HABITAR</span><span>TRANSITAR</span>
+  <span>CAMINAR</span><span>OBSERVAR</span><span>CRUZAR</span><span>HABITAR</span><span>TRANSITAR</span>
+</div></div>
+
+<section class="content" id="territorios">
+  <div class="section-head">
+    <div class="eyebrow">01 / TERRITORIOS</div>
+    <div>
+      <h2>Dos ciudades.<br>Una pregunta compartida.</h2>
+      <p>Dos sistemas de recorridos independientes. Cada calle conserva su identidad y sus propios datos. La comparación permite observarlos simultáneamente sin mezclar sus resultados.</p>
+    </div>
+  </div>
+  <div class="territory-intro">
+    <article class="territory-card">
+      <span>01 / CHILE</span>
+      <h3>Barrio Puerto<br>Valparaíso.</h3>
+      <p>Calles de estudio: Serrano, Cochrane, Blanco y Errázuriz. Los datos se incorporarán desde el levantamiento correspondiente.</p>
+    </article>
+    <article class="territory-card">
+      <span>02 / ARGENTINA</span>
+      <h3>Buenos Aires.</h3>
+      <p>Calles de estudio: Avenida Colón, Azopardo, Avenida Huergo y Avenida Alicia.</p>
+    </article>
+  </div>
+</section>
+
+<section class="visual-section" id="explorar">
+  <div class="visual-top">
+    <div>
+      <div class="eyebrow">02 / CARTOGRAFÍA DE PERCEPCIONES</div>
+      <h2>Caminar<br>deja huellas.</h2>
+    </div>
+    <p>Cada recorrido representa una calle. Su trazado serpenteante mantiene una forma continua y dinámica; su extensión cambia según la cantidad de fichas registradas.</p>
   </div>
 
-  <section class="hero">
-    <div>
-      <div class="kicker">Percepción del espacio público</div>
-      <h1>Sentir<br>la calle.</h1>
-    </div>
-    <p>
-      Caminar no es neutral. La experiencia de una calle se construye a través
-      de múltiples percepciones: la seguridad, la luminosidad, la
-      transitabilidad y la actividad urbana. Cada recorrido representa una
-      calle y se extiende según la cantidad de fichas registradas.
-    </p>
-  </section>
-
-  <section class="controls">
-    <div class="control">
-      <label for="territory">Territorio</label>
+  <div class="filters">
+    <div class="filter">
+      <label for="territory">TERRITORIO</label>
       <select id="territory">
-        <option value="all">Comparar territorios</option>
-        <option value="valpo">Barrio Puerto / Valparaíso</option>
-        <option value="ba">Buenos Aires</option>
+        <option value="both">COMPARAR AMBOS</option>
+        <option value="valpo">BARRIO PUERTO</option>
+        <option value="ba">BUENOS AIRES</option>
       </select>
     </div>
-    <div class="control">
-      <label for="day">Jornada</label>
+    <div class="filter">
+      <label for="day">JORNADA</label>
       <select id="day">
-        <option value="all">Acumulado</option>
-        <option value="0">19 noviembre</option>
-        <option value="1">20 noviembre</option>
-        <option value="2">21 noviembre</option>
+        <option value="all">ACUMULADO</option>
+        <option value="0">19 NOVIEMBRE</option>
+        <option value="1">20 NOVIEMBRE</option>
+        <option value="2">21 NOVIEMBRE</option>
       </select>
     </div>
-    <div class="control">
-      <label for="indicator">Percepción</label>
+    <div class="filter">
+      <label for="indicator">INDICADOR</label>
       <select id="indicator">
-        <option value="all">Todas las percepciones</option>
-        <option value="luminosidad">Luminosidad</option>
-        <option value="seguridad">Seguridad</option>
-        <option value="transitabilidad">Transitabilidad</option>
-        <option value="actividad">Actividad urbana</option>
+        <option value="all">TODOS</option>
+        <option value="luminosidad">LUMINOSIDAD</option>
+        <option value="seguridad">SEGURIDAD</option>
+        <option value="transitabilidad">TRANSITABILIDAD</option>
+        <option value="actividad">ACTIVIDAD URBANA</option>
       </select>
     </div>
-    <div class="mode-buttons">
-      <button class="active" data-mode="all">Todo</button>
-      <button data-mode="positive">Positivo</button>
-      <button data-mode="negative">Negativo</button>
+    <div class="mode">
+      <button class="active" data-mode="all">TODAS</button>
+      <button data-mode="p">POSITIVAS</button>
+      <button data-mode="n">NEGATIVAS</button>
     </div>
-  </section>
+  </div>
 
   <div class="legend">
-    <div class="legend-item"><i class="dot" style="background:var(--yellow)"></i>Luminosidad</div>
-    <div class="legend-item"><i class="dot" style="background:var(--blue)"></i>Seguridad</div>
-    <div class="legend-item"><i class="dot" style="background:var(--green)"></i>Transitabilidad</div>
-    <div class="legend-item"><i class="dot" style="background:var(--red)"></i>Actividad urbana</div>
+    <span><i class="swatch" style="background:var(--yellow)"></i>LUMINOSIDAD</span>
+    <span><i class="swatch" style="background:var(--blue)"></i>SEGURIDAD</span>
+    <span><i class="swatch" style="background:var(--green)"></i>TRANSITABILIDAD</span>
+    <span><i class="swatch" style="background:var(--red)"></i>ACTIVIDAD URBANA</span>
   </div>
 
-  <div class="visual-head">
-    <h2 id="chartTitle">Dos territorios, múltiples recorridos</h2>
-    <span id="chartSubtitle">LONGITUD = CANTIDAD DE FICHAS</span>
+  <div class="chart-shell">
+    <div class="chart-meta">
+      <span id="chartLabel">COMPARACIÓN DE TERRITORIOS</span>
+      <span>EXTENSIÓN = CANTIDAD DE FICHAS</span>
+    </div>
+    <svg id="roadChart" viewBox="0 0 1200 950" role="img" aria-label="Recorridos sinuosos por calle y territorio"></svg>
   </div>
 
-  <div id="chartWrap">
-    <svg id="chart" viewBox="0 0 1200 790" role="img" aria-label="Recorridos de percepción por calle"></svg>
+  <div class="summary-grid">
+    <div class="summary"><small>FICHAS VISIBLES</small><strong id="total">0</strong><span>Selección actual</span></div>
+    <div class="summary"><small>CALLES CON DATOS</small><strong id="streetCount">0</strong><span>Recorridos activos</span></div>
+    <div class="summary"><small>POSITIVAS</small><strong id="positive">0</strong><span>Fichas positivas</span></div>
+    <div class="summary"><small>NEGATIVAS</small><strong id="negative">0</strong><span>Fichas negativas</span></div>
   </div>
 
-  <section class="stats">
-    <div class="stat">
-      <small>Fichas registradas</small>
-      <strong id="totalCards">0</strong>
-      <span>En la selección actual</span>
-    </div>
-    <div class="stat">
-      <small>Calles con datos</small>
-      <strong id="roadCount">0</strong>
-      <span>Recorridos disponibles</span>
-    </div>
-    <div class="stat">
-      <small>Percepciones positivas</small>
-      <strong id="positiveCount">0</strong>
-      <span>Fichas positivas</span>
-    </div>
-    <div class="stat">
-      <small>Percepciones negativas</small>
-      <strong id="negativeCount">0</strong>
-      <span>Fichas negativas</span>
-    </div>
-  </section>
-
-  <section class="details">
-    <div class="detail-panel">
-      <h3 id="detailTitle">Explora un recorrido</h3>
-      <div class="meta" id="detailMeta">Selecciona una calle en el gráfico</div>
-      <div class="bars" id="detailBars"></div>
-    </div>
-    <div class="detail-panel">
-      <h3>Lectura del recorrido</h3>
-      <div class="meta">Cómo interpretar la visualización</div>
-      <p style="font-size:11px;line-height:1.8;color:#b7bcb1;margin:0">
-        Cada línea representa una calle. Su extensión depende de la cantidad
-        de fichas asociadas a ella en la jornada seleccionada. Los colores
-        identifican los cuatro indicadores. Los nodos marcan puntos de
-        información dentro del recorrido. Selecciona una línea para consultar
-        su desglose.
+  <div class="detail-area">
+    <article class="detail-card">
+      <h3 id="detailTitle">Selecciona una calle</h3>
+      <div class="sub" id="detailSub">DETALLE DEL RECORRIDO</div>
+      <div id="detailBars"></div>
+    </article>
+    <article class="detail-card">
+      <h3>Cómo leer los caminos</h3>
+      <div class="sub">CRITERIOS DE REPRESENTACIÓN</div>
+      <p style="font-size:11px;line-height:1.9;color:#b9bcb1">
+        Cada línea es una calle y conserva su recorrido serpenteante. La longitud visible es proporcional a las fichas de la selección actual. Los puntos de color representan los indicadores presentes en cada calle. Selecciona un camino para consultar sus cifras.
       </p>
-      <div class="note" id="dataNote">
-        Los recorridos sin datos aparecen como trazos de referencia.
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <span>CAMINAR NO ES NEUTRAL</span>
-    <span>LEVANTAMIENTO DE PERCEPCIÓN / 2026</span>
-  </footer>
+      <div class="method" id="dataNote">Las calles sin datos se muestran con una línea de referencia tenue.</div>
+    </article>
+  </div>
+</section>
 </main>
 
+<footer>
+  <span>SENTIR LA CALLE.</span>
+  <span>CAMINAR NO ES NEUTRAL</span>
+  <span>VALPARAÍSO / BUENOS AIRES</span>
+</footer>
+
 <script>
-const COLORS = {
-  luminosidad: '#e8c547',
-  seguridad: '#5b9bd5',
-  transitabilidad: '#a7c957',
-  actividad: '#d96b55'
+const COLORS={
+  luminosidad:'#d8bc62',
+  seguridad:'#7199b2',
+  transitabilidad:'#8eaa67',
+  actividad:'#bd6857'
 };
+const KEYS=['luminosidad','seguridad','transitabilidad','actividad'];
+const LABELS=['Luminosidad','Seguridad','Transitabilidad','Actividad urbana'];
+const STREET_COLORS=['#d77a42','#8eaa67','#7199b2','#b69a72'];
 
-const INDICATORS = [
-  ['luminosidad', 'Luminosidad'],
-  ['seguridad', 'Seguridad'],
-  ['transitabilidad', 'Transitabilidad'],
-  ['actividad', 'Actividad urbana']
-];
-
-const days = ['19 noviembre', '20 noviembre', '21 noviembre'];
-
-const valpoData = {
-  Serrano: [null, null, null],
-  Cochrane: [null, null, null],
-  Blanco: [null, null, null],
-  Errázuriz: [null, null, null]
-};
-
-const baData = {
-  'Av. Colón': [
-    {p:[1,0,4,4], n:[0,2,2,3]},
-    {p:[2,0,4,0], n:[2,3,1,4]},
-    {p:[2,1,1,3], n:[0,1,2,2]}
+const argentina={
+  'Av. Colón':[
+    {p:[1,0,4,4],n:[0,2,2,3]},
+    {p:[2,0,4,0],n:[2,3,1,4]},
+    {p:[2,1,1,3],n:[0,1,2,2]}
   ],
-  Azopardo: [
-    {p:[0,1,0,6], n:[2,6,2,1]},
-    {p:[0,0,2,0], n:[1,3,1,0]},
-    {p:[2,0,3,0], n:[0,2,1,0]}
+  'Azopardo':[
+    {p:[0,1,0,6],n:[2,6,2,1]},
+    {p:[0,0,2,0],n:[1,3,1,0]},
+    {p:[2,0,3,0],n:[0,2,1,0]}
   ],
-  'Av. Huergo': [
-    {p:[1,2,3,0], n:[0,5,1,1]},
-    {p:[1,0,2,0], n:[0,1,0,2]},
-    {p:[1,0,2,0], n:[0,1,6,3]}
+  'Av. Huergo':[
+    {p:[1,2,3,0],n:[0,5,1,1]},
+    {p:[1,0,2,0],n:[0,1,0,2]},
+    {p:[1,0,2,0],n:[0,1,6,3]}
   ],
-  'Av. Alicia': [
-    {p:[3,1,2,6], n:[1,0,1,3]},
-    {p:[2,0,2,1], n:[2,1,0,3]},
-    {p:[4,3,0,2], n:[1,1,1,0]}
+  'Av. Alicia':[
+    {p:[3,1,2,6],n:[1,0,1,3]},
+    {p:[2,0,2,1],n:[2,1,0,3]},
+    {p:[4,3,0,2],n:[1,1,1,0]}
   ]
 };
 
-const roads = [
-  ...Object.entries(valpoData).map(([name, data], i) => ({
-    name, territory: 'valpo', data, index: i
-  })),
-  ...Object.entries(baData).map(([name, data], i) => ({
-    name, territory: 'ba', data, index: i
-  }))
+const valparaiso={
+  'Serrano':[null,null,null],
+  'Cochrane':[null,null,null],
+  'Blanco':[null,null,null],
+  'Errázuriz':[null,null,null]
+};
+
+const streets=[
+  ...Object.entries(valparaiso).map(([name,data],i)=>({name,data,city:'valpo',index:i})),
+  ...Object.entries(argentina).map(([name,data],i)=>({name,data,city:'ba',index:i}))
 ];
 
-let selectedRoad = null;
-let currentMode = 'all';
+let mode='all';
+let selected=null;
 
-const $ = id => document.getElementById(id);
+const $=id=>document.getElementById(id);
+const svgNS='http://www.w3.org/2000/svg';
 
-function getDayData(road, dayIndex) {
-  if (road.territory === 'valpo') return null;
-  if (dayIndex === 'all') {
-    return road.data.reduce((acc, day) => {
-      day.p.forEach((v,i) => acc.p[i] += v);
-      day.n.forEach((v,i) => acc.n[i] += v);
-      return acc;
-    }, {p:[0,0,0,0], n:[0,0,0,0]});
-  }
-  return road.data[Number(dayIndex)];
-}
-
-function sum(arr) {
-  return arr.reduce((a,b) => a + b, 0);
-}
-
-function getFilteredValues(road, dayIndex, indicator, mode) {
-  const data = getDayData(road, dayIndex);
-  if (!data) return null;
-  const indices = indicator === 'all'
-    ? [0,1,2,3]
-    : [INDICATORS.findIndex(x => x[0] === indicator)];
-
-  const positive = sum(indices.map(i => data.p[i]));
-  const negative = sum(indices.map(i => data.n[i]));
-
-  if (mode === 'positive') return {positive, negative:0, total:positive};
-  if (mode === 'negative') return {positive:0, negative, total:negative};
-  return {positive, negative, total:positive + negative};
-}
-
-function visibleRoads() {
-  const territory = $('territory').value;
-  return roads.filter(r => territory === 'all' || r.territory === territory);
-}
-
-function pathFor(index, progress, side) {
-  const startX = side === 'valpo' ? 85 : 650;
-  const baseY = 125 + (index % 4) * 14;
-  const maxLength = 405;
-  const length = maxLength * progress;
-  const direction = index % 2 === 0 ? 1 : -1;
-  const amplitude = 75 + (index % 4) * 13;
-  const xEnd = startX + length;
-
-  const c1x = startX + length * .22;
-  const c1y = baseY + direction * amplitude;
-  const c2x = startX + length * .38;
-  const c2y = baseY - direction * amplitude * .85;
-  const midX = startX + length * .52;
-  const midY = baseY + direction * amplitude * .55;
-  const c3x = startX + length * .68;
-  const c3y = baseY + direction * amplitude * 1.35;
-  const c4x = startX + length * .84;
-  const c4y = baseY - direction * amplitude * .45;
-  const endY = baseY + direction * 10;
-
-  return {
-    d: `M ${startX} ${baseY} C ${c1x} ${c1y}, ${c2x} ${c2y}, ${midX} ${midY} S ${c3x} ${c3y}, ${xEnd} ${endY}`,
-    x: xEnd,
-    y: endY
-  };
-}
-
-function createSVG(tag, attrs = {}) {
-  const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
-  Object.entries(attrs).forEach(([key,value]) => el.setAttribute(key, value));
+function svg(tag,attrs={},parent=$('roadChart')){
+  const el=document.createElementNS(svgNS,tag);
+  Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,v));
+  parent.appendChild(el);
   return el;
 }
 
-function renderChart() {
-  const svg = $('chart');
-  svg.innerHTML = '';
-
-  const territory = $('territory').value;
-  const day = $('day').value;
-  const indicator = $('indicator').value;
-  const roadsToShow = visibleRoads();
-
-  const showBoth = territory === 'all';
-  const width = 1200;
-
-  if (showBoth) {
-    const leftTitle = createSVG('text', {x:80,y:55,class:'territory-label'});
-    leftTitle.textContent = 'Barrio Puerto';
-    svg.appendChild(leftTitle);
-
-    const leftSub = createSVG('text', {x:80,y:76,class:'territory-sub'});
-    leftSub.textContent = 'VALPARAÍSO / CHILE';
-    svg.appendChild(leftSub);
-
-    const rightTitle = createSVG('text', {x:650,y:55,class:'territory-label'});
-    rightTitle.textContent = 'Buenos Aires';
-    svg.appendChild(rightTitle);
-
-    const rightSub = createSVG('text', {x:650,y:76,class:'territory-sub'});
-    rightSub.textContent = 'ARGENTINA';
-    svg.appendChild(rightSub);
-  } else {
-    const title = createSVG('text', {x:80,y:55,class:'territory-label'});
-    title.textContent = territory === 'valpo' ? 'Barrio Puerto' : 'Buenos Aires';
-    svg.appendChild(title);
-    const sub = createSVG('text', {x:80,y:76,class:'territory-sub'});
-    sub.textContent = territory === 'valpo' ? 'VALPARAÍSO / CHILE' : 'ARGENTINA';
-    svg.appendChild(sub);
+function getData(street){
+  const day=$('day').value;
+  if(street.city==='valpo'){
+    if(day==='all'||street.data.some(x=>x===null))return null;
+    return null;
   }
-
-  roadsToShow.forEach((road, i) => {
-    const side = showBoth ? road.territory : 'valpo';
-    const sideIndex = showBoth ? road.index : i;
-    const values = getFilteredValues(road, day, indicator, currentMode);
-    const total = values ? values.total : 0;
-    const max = road.territory === 'ba' ? 50 : 50;
-    const progress = values ? Math.max(.08, Math.min(1, total / max)) : .08;
-    const curve = pathFor(sideIndex, progress, side);
-
-    const group = createSVG('g');
-    const path = createSVG('path', {
-      d: curve.d,
-      class: 'road-path' + (selectedRoad === road.name ? ' selected' : ''),
-      stroke: road.territory === 'ba' ? COLORS[INDICATORS[sideIndex % 4][0]] : '#d5d8cb',
-      'stroke-dasharray': values ? 'none' : '5 8',
-      'data-road': road.name
-    });
-
-    if (selectedRoad && selectedRoad !== road.name) path.classList.add('dim');
-
-    path.addEventListener('click', () => {
-      selectedRoad = road.name;
-      renderChart();
-      renderDetail();
-    });
-
-    group.appendChild(path);
-
-    const end = createSVG('circle', {
-      cx:curve.x, cy:curve.y, r:5,
-      fill: road.territory === 'ba' ? COLORS[INDICATORS[sideIndex % 4][0]] : '#d5d8cb'
-    });
-    group.appendChild(end);
-
-    const label = createSVG('text', {
-      x:curve.x + 10,
-      y:curve.y + (i % 2 ? 17 : -10),
-      class:'road-label'
-    });
-    label.textContent = road.name;
-    group.appendChild(label);
-
-    if (values && total > 0) {
-      const marker = createSVG('circle', {
-        cx:curve.x - 16,
-        cy:curve.y,
-        r:3 + Math.min(5,total / 12),
-        fill: road.territory === 'ba' ? COLORS[INDICATORS[sideIndex % 4][0]] : '#d5d8cb',
-        opacity:.9
-      });
-      group.appendChild(marker);
-    }
-
-    svg.appendChild(group);
-  });
-
-  if (roadsToShow.length === 0) {
-    const empty = createSVG('text',{x:80,y:150,fill:'#9da398','font-size':14});
-    empty.textContent = 'No hay recorridos para esta selección.';
-    svg.appendChild(empty);
-  }
-
-  $('chartTitle').textContent = showBoth
-    ? 'Dos territorios, múltiples recorridos'
-    : territory === 'valpo' ? 'Recorridos de Barrio Puerto' : 'Recorridos de Buenos Aires';
-
-  $('chartSubtitle').textContent = day === 'all'
-    ? 'ACUMULADO DE LAS TRES JORNADAS'
-    : days[Number(day)].toUpperCase();
-
-  updateStats(roadsToShow, day, indicator);
+  if(day!=='all')return street.data[Number(day)];
+  return street.data.reduce((a,d)=>{
+    d.p.forEach((v,i)=>a.p[i]+=v);
+    d.n.forEach((v,i)=>a.n[i]+=v);
+    return a;
+  },{p:[0,0,0,0],n:[0,0,0,0]});
 }
 
-function updateStats(list, day, indicator) {
-  let total = 0, positive = 0, negative = 0, count = 0;
-  list.forEach(road => {
-    const v = getFilteredValues(road, day, indicator, 'all');
-    if (v) {
-      total += v.total;
-      positive += v.positive;
-      negative += v.negative;
-      if (v.total > 0) count++;
-    }
-  });
-  $('totalCards').textContent = total;
-  $('roadCount').textContent = count;
-  $('positiveCount').textContent = positive;
-  $('negativeCount').textContent = negative;
+function getCounts(street){
+  const data=getData(street);
+  if(!data)return null;
+  const indicator=$('indicator').value;
+  const indices=indicator==='all'?[0,1,2,3]:[KEYS.indexOf(indicator)];
+  const p=indices.reduce((s,i)=>s+data.p[i],0);
+  const n=indices.reduce((s,i)=>s+data.n[i],0);
+  if(mode==='p')return {p,n:0,total:p,data};
+  if(mode==='n')return {p:0,n,total:n,data};
+  return {p,n,total:p+n,data};
 }
 
-function renderDetail() {
-  const road = roads.find(r => r.name === selectedRoad);
-  const bars = $('detailBars');
-  bars.innerHTML = '';
+function makePath(x,y,width,progress,variant){
+  const full=`
+    M ${x} ${y}
+    C ${x+width*.13} ${y-62}, ${x+width*.28} ${y-62}, ${x+width*.36} ${y}
+    C ${x+width*.44} ${y+62}, ${x+width*.55} ${y+62}, ${x+width*.63} ${y}
+    C ${x+width*.72} ${y-62}, ${x+width*.83} ${y-62}, ${x+width*.90} ${y}
+    C ${x+width*.96} ${y+45}, ${x+width*.98} ${y+70}, ${x+width} ${y+100}
+  `;
+  const short=`
+    M ${x} ${y}
+    C ${x+width*.13} ${y-62}, ${x+width*.28} ${y-62}, ${x+width*.36} ${y}
+    C ${x+width*.44} ${y+62}, ${x+width*.55} ${y+62}, ${x+width*.63} ${y}
+    C ${x+width*.72} ${y-62}, ${x+width*.83} ${y-62}, ${x+width*.90} ${y}
+    C ${x+width*.96} ${y+45}, ${x+width*.98} ${y+70}, ${x+width} ${y+100}
+  `;
+  return {d:full.trim(),progress};
+}
 
-  if (!road) {
-    $('detailTitle').textContent = 'Explora un recorrido';
-    $('detailMeta').textContent = 'Selecciona una calle en el gráfico';
-    return;
+function roadLayout(street,zone){
+  const i=street.index;
+  const y=zone.top+105+i*174;
+  const x=zone.left+22;
+  const width=zone.width-100;
+  const counts=getCounts(street);
+  const maximum=street.city==='ba'?60:60;
+  const progress=counts?Math.max(.035,Math.min(1,counts.total/maximum)):.035;
+  return {x,y,width,progress,counts};
+}
+
+function addText(x,y,text,className,parent){
+  const el=svg('text',{x,y,class:className},parent);
+  el.textContent=text;
+  return el;
+}
+
+function drawRoad(street,zone){
+  const {x,y,width,progress,counts}=roadLayout(street,zone);
+  const group=svg('g',{'data-street':street.name});
+  const color=street.city==='ba'?STREET_COLORS[street.index]:['#aaa99d','#858c79','#7e94a1','#b69a72'][street.index];
+  const path=makePath(x,y,width,progress,street.index);
+  const under=svg('path',{d:path.d,class:'road-under'},group);
+  const line=svg('path',{
+    d:path.d,
+    pathLength:100,
+    'stroke-dasharray':`${progress*100} 100`,
+    class:'road-path'+(selected===street.name?' selected':''),
+    stroke:color
+  },group);
+
+  if(selected&&selected!==street.name)line.classList.add('dim');
+
+  line.addEventListener('click',()=>{
+    selected=street.name;
+    render();
+  });
+
+  const endX=x+width*progress;
+  const endY=y+100*progress;
+  svg('circle',{cx:endX,cy:endY,r:5,fill:color,class:'node'},group);
+
+  addText(x,y-25,street.name,'road-name',group);
+  addText(x+width,y-25,counts?`${counts.total} FICHAS`:'SIN DATOS','road-total',group)
+    .setAttribute('text-anchor','end');
+
+  if(counts&&counts.total>0){
+    const values=counts.data;
+    const sums=KEYS.map((key,i)=>values.p[i]+values.n[i]);
+    let offset=0;
+    sums.forEach((value,i)=>{
+      if(value===0)return;
+      const px=x+width*(.12+offset*.12);
+      const py=y-25-(i%2)*8;
+      svg('circle',{cx:px,cy:py,r:3+Math.min(value,7)*.5,fill:COLORS[KEYS[i]],class:'node'},group);
+      offset++;
+    });
+  }
+}
+
+function renderChart(){
+  const chart=$('roadChart');
+  chart.innerHTML='';
+  const territory=$('territory').value;
+  const both=territory==='both';
+  const zones=both?[
+    {city:'valpo',left:25,width:555,top:30,title:'Barrio Puerto',sub:'VALPARAÍSO / CHILE'},
+    {city:'ba',left:620,width:555,top:30,title:'Buenos Aires',sub:'ARGENTINA'}
+  ]:[{
+    city:territory,left:45,width:1110,top:30,
+    title:territory==='valpo'?'Barrio Puerto':'Buenos Aires',
+    sub:territory==='valpo'?'VALPARAÍSO / CHILE':'ARGENTINA'
+  }];
+
+  zones.forEach(zone=>{
+    addText(zone.left+20,zone.top+20,zone.title,'zone-title');
+    addText(zone.left+20,zone.top+43,zone.sub,'zone-sub');
+    const subset=streets.filter(s=>s.city===zone.city);
+    subset.forEach(street=>drawRoad(street,zone));
+  });
+
+  if(both){
+    svg('line',{x1:600,y1:30,x2:600,y2:890,stroke:'#343a32','stroke-dasharray':'3 8'});
   }
 
-  const day = $('day').value;
-  const data = getDayData(road, day);
+  const shown=streets.filter(s=>territory==='both'||s.city===territory);
+  updateSummary(shown);
+  $('chartLabel').textContent=both?'DOS TERRITORIOS / SISTEMAS INDEPENDIENTES':territory==='valpo'?'BARRIO PUERTO / VALPARAÍSO':'BUENOS AIRES / ARGENTINA';
+}
 
-  $('detailTitle').textContent = road.name;
-  $('detailMeta').textContent = road.territory === 'ba'
-    ? 'BUENOS AIRES / ARGENTINA'
-    : 'BARRIO PUERTO / VALPARAÍSO';
+function updateSummary(shown){
+  let total=0,p=0,n=0,active=0;
+  shown.forEach(street=>{
+    const v=getCounts(street);
+    if(!v)return;
+    total+=v.total;p+=v.p;n+=v.n;
+    if(v.total>0)active++;
+  });
+  $('total').textContent=total;
+  $('positive').textContent=p;
+  $('negative').textContent=n;
+  $('streetCount').textContent=active;
+}
 
-  if (!data) {
-    bars.innerHTML = '<p style="font-size:11px;color:#aab0a4">Aún no hay datos cargados para esta calle.</p>';
+function renderDetail(){
+  const street=streets.find(s=>s.name===selected);
+  const bars=$('detailBars');
+  bars.innerHTML='';
+  if(!street){
+    $('detailTitle').textContent='Selecciona una calle';
+    $('detailSub').textContent='DETALLE DEL RECORRIDO';
     return;
   }
-
-  const max = Math.max(1, ...data.p, ...data.n);
-  INDICATORS.forEach(([key,label],i) => {
-    const row = document.createElement('div');
-    row.className = 'bar-row';
-    const name = document.createElement('span');
-    name.textContent = label;
-    const track = document.createElement('div');
-    track.className = 'bar-track';
-    const fill = document.createElement('div');
-    fill.className = 'bar-fill';
-    fill.style.width = `${((data.p[i] + data.n[i]) / max) * 100}%`;
-    fill.style.background = COLORS[key];
+  $('detailTitle').textContent=street.name;
+  $('detailSub').textContent=street.city==='ba'?'BUENOS AIRES / ARGENTINA':'BARRIO PUERTO / VALPARAÍSO';
+  const data=getData(street);
+  if(!data){
+    bars.textContent='No hay datos cargados para esta calle y selección.';
+    bars.style.cssText='font-size:11px;color:#a7aa9f;line-height:1.8';
+    return;
+  }
+  bars.style.cssText='';
+  const max=Math.max(1,...data.p,...data.n);
+  KEYS.forEach((key,i)=>{
+    const row=document.createElement('div');
+    row.className='metric';
+    const name=document.createElement('span');
+    name.textContent=LABELS[i];
+    const track=document.createElement('div');
+    track.className='track';
+    const fill=document.createElement('div');
+    fill.className='fill';
+    fill.style.width=((data.p[i]+data.n[i])/max*100)+'%';
+    fill.style.background=COLORS[key];
     track.appendChild(fill);
-    const value = document.createElement('span');
-    value.className = 'bar-value';
-    value.textContent = data.p[i] + data.n[i];
+    const value=document.createElement('strong');
+    value.textContent=data.p[i]+data.n[i];
     row.append(name,track,value);
     bars.appendChild(row);
   });
-
-  const note = document.createElement('div');
-  note.className = 'note';
-  note.textContent = `Positivas: ${sum(data.p)} fichas · Negativas: ${sum(data.n)} fichas`;
+  const note=document.createElement('div');
+  note.className='method';
+  note.textContent=`Positivas: ${data.p.reduce((a,b)=>a+b,0)} · Negativas: ${data.n.reduce((a,b)=>a+b,0)}`;
   bars.appendChild(note);
 }
 
-function refresh() {
+function render(){
   renderChart();
   renderDetail();
 }
 
-$('territory').addEventListener('change', () => {
-  selectedRoad = null;
-  refresh();
-});
-$('day').addEventListener('change', refresh);
-$('indicator').addEventListener('change', refresh);
-
-document.querySelectorAll('.mode-buttons button').forEach(button => {
-  button.addEventListener('click', () => {
-    document.querySelectorAll('.mode-buttons button').forEach(b => b.classList.remove('active'));
+$('territory').addEventListener('change',()=>{selected=null;render()});
+$('day').addEventListener('change',render);
+$('indicator').addEventListener('change',render);
+document.querySelectorAll('.mode button').forEach(button=>{
+  button.addEventListener('click',()=>{
+    document.querySelectorAll('.mode button').forEach(b=>b.classList.remove('active'));
     button.classList.add('active');
-    currentMode = button.dataset.mode;
-    refresh();
+    mode=button.dataset.mode;
+    render();
   });
 });
+render();
 
-refresh();
+let audio=null;
+let musicTimer=null;
+let musicOn=false;
+let introDone=false;
+const frame=$('introFrame');
+let frameNumber=1;
+let frameTimer=null;
+let titleTimer=null;
 
-let audioContext = null;
-let musicNodes = [];
-let musicTimer = null;
-let musicPlaying = false;
-
-function startMusic() {
-  if (musicPlaying) return;
-  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-  if (!AudioContextClass) return;
-
-  audioContext = new AudioContextClass();
-  audioContext.resume();
-  musicPlaying = true;
-
-  const master = audioContext.createGain();
-  master.gain.value = .12;
-  master.connect(audioContext.destination);
-  musicNodes.push(master);
-
-  const notes = [
-    [261.63,329.63,392.00],
-    [293.66,349.23,440.00],
-    [220.00,261.63,329.63],
+function startMusic(){
+  if(musicOn)return;
+  const AC=window.AudioContext||window.webkitAudioContext;
+  if(!AC)return;
+  audio=new AC();
+  audio.resume();
+  musicOn=true;
+  const master=audio.createGain();
+  master.gain.value=.09;
+  master.connect(audio.destination);
+  const chords=[
+    [261.63,329.63,392],
+    [293.66,349.23,440],
+    [220,261.63,329.63],
     [246.94,293.66,369.99]
   ];
-
-  let step = 0;
-
-  function playNote() {
-    if (!musicPlaying || !audioContext) return;
-    const chord = notes[step % notes.length];
-    const now = audioContext.currentTime;
-
-    chord.forEach((frequency,index) => {
-      const oscillator = audioContext.createOscillator();
-      const gain = audioContext.createGain();
-      oscillator.type = index === 0 ? 'triangle' : 'sine';
-      oscillator.frequency.value = frequency;
-      gain.gain.setValueAtTime(0, now);
-      gain.gain.linearRampToValueAtTime(index === 0 ? .24 : .11, now + .08);
-      gain.gain.exponentialRampToValueAtTime(.001, now + 1.15);
-      oscillator.connect(gain);
+  let step=0;
+  function note(){
+    if(!musicOn||!audio)return;
+    const now=audio.currentTime;
+    chords[step%chords.length].forEach((freq,i)=>{
+      const osc=audio.createOscillator();
+      const gain=audio.createGain();
+      osc.type=i===0?'triangle':'sine';
+      osc.frequency.value=freq;
+      gain.gain.setValueAtTime(.001,now);
+      gain.gain.linearRampToValueAtTime(i===0?.19:.09,now+.08);
+      gain.gain.exponentialRampToValueAtTime(.001,now+1.1);
+      osc.connect(gain);
       gain.connect(master);
-      oscillator.start(now);
-      oscillator.stop(now + 1.2);
-      musicNodes.push(oscillator, gain);
+      osc.start(now);
+      osc.stop(now+1.15);
     });
-
-    const bass = audioContext.createOscillator();
-    const bassGain = audioContext.createGain();
-    bass.type = 'sine';
-    bass.frequency.value = chord[0] / 2;
-    bassGain.gain.setValueAtTime(.001, now);
-    bassGain.gain.linearRampToValueAtTime(.18, now + .04);
-    bassGain.gain.exponentialRampToValueAtTime(.001, now + .8);
-    bass.connect(bassGain);
-    bassGain.connect(master);
-    bass.start(now);
-    bass.stop(now + .85);
-    musicNodes.push(bass, bassGain);
-
     step++;
   }
-
-  playNote();
-  musicTimer = setInterval(playNote, 850);
+  note();
+  musicTimer=setInterval(note,850);
+  $('soundButton').textContent='SONIDO ACTIVADO';
 }
 
-function stopMusic() {
-  if (!musicPlaying) return;
-  musicPlaying = false;
-  if (musicTimer) clearInterval(musicTimer);
-  musicTimer = null;
-
-  if (audioContext) {
-    const ctx = audioContext;
-    try {
-      musicNodes.forEach(node => {
-        if (node.gain) {
-          node.gain.cancelScheduledValues(ctx.currentTime);
-          node.gain.setTargetAtTime(0, ctx.currentTime, .025);
-        }
-        if (node.stop) {
-          try { node.stop(ctx.currentTime + .12); } catch(e) {}
-        }
-      });
-      setTimeout(() => ctx.close(), 180);
-    } catch(e) {
-      ctx.close();
-    }
+function stopMusic(){
+  musicOn=false;
+  clearInterval(musicTimer);
+  musicTimer=null;
+  if(audio){
+    const old=audio;
+    audio=null;
+    old.close().catch(()=>{});
   }
-  musicNodes = [];
-  audioContext = null;
+  $('soundButton').textContent='SONIDO DETENIDO';
 }
 
-const intro = $('intro');
-const introImage = $('introVisual');
-const totalFrames = 53;
-let frame = 1;
-let introTimer = null;
-let introFinished = false;
-
-function finishIntro() {
-  if (introFinished) return;
-  introFinished = true;
-  if (introTimer) clearInterval(introTimer);
-  introTimer = null;
+function finishIntro(){
+  if(introDone)return;
+  introDone=true;
+  clearInterval(frameTimer);
+  clearTimeout(titleTimer);
   stopMusic();
-  intro.classList.add('hidden');
+  $('intro').classList.add('done');
+  setTimeout(()=>$('intro').remove(),900);
 }
 
-function showFrame() {
-  const number = String(frame).padStart(2,'0');
-  introImage.src = `caminar_frames/frame-${number}.webp`;
+function showTitle(){
+  if(introDone)return;
+  $('intro').classList.add('title-on');
+  titleTimer=setTimeout(finishIntro,1600);
+}
 
-  if (frame >= totalFrames) {
-    finishIntro();
+function nextFrame(){
+  frameNumber++;
+  if(frameNumber>53){
+    clearInterval(frameTimer);
+    showTitle();
     return;
   }
-  frame++;
+  frame.src=`caminar_frames/frame-${String(frameNumber).padStart(2,'0')}.webp`;
 }
 
-function beginIntro() {
-  startMusic();
-  showFrame();
-  introTimer = setInterval(showFrame, 120);
+function beginIntro(){
+  frame.src='caminar_frames/frame-01.webp';
+  frameTimer=setInterval(nextFrame,120);
 }
 
-$('skipIntro').addEventListener('click', finishIntro);
-
-window.addEventListener('load', () => {
-  beginIntro();
+$('soundButton').addEventListener('click',()=>{
+  if(introDone)return;
+  if(!musicOn)startMusic();
+  else stopMusic();
 });
-
-document.addEventListener('visibilitychange', () => {
-  if (document.hidden && !introFinished) finishIntro();
-});
+$('skipButton').addEventListener('click',finishIntro);
+beginIntro();
 </script>
 </body>
 </html>
